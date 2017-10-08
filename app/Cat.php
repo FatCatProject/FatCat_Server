@@ -37,4 +37,9 @@ class Cat extends Model
     {
         return $this->hasMany('App\CatVetLog', 'cat_id', 'id');
     }
+
+    public function cards()
+    {
+        return $this->hasMany('App\Card', 'cat_id', 'id');
+    }
 }

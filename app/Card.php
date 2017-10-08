@@ -44,4 +44,9 @@ class Card extends Model
     {
         return $this->hasMany('App\FeedingLog', 'card_id', 'card_id');
     }
+
+    public function cat()
+    {
+        return $this->belongsTo('App\Cat', 'cat_id', 'cat_id');
+    }
 }
