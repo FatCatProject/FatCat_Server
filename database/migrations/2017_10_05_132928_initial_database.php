@@ -38,7 +38,7 @@ class InitialDatabase extends Migration
             $table->string('cat_race')->nullable();
             $table->float('current_weight')->nullable();
             $table->float('target_weight')->nullable();
-            $table->integer('daily_calories')->nullalble();
+            $table->integer('daily_calories')->nullable();
             $table->string('wiki_page')->nullable();
             $table->timestamps();
 
@@ -105,7 +105,7 @@ class InitialDatabase extends Migration
             $table->string('description')->nullable();
             $table->string('clinic_name')->nullable();
             $table->string('prescription_picture')->nullable();
-            $table->float('price')->nullalble();
+            $table->float('price')->nullable();
 
         });
 
