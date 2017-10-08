@@ -7,6 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 class FeedingLog extends Model
 {
     protected $table = 'feeding_logs';
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_email',
+        'foodbox_id',
+        'card_id',
+        'feeding_id',
+        'open_time',
+        'close_time',
+        'start_weight',
+        'end_weight',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+
+    ];
 
     public function user()
     {

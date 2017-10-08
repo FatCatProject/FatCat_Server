@@ -9,6 +9,27 @@ class Foodbox extends Model
 
     protected $table = 'foodboxes';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_email',
+        'food_id',
+        'foodbox_id',
+        'foodbox_name',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_email', 'email');
