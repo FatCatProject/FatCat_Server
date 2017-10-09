@@ -35,7 +35,7 @@ class Cat extends Model
 
     public function vetLogs()
     {
-        return $this->hasMany('App\CatVetLog', 'cat_id', 'id');
+        return $this->hasMany('App\CatVetLog', 'user_email', 'user_email')->where('cat_name', '=', $this->cat_name);
     }
 
     public function cards()

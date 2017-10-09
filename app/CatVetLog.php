@@ -36,6 +36,6 @@ class CatVetLog extends Model
 
     public function cat()
     {
-        return $this->belongsTo('App\Cat', 'cat_id', 'id');
+        return $this->belongsTo('App\Cat', 'user_email', 'user_email')->where('cat_name', '=', $this->cat_name);
     }
 }
