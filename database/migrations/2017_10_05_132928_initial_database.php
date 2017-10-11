@@ -30,7 +30,6 @@ class InitialDatabase extends Migration
         Schema::create('cats', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('cat_name');
             $table->string('profile_picture')->nullable();
             $table->date('dob')->nullable();
@@ -38,9 +37,11 @@ class InitialDatabase extends Migration
             $table->string('cat_race')->nullable();
             $table->float('current_weight')->nullable();
             $table->float('target_weight')->nullable();
-            $table->integer('daily_calories')->nullalble();
+            $table->integer('daily_calories')->nullable();
             $table->string('wiki_page')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'cat_name'));
         });
@@ -48,9 +49,10 @@ class InitialDatabase extends Migration
         Schema::create('notification_emails', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('notification_email');
             $table->boolean('active')->default(true);
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'notification_email'));
         });
@@ -58,12 +60,13 @@ class InitialDatabase extends Migration
         Schema::create('brainboxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('brainbox_id');
             $table->string('brainbox_ip')->nullable();
             $table->boolean('synced_to_client')->default(true);
             $table->dateTime('last_seen');
             $table->timestamps();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'brainbox_id'));
         });
@@ -71,12 +74,13 @@ class InitialDatabase extends Migration
         Schema::create('veterinarians', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('clinic_name');
             $table->string('vet_name');
             $table->string('address')->nullable();
             $table->string('hours')->nullable();
             $table->string('phone')->nullable();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'clinic_name', 'vet_name'));
         });
@@ -84,12 +88,13 @@ class InitialDatabase extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('shop_name');
             $table->string('url')->nullable();
             $table->string('address')->nullable();
             $table->string('hours')->nullable();
             $table->string('phone')->nullable();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'shop_name'));
         });
@@ -97,25 +102,26 @@ class InitialDatabase extends Migration
         Schema::create('cats_vet_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('cat_id');
-            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade')->onUpdate('cascade');
             $table->date('visit_date');
             $table->string('subject')->nullable();
             $table->string('description')->nullable();
             $table->string('clinic_name')->nullable();
             $table->string('prescription_picture')->nullable();
-            $table->float('price')->nullalble();
+            $table->float('price')->nullable();
 
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('cat_id')->references('id')->on('cats')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::create('foods', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('food_name');
             $table->float('weight_left')->default(0);
             $table->date('date_bought')->nullable();;
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'food_name'));
         });
@@ -123,12 +129,13 @@ class InitialDatabase extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('product_name');
             $table->string('picture')->nullable();
             $table->float('weight');
             $table->float('price');
             $table->boolean('is_food');
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'product_name', 'weight'));
         });
@@ -136,24 +143,27 @@ class InitialDatabase extends Migration
         Schema::create('shopping_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->date('shopping_date');
             $table->string('description')->nullable();
             $table->float('price');
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::create('foodboxes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('food_id')->nullable();
-            $table->foreign('food_id')->references('id')->on('foods')->onDelete('set null')->onUpdate('cascade');
             $table->string('foodbox_id');
-            $table->index('foodbox_id');
             $table->string('foodbox_name');
             $table->boolean('synced_to_brainbox')->default(true);
             $table->dateTime('last_seen');
             $table->timestamps();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('set null')->onUpdate('cascade');
+
+            $table->index('foodbox_id');
 
             $table->unique(array('user_email', 'foodbox_id'));
         });
@@ -162,16 +172,18 @@ class InitialDatabase extends Migration
             $table->increments('id');
             $table->string('user_email');
             $table->string('foodbox_id');
-            $table->foreign(array('user_email', 'foodbox_id'))->references(array(
-                'user_email',
-                'foodbox_id'
-            ))->on('foodboxes')->onDelete('cascade')->onUpdate('cascade');
             $table->string('card_id');
-            $table->index('card_id');
             $table->string('card_name');
             $table->boolean('active')->default(true);
             $table->boolean('synced_to_brainbox')->default(false);
             $table->timestamps();
+
+            $table->foreign(array('user_email', 'foodbox_id'))->references(array(
+                'user_email',
+                'foodbox_id'
+            ))->on('foodboxes')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->index('card_id');
 
             $table->unique(array('user_email', 'card_id'));
         });
@@ -179,12 +191,13 @@ class InitialDatabase extends Migration
         Schema::create('admin_cards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('card_id');
             $table->string('card_name');
             $table->boolean('active')->default(true);
             $table->boolean('synced_to_brainbox')->default(false);
             $table->timestamps();
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'card_id'));
         });
@@ -192,16 +205,17 @@ class InitialDatabase extends Migration
         Schema::create('feeding_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_email');
-            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('foodbox_id')->nullable();
-            $table->foreign('foodbox_id')->references('foodbox_id')->on('foodboxes')->onDelete('set null')->onUpdate('cascade');
             $table->string('card_id')->nullable();
-            $table->foreign('card_id')->references('card_id')->on('cards')->onDelete('set null')->onUpdate('cascade');
             $table->string('feeding_id');
             $table->dateTime('open_time');
             $table->dateTime('close_time');
             $table->float('start_weight');
             $table->float('end_weight');
+
+            $table->foreign('user_email')->references('email')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('foodbox_id')->references('foodbox_id')->on('foodboxes')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('card_id')->references('card_id')->on('cards')->onDelete('set null')->onUpdate('cascade');
 
             $table->unique(array('user_email', 'foodbox_id', 'feeding_id'));
         });
@@ -235,41 +249,53 @@ class InitialDatabase extends Migration
             $table->dropForeign(['foodbox_id']);
             $table->dropForeign(['card_id']);
         });
+
         Schema::table('admin_cards', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('cards', function (Blueprint $table) {
             $table->dropForeign(array('user_email', 'foodbox_id'));
         });
+
         Schema::table('foodboxes', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
             $table->dropForeign(['food_id']);
         });
+
         Schema::table('shopping_logs', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('foods', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('cats_vet_logs', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
             $table->dropForeign(['cat_id']);
         });
+
         Schema::table('shops', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('veterinarians', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('brainboxes', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('notification_emails', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });
+
         Schema::table('cats', function (Blueprint $table) {
             $table->dropForeign(['user_email']);
         });

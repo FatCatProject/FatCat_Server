@@ -7,6 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 class CatVetLog extends Model
 {
     protected $table = 'cats_vet_logs';
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_email',
+        'cat_id',
+        'visit_date',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'prescription_picture',
+    ];
 
     public function user()
     {
@@ -15,6 +36,6 @@ class CatVetLog extends Model
 
     public function cat()
     {
-        return $this->belongsTo('App\Cat', 'cat_id', 'id');
+        return $this->belongsTo('App\Cat', 'user_email', 'user_email')->where('cat_name', '=', $this->cat_name);
     }
 }
