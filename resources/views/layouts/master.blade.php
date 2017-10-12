@@ -23,7 +23,7 @@
         <!-- //header-ends -->
 
         <!-- //content starts -->
-        @yield('pages/content')
+        @yield('content')
         <!-- //content ends -->
 
         <!--body wrapper end-->
