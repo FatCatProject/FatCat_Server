@@ -42,4 +42,9 @@ class Cat extends Model
     {
         return $this->hasMany('App\Card', 'cat_id', 'id');
     }
+
+    public function catBreed()
+    {
+        return $this->belongsTo('App\CatBreed', 'cat_breed', 'breed_name');
+    }
 }
