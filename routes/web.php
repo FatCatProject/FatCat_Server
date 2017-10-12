@@ -15,7 +15,9 @@
 //    return view('layouts/master');
 //});
 Route::get('/' , 'PagesController@index');
-Route::get('/addCat' , 'PagesController@addCat');
+Route::get('/addCat' , ['uses'=>'CatController@breeds']);
+//Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
