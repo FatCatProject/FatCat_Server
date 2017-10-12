@@ -4,9 +4,16 @@
 
     function trackChange(value)
     {
-        var breed = document.getElementById("breed").value;
-        var wikiUrl = "https://en.wikipedia.org/wiki/"+breed;
-        // window.open(wikiUrl)
+
+
+        var x = document.getElementById("breed").selectedIndex;
+        var y = document.getElementById("breed").options;
+
+//        alert("Index: " + y[x].index + " is " + y[x].text + "name" +y[x].getAttribute("name"));
+        var breed = y[x].text;
+        var wikiUrl = y[x].getAttribute("name");
+        if(breed=="Other" || breed=="Stray") {breed="Cat"}
+
         document.getElementById("wikiLink").href= wikiUrl;
         document.getElementById("wikiLink").innerHTML = "Learn more on wikipedia!";
         document.getElementById("wikiLink").target = "_blank";
@@ -21,7 +28,7 @@
 
                 var markup = data.parse.text["*"];
                 var blurb = $('<div></div>').html(markup);
-                var breed = document.getElementById("breed").value;
+
                 // remove links as they will not work
                 blurb.find('a').each(function() { $(this).replaceWith($(this).html()); });
 
