@@ -9,17 +9,23 @@
         color: black;
         width: 200px;
     }
+
     .bootstrap-iso form button, .bootstrap-iso form button:hover {
         color: white !important;
     }
 </style>
 <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+    <label for="focusedinput" class="col-sm-2 control-label">Birthday:</label>
 
-
-
+        <div class="input-group" style="margin: 0px 0px 0px 15px">
+            <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </div>
+            <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" style="width: 120px;"/>
+        </div>
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
 <!-- Include jQuery -->
-{{--<script src="js/jquery-1.11.3.min.js"></script>--}}
+<script src="js/jquery-1.11.3.min.js"></script>
 
 <!-- Include Date Range Picker -->
 <script src="js/bootstrap-datepicker.min.js"></script>

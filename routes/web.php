@@ -15,20 +15,7 @@
 //    return view('layouts/master');
 //});
 Route::get('/' , 'PagesController@index');
-Route::get('/addCat' , ['uses'=>'CatController@addCat']);
-Route::get('/catPage' , ['uses'=>'CatController@catPage']);
-//Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
-//Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
-Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
-Route::get('/autocompleteBreed', 'CatController@autocomplete');
-
-
-
+Route::get('/addCat' , 'PagesController@addCat');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-
-//added by michael
-Route::post('addcat',['uses' => 'CatController@store']);
