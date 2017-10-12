@@ -4,10 +4,12 @@
 <link href="css/graph.css" rel='stylesheet' type='text/css' />
 <link href="css/icon-font.min.css" rel='stylesheet' type='text/css' />
 <link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href="css/bootstrap-datetimepicker.css" rel='stylesheet' type='text/css' />
 <link href='//fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
 
 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/Chart.js"></script>
 <script src="js/classie.js"></script>
 <script src="js/jquery.flexisel.js"></script>

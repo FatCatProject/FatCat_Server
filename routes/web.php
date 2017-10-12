@@ -15,6 +15,7 @@
 //    return view('layouts/master');
 //});
 Route::get('/' , 'PagesController@index');
+Route::get('/addCat' , 'PagesController@addCat');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
