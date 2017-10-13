@@ -5,5 +5,5 @@ This serves as the FatCat web server.
 Written in PHP.
 
 Dependencies:
-- doctrine/dbal
-- laravel/laravel
+- doctrine/dbal (artisan)
+- laravel/laravel (artisan)
