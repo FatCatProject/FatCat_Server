@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get("bbox/head_check_connection", "bbox@head_check_connection");
+Route::get("bbox/get_server_token", "bbox@get_server_token");
+

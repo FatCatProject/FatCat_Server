@@ -18,6 +18,7 @@ class CheckServerToken
      */
     public function handle($request, Closure $next)
     {
+//        TODO - Log IP if login failed
 
         if (!$request->hasHeader("php-auth-user") || !$request->hasHeader("php-auth-pw")) {
             return response("", 401);
