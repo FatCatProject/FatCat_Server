@@ -16,6 +16,7 @@
 //});
 Route::get('/' , 'PagesController@index');
 Route::get('/addCat' , ['uses'=>'CatController@breeds']);
+Route::get('/catPage' , ['uses'=>'CatController@catPage']);
 //Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
 
 Auth::routes();
