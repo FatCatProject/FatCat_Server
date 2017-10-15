@@ -19,14 +19,17 @@
                             <label for="breed_selection" class="col-sm-2 control-label"
                                    id="breed_selection">Breed</label>
                             <div class="col-sm-8">
-                                <select name="breed" id="breed" class="form-control1"
-                                        onchange="trackChange(this.value)">
-                                    <option value="" name=""></option>
+                                <select name="breedd" id="breedd" class="form-control1">
+                                    <option value="" name="" selected disabled>Please select a breed</option>
                                     @foreach ($breeds as $breed)
-                                        <option value="{!! $breed['breed_name'] !!}"
-                                                name="{!! $breed['link'] !!}">{!! $breed['breed_name'] !!}</option>
+                                        <option value="{!! $breed !!}"
+                                                name="{!! $breed !!}">{!! $breed !!}</option>
                                     @endforeach
                                 </select>
+
+
+                                <input type="text" id="breed" name="breed">
+
                             </div>
                         </div>
 
