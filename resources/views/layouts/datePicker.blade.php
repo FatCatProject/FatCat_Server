@@ -20,7 +20,7 @@
 
 <!-- Extra JavaScript/CSS added manually in "Settings" tab -->
 <!-- Include jQuery -->
-<script src="js/jquery-1.11.3.min.js"></script>
+{{--<script src="js/jquery-1.11.3.min.js"></script>--}}
 
 <!-- Include Date Range Picker -->
 <script src="js/bootstrap-datepicker.min.js"></script>
