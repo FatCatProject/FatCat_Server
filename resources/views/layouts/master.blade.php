@@ -12,7 +12,7 @@
     </script>
 </head>
 
-<body class="sticky-header left-side-collapsed"  onload="initMap()">
+<body class="sticky-header left-side-collapsed" onload="initMap()">
 <section>
  @include('layouts/menu')
 
@@ -36,7 +36,7 @@
     <!-- main content end-->
 </section>
 
-<script src="js/jquery.nicescroll.js"></script>
-<script src="js/scripts.js"></script>
+{{--<script src="js/jquery.nicescroll.js"></script>--}}
+{{--<script src="js/scripts.js"></script>--}}
 </body>
 </html>
