@@ -57,6 +57,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="catDob" class="col-sm-2 control-label">Birthday:</label>
+                            <div class="input-group" style="margin: 0px 0px 0px 15px">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY" type="text" style="width: 120px;"/>
+                            </div>
                             @include('layouts.datePicker')
                         </div>
 
