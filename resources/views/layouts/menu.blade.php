@@ -27,9 +27,9 @@
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Information</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="some.html">Cat A</a></li>
-                    <li><a href="some.html">Cat B</a></li>
-                    <li><a href="some.html">Cat C</a></li>
+                    <li><a href="./catPage">Cat A</a></li>
+                    <li><a href="./catPage">Cat B</a></li>
+                    <li><a href="./catPage">Cat C</a></li>
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-heart-pulse"></i>
@@ -41,7 +41,7 @@
                 </ul>
             </li>
             <li><a href="forms.html"><i class="lnr lnr-cart"></i> <span>Shopping list</span></a></li>
-
+        </ul>
             <!--sidebar nav end-->
     </div>
 </div>

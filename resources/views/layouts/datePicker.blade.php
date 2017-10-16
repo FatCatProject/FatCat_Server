@@ -9,7 +9,6 @@
         color: black;
         width: 200px;
     }
-
     .bootstrap-iso form button, .bootstrap-iso form button:hover {
         color: white !important;
     }
