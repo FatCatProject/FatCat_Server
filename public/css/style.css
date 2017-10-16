@@ -3083,6 +3083,10 @@ select[multiple] {
 .panel-warning {
   margin-top: 2em;
 }
+/*.panel-warning {*/
+	/*width:98%;*/
+	/*margin-left: 15px;*/
+/*}*/
 .panel.panel-midnightblue {
   border-color: #263238;
 }
