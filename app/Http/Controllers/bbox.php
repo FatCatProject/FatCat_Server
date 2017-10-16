@@ -79,4 +79,27 @@ class bbox extends Controller
         return response()->json(["admin_cards" => $admin_cards, "regular_cards" => $regular_cards]);
     }
 
+    public function get_foodbox(Request $request)
+    {
+        $request_user = $request->get("request_user");
+        $synced_foodboxes = array();
+
+        $foodboxes = array();
+        foreach ($request_user->foodboxes->where("synced_to_brainbox", false) as $foodbox) {
+            array_push($foodboxes,
+                [
+                    "foodbox_id" => $foodbox->foodbox_id,
+                    "foodbox_name" => $foodbox->foodbox_name
+                ]
+            );
+            array_push($synced_foodboxes, $foodbox->foodbox_id);
+        }
+
+        DB::table("foodboxes")
+            ->where("user_email", $request_user->email)
+            ->whereIn("foodbox_id", $synced_foodboxes)
+            ->update(["synced_to_brainbox" => true]);
+
+        return response()->json(["foodboxes" => $foodboxes]);
+    }
 }
