@@ -54,5 +54,4 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-
 }
