@@ -7,6 +7,7 @@
     <meta name="keywords" content="FatCat" />
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     @include('layouts.styling')
+
     <script>
         new WOW().init();
     </script>
@@ -14,6 +15,7 @@
 
 <body class="sticky-header left-side-collapsed" onload="initMap()">
 <section>
+
  @include('layouts/menu')
 
     <!-- main content start-->
@@ -38,5 +40,6 @@
 
 <script src="js/jquery.nicescroll.js"></script>
 <script src="js/scripts.js"></script>
+
 </body>
 </html>

@@ -22,6 +22,8 @@ Route::get('/catPage' , ['uses'=>'CatController@catPage']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
 
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
