@@ -30,6 +30,12 @@ class Foodbox extends Model
 
     ];
 
+    public function setCurrentWeightAttribute($value)
+    {
+        $value = ($value >= 0) ? $value : 0;
+        return $value;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_email', 'email');

@@ -18,6 +18,12 @@ class FoodAllowanceAndCurrentWeight extends Migration
                 $table->integer('food_allowance')->default(0);
             }
         });
+
+        Schema::table('foodboxes', function (Blueprint $table) {
+            if (!Schema::hasColumn('foodboxes', 'current_weight')) {
+                $table->float('current_weight')->default(0);
+            }
+        });
     }
 
     /**
@@ -27,9 +33,9 @@ class FoodAllowanceAndCurrentWeight extends Migration
      */
     public function down()
     {
-        Schema::table('cats', function (Blueprint $table) {
-            if (Schema::hasColumn('cats', 'food_allowance')) {
-                $table->dropColumn('food_allowance');
+        Schema::table('foodboxes', function (Blueprint $table) {
+            if (Schema::hasColumn('foodboxes', 'current_weight')) {
+                $table->dropColumn('current_weight');
             }
         });
     }
