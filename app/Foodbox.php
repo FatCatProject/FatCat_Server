@@ -19,6 +19,8 @@ class Foodbox extends Model
         'food_id',
         'foodbox_id',
         'foodbox_name',
+        'current_weight',
+        'bowel_weight'
     ];
 
     /**
@@ -31,6 +33,17 @@ class Foodbox extends Model
     ];
 
     public function setCurrentWeightAttribute($value)
+    {
+        $value = ($value >= 0) ? $value : 0;
+        return $value;
+    }
+
+    public function getCurrentWeightAttribute($value)
+    {
+        return $value - $this->bowel_weight;
+    }
+
+    public function setBowelWeightAttribute($value)
     {
         $value = ($value >= 0) ? $value : 0;
         return $value;

@@ -23,6 +23,9 @@ class FoodAllowanceAndCurrentWeight extends Migration
             if (!Schema::hasColumn('foodboxes', 'current_weight')) {
                 $table->float('current_weight')->default(0);
             }
+            if (!Schema::hasColumn('foodboxes', 'bowel_weight')) {
+                $table->float('bowel_weight')->default(0);
+            }
         });
     }
 
@@ -36,6 +39,9 @@ class FoodAllowanceAndCurrentWeight extends Migration
         Schema::table('foodboxes', function (Blueprint $table) {
             if (Schema::hasColumn('foodboxes', 'current_weight')) {
                 $table->dropColumn('current_weight');
+            }
+            if (Schema::hasColumn('foodboxes', 'bowel_weight')) {
+                $table->dropColumn('bowel_weight');
             }
         });
     }
