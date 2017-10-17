@@ -12,7 +12,7 @@ class bbox extends Controller
 
     public function head_check_connection(Request $request)
     {
-        return response("", 200);
+        return response("", 204);
     }
 
     public function get_server_token(Request $request)
@@ -161,10 +161,10 @@ class bbox extends Controller
 
         } catch (QueryException $e) {
             \App\FeedingLog::destroy($created_ids);
-            return response("", 400);
+            return response("Probably Integrity constraint violation", 400);
         } catch (InvalidPayloadException $e) {
             \App\FeedingLog::destroy($created_ids);
-            return response("", 400);
+            return response($e->getMessage(), 400);
         } catch (\Exception $e) {
             \App\FeedingLog::destroy($created_ids);
             throw $e;
@@ -221,7 +221,7 @@ class bbox extends Controller
 
         } catch (QueryException $e) {
             \App\Foodbox::destroy($created_ids);
-            return response($e->getMessage(), 400);
+            return response("Probably Integrity constraint violation", 400);
         } catch (InvalidPayloadException $e) {
             \App\Foodbox::destroy($created_ids);
             return response($e->getMessage(), 400);
