@@ -23,3 +23,4 @@ Route::get("bbox/get_card", "bbox@get_card")->middleware("CheckServerToken");
 Route::get("bbox/get_foodbox", "bbox@get_foodbox")->middleware("CheckServerToken");
 
 Route::put("bbox/put_feeding_log", "bbox@put_feeding_log")->middleware("CheckServerToken");
+Route::put("bbox/put_foodbox", "bbox@put_foodbox")->middleware("CheckServerToken");

@@ -33,7 +33,7 @@ class bbox extends Controller
         $request_user_brainbox->last_seen = new \DateTime();
         $request_user_brainbox->save();
 
-        return response()->json(["server_token" => Auth::user()->server_token]);
+        return response()->json(["server_token" => Auth::user()->server_token], 200);
     }
 
     public function get_card(Request $request)
@@ -69,16 +69,16 @@ class bbox extends Controller
             array_push($synced_regular_cards, $card->card_id);
         }
 
-        DB::table("admin_cards")
+        \DB::table("admin_cards")
             ->where("user_email", $request_user->email)
             ->whereIn("card_id", $synced_admin_cards)
             ->update(["synced_to_brainbox" => true]);
-        DB::table("cards")
+        \DB::table("cards")
             ->where("user_email", $request_user->email)
             ->whereIn("card_id", $synced_regular_cards)
             ->update(["synced_to_brainbox" => true]);
 
-        return response()->json(["admin_cards" => $admin_cards, "regular_cards" => $regular_cards]);
+        return response()->json(["admin_cards" => $admin_cards, "regular_cards" => $regular_cards], 200);
     }
 
     public function get_foodbox(Request $request)
@@ -97,12 +97,12 @@ class bbox extends Controller
             array_push($synced_foodboxes, $foodbox->foodbox_id);
         }
 
-        DB::table("foodboxes")
+        \DB::table("foodboxes")
             ->where("user_email", $request_user->email)
             ->whereIn("foodbox_id", $synced_foodboxes)
             ->update(["synced_to_brainbox" => true]);
 
-        return response()->json(["foodboxes" => $foodboxes]);
+        return response()->json(["foodboxes" => $foodboxes], 200);
     }
 
     public function put_feeding_log(Request $request)
@@ -113,36 +113,104 @@ class bbox extends Controller
             return response("", 400);
         }
 
+        $created_ids = array();
+        $foodboxes_to_save = array();
         try {
             $request_feeding_logs = json_decode($request->getContent());
             if (!isset($request_feeding_logs) || !isset($request_feeding_logs->feeding_logs)) {
                 throw new InvalidPayloadException();
             }
-            $created_feeding_logs_ids = array();
+
             foreach ($request_feeding_logs->feeding_logs as $feeding_log) {
-                $tmp_feeding_log = App\FeedingLog::create([
-                    "user_email" => $request_user->email,
-                    "foodbox_id" => $feeding_log->foodbox_id,
-                    "card_id" => $feeding_log->card_id,
-                    "feeding_id" => $feeding_log->feeding_id,
-                    "open_time" => $feeding_log->open_time,
-                    "close_time" => $feeding_log->close_time,
-                    "start_weight" => $feeding_log->start_weight,
-                    "end_weight" => $feeding_log->end_weight
-                ]);
-                array_push($created_feeding_logs_ids, $tmp_feeding_log->feeding_id);
+                $tmp_feeding_log = \App\FeedingLog::create(
+                    [
+                        "user_email" => $request_user->email,
+                        "foodbox_id" => $feeding_log->foodbox_id,
+                        "card_id" => $feeding_log->card_id,
+                        "feeding_id" => $feeding_log->feeding_id,
+                        "open_time" => $feeding_log->open_time,
+                        "close_time" => $feeding_log->close_time,
+                        "start_weight" => $feeding_log->start_weight,
+                        "end_weight" => $feeding_log->end_weight
+                    ]
+                );
+
+                array_push($foodboxes_to_save, $tmp_feeding_log->foodbox);
+                array_push($created_ids, $tmp_feeding_log->id);
             }
 
         } catch (QueryException $e) {
-            App\FeedingLog::destroy($created_feeding_logs_ids);
+            \App\FeedingLog::destroy($created_ids);
             print("\n\nException: " . var_dump($e) . "\n\n");
             return response("", 400);
         } catch (InvalidPayloadException $e) {
             print("\n\nException: " . var_dump($e) . "\n\n");
             return response("", 400);
+        } catch (\Exception $e) {
+            \App\FeedingLog::destroy($created_ids);
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            throw $e;
         }
 
-
+        array_unique($foodboxes_to_save);
+        $now = new \DateTime();
+        foreach ($foodboxes_to_save as $foodbox) {
+            $foodbox->last_seen = $now;
+            $foodbox->save();
+        }
         return response("", 201);
+    }
+
+    public function put_foodbox(Request $request)
+    {
+        $request_user = $request->get("request_user");
+
+        if (!$request->isJson()) {
+            return response("", 400);
+        }
+
+        $created_ids = array();
+        $foodboxes_to_save = array();
+        try {
+            $request_foodboxes = json_decode($request->getContent());
+            if (!isset($request_foodboxes) || !isset($request_foodboxes->foodboxes)) {
+                throw new InvalidPayloadException();
+            }
+            foreach ($request_foodboxes->foodboxes as $foodbox) {
+                $tmp_foodbox = \App\Foodbox::updateOrCreate(
+                    [
+                        "user_email" => $request_user->email,
+                        "foodbox_id" => $foodbox->foodbox_id
+                    ],
+                    [
+                        "foodbox_name" => $foodbox->foodbox_name,
+                        "current_weight" => (float)$foodbox->current_weight,
+
+                    ]);
+
+                array_push($foodboxes_to_save, $tmp_foodbox);
+                array_push($created_ids, $tmp_foodbox->id);
+            }
+
+        } catch (QueryException $e) {
+            \App\Foodbox::destroy($created_ids);
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            return response("", 400);
+        } catch (InvalidPayloadException $e) {
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            return response("", 400);
+        } catch (\Exception $e) {
+            \App\Foodbox::destroy($created_ids);
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            throw $e;
+        }
+
+        array_unique($foodboxes_to_save);
+        $now = new \DateTime();
+        foreach ($foodboxes_to_save as $foodbox) {
+            $foodbox->last_seen = $now;
+            $foodbox->save();
+        }
+        return response("", 204);
     }
 }
