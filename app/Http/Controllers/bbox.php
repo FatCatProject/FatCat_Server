@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Queue\InvalidPayloadException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -101,5 +103,46 @@ class bbox extends Controller
             ->update(["synced_to_brainbox" => true]);
 
         return response()->json(["foodboxes" => $foodboxes]);
+    }
+
+    public function put_feeding_log(Request $request)
+    {
+        $request_user = $request->get("request_user");
+
+        if (!$request->isJson()) {
+            return response("", 400);
+        }
+
+        try {
+            $request_feeding_logs = json_decode($request->getContent());
+            if (!isset($request_feeding_logs) || !isset($request_feeding_logs->feeding_logs)) {
+                throw new InvalidPayloadException();
+            }
+            $created_feeding_logs_ids = array();
+            foreach ($request_feeding_logs->feeding_logs as $feeding_log) {
+                $tmp_feeding_log = App\FeedingLog::create([
+                    "user_email" => $request_user->email,
+                    "foodbox_id" => $feeding_log->foodbox_id,
+                    "card_id" => $feeding_log->card_id,
+                    "feeding_id" => $feeding_log->feeding_id,
+                    "open_time" => $feeding_log->open_time,
+                    "close_time" => $feeding_log->close_time,
+                    "start_weight" => $feeding_log->start_weight,
+                    "end_weight" => $feeding_log->end_weight
+                ]);
+                array_push($created_feeding_logs_ids, $tmp_feeding_log->feeding_id);
+            }
+
+        } catch (QueryException $e) {
+            App\FeedingLog::destroy($created_feeding_logs_ids);
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            return response("", 400);
+        } catch (InvalidPayloadException $e) {
+            print("\n\nException: " . var_dump($e) . "\n\n");
+            return response("", 400);
+        }
+
+
+        return response("", 201);
     }
 }
