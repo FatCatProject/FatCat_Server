@@ -35,7 +35,7 @@ class Foodbox extends Model
     public function setCurrentWeightAttribute($value)
     {
         $value = ($value >= 0) ? $value : 0;
-        return $value;
+        $this->attributes["current_weight"] = $value;
     }
 
     public function getCurrentWeightAttribute($value)
@@ -46,7 +46,7 @@ class Foodbox extends Model
     public function setBowelWeightAttribute($value)
     {
         $value = ($value >= 0) ? $value : 0;
-        return $value;
+        $this->attributes["bowel_weight"] = $value;
     }
 
     public function user()

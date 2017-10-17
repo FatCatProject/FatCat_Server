@@ -31,7 +31,7 @@ class Cat extends Model
     public function setFoodAllowanceAttribute($value)
     {
         $value = ($value >= 0) ? $value : 0;
-        return $value;
+        $this->attributes["food_allowance"] = $value;
     }
 
     public function user()

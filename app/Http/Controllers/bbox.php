@@ -184,7 +184,7 @@ class bbox extends Controller
                     ],
                     [
                         "foodbox_name" => $foodbox->foodbox_name,
-                        "current_weight" => (float)$foodbox->current_weight,
+                        "current_weight" => $foodbox->current_weight
 
                     ]);
 
