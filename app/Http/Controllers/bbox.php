@@ -77,6 +77,10 @@ class bbox extends Controller
             ->whereIn("card_id", $synced_regular_cards)
             ->update(["synced_to_brainbox" => true]);
 
+        $request_user_brainbox = $request_user->brainbox;
+        $request_user_brainbox->brainbox_ip = $request->ip();
+        $request_user_brainbox->last_seen = new \DateTime();
+        $request_user_brainbox->save();
         return response()->json(["admin_cards" => $admin_cards, "regular_cards" => $regular_cards], 200);
     }
 
@@ -101,12 +105,20 @@ class bbox extends Controller
             ->whereIn("foodbox_id", $synced_foodboxes)
             ->update(["synced_to_brainbox" => true]);
 
+        $request_user_brainbox = $request_user->brainbox;
+        $request_user_brainbox->brainbox_ip = $request->ip();
+        $request_user_brainbox->last_seen = new \DateTime();
+        $request_user_brainbox->save();
         return response()->json(["foodboxes" => $foodboxes], 200);
     }
 
     public function put_feeding_log(Request $request)
     {
         $request_user = $request->get("request_user");
+        $request_user_brainbox = $request_user->brainbox;
+        $request_user_brainbox->brainbox_ip = $request->ip();
+        $request_user_brainbox->last_seen = new \DateTime();
+        $request_user_brainbox->save();
 
         if (!$request->isJson()) {
             return response("", 400);
@@ -142,13 +154,16 @@ class bbox extends Controller
                 );
 
                 array_push($foodboxes_to_save, $tmp_feeding_log->foodbox);
-                array_push($created_ids, $tmp_feeding_log->id);
+                if ($tmp_feeding_log->wasRecentlyCreated) {
+                    array_push($created_ids, $tmp_feeding_log->id);
+                }
             }
 
         } catch (QueryException $e) {
             \App\FeedingLog::destroy($created_ids);
             return response("", 400);
         } catch (InvalidPayloadException $e) {
+            \App\FeedingLog::destroy($created_ids);
             return response("", 400);
         } catch (\Exception $e) {
             \App\FeedingLog::destroy($created_ids);
@@ -167,6 +182,10 @@ class bbox extends Controller
     public function put_foodbox(Request $request)
     {
         $request_user = $request->get("request_user");
+        $request_user_brainbox = $request_user->brainbox;
+        $request_user_brainbox->brainbox_ip = $request->ip();
+        $request_user_brainbox->last_seen = new \DateTime();
+        $request_user_brainbox->save();
 
         if (!$request->isJson()) {
             return response("", 400);
@@ -195,16 +214,19 @@ class bbox extends Controller
                     ]);
 
                 array_push($foodboxes_to_save, $tmp_foodbox);
-                array_push($created_ids, $tmp_foodbox->id);
+                if ($tmp_foodbox->wasRecentlyCreated) {
+                    array_push($created_ids, $tmp_foodbox->id);
+                }
             }
 
         } catch (QueryException $e) {
-//            \App\Foodbox::destroy($created_ids);  // fixme - Handle created and updated foodboxes differently.
+            \App\Foodbox::destroy($created_ids);
             return response($e->getMessage(), 400);
         } catch (InvalidPayloadException $e) {
+            \App\Foodbox::destroy($created_ids);
             return response($e->getMessage(), 400);
         } catch (\Exception $e) {
-//            \App\Foodbox::destroy($created_ids);  // fixme - Handle created and updated foodboxes differently.
+            \App\Foodbox::destroy($created_ids);
             throw $e;
         }
 
