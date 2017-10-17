@@ -6,7 +6,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Queue\InvalidPayloadException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class bbox extends Controller
 {
@@ -118,10 +117,17 @@ class bbox extends Controller
         try {
             $request_feeding_logs = json_decode($request->getContent());
             if (!isset($request_feeding_logs) || !isset($request_feeding_logs->feeding_logs)) {
-                throw new InvalidPayloadException();
+                throw new InvalidPayloadException("InvalidPayloadException");
             }
 
             foreach ($request_feeding_logs->feeding_logs as $feeding_log) {
+                if (!(
+                    isset($feeding_log->foodbox_id) && isset($feeding_log->card_id) && isset($feeding_log->feeding_id) &&
+                    isset($feeding_log->open_time) && isset($feeding_log->close_time) && isset($feeding_log->start_weight) &&
+                    isset($feeding_log->end_weight)
+                )) {
+                    throw new InvalidPayloadException("InvalidPayloadException");
+                }
                 $tmp_feeding_log = \App\FeedingLog::create(
                     [
                         "user_email" => $request_user->email,
@@ -141,14 +147,11 @@ class bbox extends Controller
 
         } catch (QueryException $e) {
             \App\FeedingLog::destroy($created_ids);
-            print("\n\nException: " . var_dump($e) . "\n\n");
             return response("", 400);
         } catch (InvalidPayloadException $e) {
-            print("\n\nException: " . var_dump($e) . "\n\n");
             return response("", 400);
         } catch (\Exception $e) {
             \App\FeedingLog::destroy($created_ids);
-            print("\n\nException: " . var_dump($e) . "\n\n");
             throw $e;
         }
 
@@ -174,9 +177,12 @@ class bbox extends Controller
         try {
             $request_foodboxes = json_decode($request->getContent());
             if (!isset($request_foodboxes) || !isset($request_foodboxes->foodboxes)) {
-                throw new InvalidPayloadException();
+                throw new InvalidPayloadException("InvalidPayloadException");
             }
             foreach ($request_foodboxes->foodboxes as $foodbox) {
+                if (!(isset($foodbox->foodbox_id) && isset($foodbox->foodbox_name) && isset($foodbox->current_weight))) {
+                    throw new InvalidPayloadException("InvalidPayloadException");
+                }
                 $tmp_foodbox = \App\Foodbox::updateOrCreate(
                     [
                         "user_email" => $request_user->email,
@@ -193,15 +199,12 @@ class bbox extends Controller
             }
 
         } catch (QueryException $e) {
-            \App\Foodbox::destroy($created_ids);
-            print("\n\nException: " . var_dump($e) . "\n\n");
-            return response("", 400);
+//            \App\Foodbox::destroy($created_ids);  // fixme - Handle created and updated foodboxes differently.
+            return response($e->getMessage(), 400);
         } catch (InvalidPayloadException $e) {
-            print("\n\nException: " . var_dump($e) . "\n\n");
-            return response("", 400);
+            return response($e->getMessage(), 400);
         } catch (\Exception $e) {
-            \App\Foodbox::destroy($created_ids);
-            print("\n\nException: " . var_dump($e) . "\n\n");
+//            \App\Foodbox::destroy($created_ids);  // fixme - Handle created and updated foodboxes differently.
             throw $e;
         }
 
