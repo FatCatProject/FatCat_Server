@@ -21,6 +21,7 @@ class User extends Authenticatable
         'last_name',
         'country',
         'phone',
+        'server_token',
     ];
 
     /**
@@ -31,6 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'server_token',
     ];
 
     public function getFirstNameAttribute($value)
