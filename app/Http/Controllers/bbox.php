@@ -20,17 +20,43 @@ class bbox extends Controller
         if (!$request->hasHeader("php-auth-user") || !$request->hasHeader("php-auth-pw")) {
             return response("", 401);
         }
+
+        if (!$request->isJson()) {
+            return response("", 400);
+        }
+
         $auth_user = $request->header("php-auth-user");
         $auth_pw = $request->header("php-auth-pw");
+        $request_brainbox_id = json_decode($request->getContent());
 
-        if (!Auth::attempt(['email' => $auth_user, 'password' => $auth_pw])) {
-            return response("", 401);
+        try {
+            if (!isset($request_brainbox_id) || !isset($request_brainbox_id->brainbox_id)) {
+                throw new InvalidPayloadException("InvalidPayloadException");
+            }
+            if (!Auth::attempt(['email' => $auth_user, 'password' => $auth_pw])) {
+                return response("", 401);
+            }
+            $request_user = Auth::user();
+            $request_user_brainbox = $request_user->brainbox;
+            if (!isset($request_user_brainbox)) {
+                $request_user_brainbox = \App\Brainbox::create(
+                    [
+                        "user_email" => $request_user->email,
+                        "brainbox_id" => $request_brainbox_id->brainbox_id
+                    ]
+                );
+            }
+            $request_user_brainbox->brainbox_ip = $request->ip();
+            $request_user_brainbox->last_seen = new \DateTime();
+            $request_user_brainbox->save();
+
+        } catch (QueryException $e) {
+            return response("Probably Integrity constraint violation", 400);
+        } catch (InvalidPayloadException $e) {
+            return response($e->getMessage(), 400);
+        } catch (\Exception $e) {
+            throw $e;
         }
-        $request_user = Auth::user();
-        $request_user_brainbox = $request_user->brainbox;
-        $request_user_brainbox->brainbox_ip = $request->ip();
-        $request_user_brainbox->last_seen = new \DateTime();
-        $request_user_brainbox->save();
 
         return response()->json(["server_token" => Auth::user()->server_token], 200);
     }
@@ -38,6 +64,9 @@ class bbox extends Controller
     public function get_card(Request $request)
     {
         $request_user = $request->get("request_user");
+        if (!isset($request_user->brainbox)) {
+            return response("Please re-authenticate BrainBox", 401);
+        }
         $synced_admin_cards = array();
         $synced_regular_cards = array();
 
@@ -87,6 +116,9 @@ class bbox extends Controller
     public function get_foodbox(Request $request)
     {
         $request_user = $request->get("request_user");
+        if (!isset($request_user->brainbox)) {
+            return response("Please re-authenticate BrainBox", 401);
+        }
         $synced_foodboxes = array();
 
         $foodboxes = array();
@@ -115,6 +147,9 @@ class bbox extends Controller
     public function put_feeding_log(Request $request)
     {
         $request_user = $request->get("request_user");
+        if (!isset($request_user->brainbox)) {
+            return response("Please re-authenticate BrainBox", 401);
+        }
         $request_user_brainbox = $request_user->brainbox;
         $request_user_brainbox->brainbox_ip = $request->ip();
         $request_user_brainbox->last_seen = new \DateTime();
@@ -182,6 +217,9 @@ class bbox extends Controller
     public function put_foodbox(Request $request)
     {
         $request_user = $request->get("request_user");
+        if (!isset($request_user->brainbox)) {
+            return response("Please re-authenticate BrainBox", 401);
+        }
         $request_user_brainbox = $request_user->brainbox;
         $request_user_brainbox->brainbox_ip = $request->ip();
         $request_user_brainbox->last_seen = new \DateTime();
