@@ -28,6 +28,12 @@ class Cat extends Model
         'profile_picture',
     ];
 
+    public function setFoodAllowanceAttribute($value)
+    {
+        $value = ($value >= 0) ? $value : 0;
+        $this->attributes["food_allowance"] = $value;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_email', 'email');
