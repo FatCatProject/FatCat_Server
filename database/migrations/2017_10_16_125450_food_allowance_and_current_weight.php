@@ -44,5 +44,11 @@ class FoodAllowanceAndCurrentWeight extends Migration
                 $table->dropColumn('bowel_weight');
             }
         });
+
+        Schema::table('cats', function (Blueprint $table) {
+            if (Schema::hasColumn('cats', 'food_allowance')) {
+                $table->dropColumn('food_allowance');
+            }
+        });
     }
 }
