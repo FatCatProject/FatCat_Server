@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class bbox extends Controller
 {
 
-    public function head_check_connection(Request $request)
+    public function head_check_server_connection(Request $request)
     {
         return response("", 204);
     }
