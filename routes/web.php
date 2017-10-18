@@ -27,3 +27,8 @@ Route::get('/autocompleteBreed', 'CatController@autocomplete');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+//added by michael
+Route::post('addcat',['uses' => 'CatController@store']);
