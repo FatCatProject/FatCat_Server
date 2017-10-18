@@ -45,3 +45,8 @@ Route::post('cards',['uses' => 'CatController@store2']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+//added by michael
+Route::post('addcat',['uses' => 'CatController@store']);
