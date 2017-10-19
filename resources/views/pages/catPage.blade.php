@@ -100,7 +100,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
+                                <input class="form-control" id="catDob" name="dateMonth" placeholder="MM/YYYY"
                                        type="text" style="width: 120px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -140,8 +140,25 @@
         <!-- Table-->
         <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
              data-widget-static="">
+
+
+
             <div class="panel-body no-padding">
-                <h4 style="margin-left: -15px; color: gray"> Last 10 logs:</h4>
+                <div class="row">
+
+                    <div class="col-sm-2">
+                        <div class="input-group" style="margin: 0px 0px 10px 0px; width: 20%">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
+                                   type="text" style="width: 120px; "/>
+                        </div>
+                    </div>
+                    <div class="col-sm-10" style="color: #999; font-size: 13px;margin: 10px 0px 10px -50px">Pick a month or view 10 last feeding logs</div>
+
+
+                </div>
                 <table class="table table-striped">
                     <thead>
                     <tr class="warning">
@@ -252,14 +269,13 @@
                             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                                  aria-labelledby="headingThree">
                                 <div class="panel-body panel_text">
-                                  <!-- Change Cat info -->
+                                    <!-- Change Cat info -->
                                     <script>
-                                        $( document ).ready(function() {
+                                        $(document).ready(function () {
                                             $('#title').html('Edit information:');
                                         });
                                     </script>
                                     @include("layouts.catFields")
-
                                 </div>
                             </div>
                         </div>

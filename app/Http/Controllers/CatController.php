@@ -20,6 +20,11 @@ class CatController extends Controller
         return view('pages.addCat', compact('breeds'));
     }
 
+    public function catVetPage()
+    {
+        return view('pages.catVetPage');
+    }
+
     public function breedInfo(Request $request)
     {
         if ($request->has('breed_name')) {
