@@ -89,15 +89,13 @@
 
 
                     <div class="form-group">
-                        <label for="smallinput" class="col-sm-2 control-label label-input-sm">Daily
-                            callories:</label>
+                        <label for="smallinput" class="col-sm-2 control-label label-input-sm">Daily callories:</label>
                         <div class="col-sm-8">
                             <input type="number" step="any" min="0" max="1000" class="form-control1 input-sm"
                                    id="dailyCallories" placeholder="">
                         </div>
                     </div>
-                </form>
-                <form class="form-horizontal">
+
 
 
 
@@ -113,7 +111,6 @@
                         <div class="row">
                             <div class="col-sm-8 col-sm-offset-2">
                                 <button class="btn-success btn">Submit</button>
-                                <button class="btn-default btn">Cancel</button>
                                 <button class="btn-inverse btn">Reset</button>
                             </div>
                         </div>
