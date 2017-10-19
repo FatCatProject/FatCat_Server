@@ -64,6 +64,7 @@
 //                    console.log(data);
                     var breedReceived = data;
                     $("#wikiLink").text(breedReceived.link);
+                    $("#wikiLink").attr("href", breedReceived.link);
                     $("#wikiInfo").text(breedReceived.description);
                     console.log("CatBreedSent");
                 },

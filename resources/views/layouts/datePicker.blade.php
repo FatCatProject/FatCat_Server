@@ -38,4 +38,36 @@
     })
 </script>
 
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="dateMonth"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: "mm/yyyy",
+            startView: "months",
+            minViewMode: "months",
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="dateYear"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: "yyyy",
+            startView: "years",
+            minViewMode: "years",
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
+
+
 
