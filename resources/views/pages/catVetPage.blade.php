@@ -23,15 +23,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Clinic:</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control1" id="clinicLogName" placeholder="">
                                     </div>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
                                     <div class="col-sm-8">
@@ -46,8 +43,6 @@
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
                                     <div class="col-sm-8">
@@ -56,7 +51,6 @@
                                     </div>
 
                                 </div>
-
                                 <div class="form-group">
                                     <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
                                     <div class="col-sm-8">
@@ -116,7 +110,6 @@
                                                     data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4, 20, 30]
                                                 },
                                             ]
-
                                         };
                                         new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
                                     </script>
@@ -197,7 +190,6 @@
                             <td>ccc</td>
                             <td>Picture</td>
                             <td>200</td>
-
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
@@ -239,12 +231,7 @@
             </div>
             <!--END Table -->
             <br>
-
         </div>
         <br><br><br>
     </div>
-
-
-
-
 @endsection
