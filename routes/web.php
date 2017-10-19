@@ -22,7 +22,7 @@ Route::get('/catPage' , ['uses'=>'CatController@catPage']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
 
-
+Route::get('/catVetPage', 'CatController@catVetPage');
 
 Auth::routes();
 
