@@ -80,7 +80,7 @@ class CatController extends Controller
     }
 
     public function myCats(){
-        $user = User::find(Auth::id());
-        return $user.cats;
+        $currentUserCats = auth()->user()->cats();
+        dd($currentUserCats);
     }
 }
