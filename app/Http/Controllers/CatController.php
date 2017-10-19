@@ -54,4 +54,19 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
+    public function dailyEating($id,$date){
+        $cat = Cat::find($id);
+        $card_ids = array();
+        $card_ids = DB::table('cards')->where('cat_id',$cat->id)->get();
+        $dailyFeedingLogs= Array();
+        foreach ($card_ids as $card_id){
+            $FeedingLogs = DB::table('feeding_logs')->where(
+                ['card_id',$card_id->card_id],
+                ['card_id',$card_id->card_id],
+            )->get();
+            array_push($dailyFeedingLogs,$FeedingLogs);
+        }
+        return $dailyFeedingLogs;
+    }
+
 }
