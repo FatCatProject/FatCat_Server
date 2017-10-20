@@ -3,7 +3,7 @@
         <h3 class="blank1" id="title">Tile</h3>
         <div class="tab-content">
             <div class="tab-pane active" id="horizontal-form">
-                <form class="form-horizontal" method="POST" action="addcat" id="catFields">
+                <form class="form-horizontal" method="POST" action="cataction" id="catFields">
                     {!! csrf_field() !!}
                     <div class="form-group">
                         <label for="focusedinput" class="col-sm-2 control-label">Name:</label>

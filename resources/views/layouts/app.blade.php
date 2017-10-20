@@ -72,7 +72,6 @@
         </nav>
 
         @yield('content')
-        @yield('contentt')
     </div>
 
     <!-- Scripts -->
