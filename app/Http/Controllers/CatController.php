@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use carboon;
+use App\User;
+use App\Http\Controllers\Auth;
 use App\CatBreed;
 use App\Cat;
 use App\FeedingLog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Array_;
 
 class CatController extends Controller
 {
@@ -46,6 +52,11 @@ class CatController extends Controller
         return view('pages.catPage', compact('catInfo'), compact('catLogs'));
 
     }
+
+    public function catVetPage(){
+        return view('pages.catVetPage');
+    }
+
     public function autocomplete(Request $request){
         $breedSearch = $request->input('searchTerm');
         $queries = DB::table('cat_breeds')
@@ -54,19 +65,90 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-    public function dailyEating($id,$date){
+    public function requestFromCatFields(Request $request){
+
+        if(strpos($request->referer,"addCat")==true){
+            $this->store($request);
+        }
+    }
+
+    public function store(Request $request){
+        //dd($request);
+        $status="success";
+        $currentUser = auth()->user();
+        if($request->cat_name ==null){
+            $status = "failed";
+        }else{
+            $profile_picture=base64_encode($request->profile_picture);
+            $dob = new DateTime($request->dob);
+            $dob->format('Y-d-m');
+            $now = new DateTime();
+            $now->format('Y-m-d H:i:s');
+            $id = DB::table('cats')->insertGetId(
+                ['user_email'=>$currentUser->email ,'cat_name'=>$request->cat_name ,'profile_picture'=>$profile_picture,
+                    'dob'=>$dob ,'gender'=>$request->gender ,'cat_breed'=>$request->cat_breed , 'current_weight'=>$request->current_weight,
+                    'target_weight'=>$request->target_weight , 'daily_calories'=>$request->daily_calories , 'created_at'=>$now ,
+                    'updated_at'=>$now]
+            );
+        }
+        return redirect()->back()->with('status',$status);
+     }
+
+    #TO DO sort all Feeding logs by date
+    public function allReportsByID($id){
         $cat = Cat::find($id);
         $card_ids = array();
         $card_ids = DB::table('cards')->where('cat_id',$cat->id)->get();
-        $dailyFeedingLogs= Array();
+        $allFeedingLogs= Array();
         foreach ($card_ids as $card_id){
-            $FeedingLogs = DB::table('feeding_logs')->where(
-                ['card_id',$card_id->card_id],
-                ['card_id',$card_id->card_id],
-            )->get();
-            array_push($dailyFeedingLogs,$FeedingLogs);
+            $FeedingLogs = DB::table('feeding_logs')->where('card_id',$card_id->card_id)->get();
+            array_push($allFeedingLogs,$FeedingLogs);
+
         }
-        return $dailyFeedingLogs;
+        $result = array_collapse($allFeedingLogs);
+        return $result;
+    }
+
+    public function dailyFeedingLogs($id,$date){
+        $allFeedingLogs = $this->allReportsByID($id);
+
+        $todayFeedingLogs = Array();
+        if($date == null){
+            $date = new DateTime();
+            $date->format('Y-m-d');
+        }
+        foreach ($allFeedingLogs as $feedingLog){
+            $openTime = $feedingLog->open_time;
+            $date = $this->stringToDate($openTime);
+            dd($date);
+
+            $openTime = format('Y-m-d');
+            dd($openTime);
+            if($openTime->format("Y-m-d") == $date->format("Y-m-d")){
+                array_push($todayFeedingLogs,$feedingLog);
+            }
+        }
+        dd($todayFeedingLogs);
+    }
+
+    public function stringToDate($string){
+        $dateString = explode(" ",$string);
+        $temp = $dateString[0];
+
+        $dateParts = explode("-",$temp);
+        $year = $dateParts[0];
+        $month = $dateParts[1];
+        $day = $dateParts[2];
+        $tz='Asia/Jerusalem';//time zone
+        $dateTime = Carbon::createFromDate($year, $month, $day, $tz);
+        $date = $date->format('Y-m-d');
+
+        return $date;
+    }
+
+    public function myCats(){
+        $user = User::find(Auth::id());
+        return $user.cats;
     }
 
 }

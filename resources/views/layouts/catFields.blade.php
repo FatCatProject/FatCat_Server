@@ -3,18 +3,19 @@
         <h3 class="blank1" id="title">Tile</h3>
         <div class="tab-content">
             <div class="tab-pane active" id="horizontal-form">
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="POST" action="addcat" id="catFields">
+                    {!! csrf_field() !!}
                     <div class="form-group">
                         <label for="focusedinput" class="col-sm-2 control-label">Name:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control1" id="focusedinput" placeholder="">
+                            <input type="text" name="cat_name" class="form-control1" id="focusedinput" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="focusedinput" class="col-sm-2 control-label">Breed:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control1" id="breed" name="breed" placeholder="">
+                            <input type="text" class="form-control1" id="breed" name="cat_breed" placeholder="">
                         </div>
                     </div>
 
@@ -65,7 +66,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY" type="text" style="width: 120px;"/>
+                            <input class="form-control" id="catDob" name="dob" placeholder="MM/DD/YYYY" type="text" style="width: 120px;"/>
                         </div>
                         @include('layouts.datePicker')
                     </div>
@@ -74,7 +75,7 @@
                         <label for="smallinput" class="col-sm-2 control-label label-input-sm">Current
                             weight:</label>
                         <div class="col-sm-8">
-                            <input type="number" step="any" min="0" max="100" class="form-control1 input-sm"
+                            <input type="number" name="current_weight" step="any" min="0" max="100" class="form-control1 input-sm"
                                    id="currentWeight" placeholder="">
                         </div>
                     </div>
@@ -82,7 +83,7 @@
                     <div class="form-group">
                         <label for="smallinput" class="col-sm-2 control-label label-input-sm">Target weight:</label>
                         <div class="col-sm-8">
-                            <input type="number" step="any" min="0" max="100" class="form-control1 input-sm"
+                            <input type="number" name="target_weight" step="any" min="0" max="100" class="form-control1 input-sm"
                                    id="targetWeight" placeholder="">
                         </div>
                     </div>
@@ -91,7 +92,7 @@
                     <div class="form-group">
                         <label for="smallinput" class="col-sm-2 control-label label-input-sm">Daily callories:</label>
                         <div class="col-sm-8">
-                            <input type="number" step="any" min="0" max="1000" class="form-control1 input-sm"
+                            <input type="number" name="daily_calories" step="any" min="0" max="1000" class="form-control1 input-sm"
                                    id="dailyCallories" placeholder="">
                         </div>
                     </div>
@@ -102,7 +103,7 @@
                     <div class="form-group">
                         <label for="profilePicture" class="col-sm-2 control-label">Profile picture:</label>
                         <div class="col-sm-8">
-                            <input type="file" id="profilePicture"  class="filestyle" data-buttonBefore="true" style="margin-top: 6px">
+                            <input type="file" name="profile_picture" id="profilePicture"  class="filestyle" data-buttonBefore="true" style="margin-top: 6px">
                             {{--<p class="help-block">Example block-level help text here.</p>--}}
                         </div>
 
@@ -110,7 +111,7 @@
                     <div class="">
                         <div class="row">
                             <div class="col-sm-8 col-sm-offset-2">
-                                <button class="btn-success btn">Submit</button>
+                                <button class="btn-success btn" form="catFields">Submit</button>
                                 <button class="btn-inverse btn">Reset</button>
                             </div>
                         </div>
