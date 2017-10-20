@@ -16,7 +16,12 @@
 //});
 Route::get('/' , 'PagesController@index');
 Route::get('/addCat' , ['uses'=>'CatController@addCat']);
-Route::get('/catPage' , ['uses'=>'CatController@catPage']);
+
+
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage']);  // By Natalie
+
+
+
 //Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
 //Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
@@ -31,16 +36,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //added by michael
-Route::post('/addcat',['uses' => 'CatController@store']);
+Route::post('/cataction',['uses' => 'CatController@requestFromCatFields']);
+
+
 Route::get('/temp' , 'CatController@myCats');
 Route::get('temp/{date}',['uses' => 'CatController@stringToDate']);
-Route::get('catPage/{id}',['uses' => 'CatController@allReportsByID']);
 Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-

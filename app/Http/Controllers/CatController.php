@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use DateTime;
 use carboon;
 use App\User;
-use App\Http\Controllers\Auth;
 use App\CatBreed;
 use App\Cat;
 use App\FeedingLog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Console\Presets\Vue;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class CatController extends Controller
         ]);
     }
 
-    public function catPage()
+    public function catPage($id)
     {
 //  IMPORTANT:  getting all cats and all logs - just for view checking purposes !!!
         $catInfo = Cat::all();
@@ -65,15 +66,19 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-    public function requestFromCatFields(Request $request){
+    public function storeVetEntry(Request $request){
 
-        if(strpos($request->referer,"addCat")==true){
+    }
+
+    public function requestFromCatFields(Request $request){
+        if(strpos($_SERVER['HTTP_REFERER'],"addCat")==true){
             $this->store($request);
+        }else{
+        return "action not found";
         }
     }
 
     public function store(Request $request){
-        //dd($request);
         $status="success";
         $currentUser = auth()->user();
         if($request->cat_name ==null){
@@ -91,8 +96,12 @@ class CatController extends Controller
                     'updated_at'=>$now]
             );
         }
-        return redirect()->back()->with('status',$status);
-     }
+
+
+        //return view('pages.addCat',compact('status'));
+        //return redirect('http://127.0.0.1:8000/addCat');
+        return view('pages.addCat');
+    }
 
     #TO DO sort all Feeding logs by date
     public function allReportsByID($id){
@@ -148,7 +157,8 @@ class CatController extends Controller
 
     public function myCats(){
         $user = User::find(Auth::id());
-        return $user.cats;
+        $cats = DB::table('cats')->where('user_email',$user->email)->get();
+        return $cats;
     }
 
 }
