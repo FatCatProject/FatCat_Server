@@ -2,7 +2,7 @@
 @section('content')
     <div id="page-wrapper">
         <div class="row">
-            <h3 class="blank1">$CatName information</h3>
+            <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
             <!---728x90--->
 
             <div class="col-md-4 grid_2 grid_2_bot">
@@ -164,76 +164,25 @@
                     <tr class="warning">
                         <th>Opened time</th>
                         <th>Closed time</th>
-                        <th>Toatl time</th>
+                        <th>Total time</th>
                         <th>Amout of food</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($data as $row)
                     <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
+                        <td> {!! $row['open_time'] !!} </td>
+                        <td> {!! $row['close_time'] !!} </td>
+                        <td> {!! $row['diff'] !!} </td>
+                        <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
                     </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 <div align="right" class="col-md-12 page_1">
                     <nav>
                         <ul class="pagination">
+
                             <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
                             </li>
                             <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
@@ -262,7 +211,7 @@
                                        data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                        aria-controls="collapseThree">
                                         <span class="lnr lnr-chevron-down"></span><i
-                                                class="lnr lnr-chevron-up"></i><label>Edit $Cat's information</label>
+                                                class="lnr lnr-chevron-up"></i><label>Edit {!! $cat['cat_name'] !!}'s information</label>
                                     </a>
                                 </h4>
                             </div>

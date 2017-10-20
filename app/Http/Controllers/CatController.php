@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Scalar\String_;
 
 class CatController extends Controller
 {
@@ -48,10 +49,20 @@ class CatController extends Controller
     public function catPage($id)
     {
 //  IMPORTANT:  getting all cats and all logs - just for view checking purposes !!!
-        $catInfo = Cat::all();
-        $catLogs = FeedingLog::all();
-        return view('pages.catPage', compact('catInfo'), compact('catLogs'));
-
+        $cat = Cat::find($id);
+        $feedingLogs = $this->allReportsByID($id);
+        //$timeDiffrence = array();
+        $data = array();
+        foreach ($feedingLogs as $log){
+            $diff = $this->diffBetweenDates($log->open_time,$log->close_time);
+            $improvedLog = array("id"=>$log->id,"user_email"=>$log->user_email,"foodbox_id"=>$log->foodbox_id,
+                "card_id"=>$log->card_id, "feeding_id"=>$log->feeding_id, "open_time"=>$log->open_time,
+                "close_time"=>$log->close_time, "start_weight"=>$log->start_weight,"end_weight"=>$log->end_weight,
+                "diff"=>$diff);
+            array_push($data,$improvedLog);
+        }
+        $numberOfPages = intval(count($data)/10)+1;
+        return view('pages.catPage', compact('cat'), compact('data'),compact('numberOfPages'));
     }
 
     public function catVetPage(){
@@ -112,7 +123,6 @@ class CatController extends Controller
         foreach ($card_ids as $card_id){
             $FeedingLogs = DB::table('feeding_logs')->where('card_id',$card_id->card_id)->get();
             array_push($allFeedingLogs,$FeedingLogs);
-
         }
         $result = array_collapse($allFeedingLogs);
         return $result;
@@ -150,9 +160,113 @@ class CatController extends Controller
         $day = $dateParts[2];
         $tz='Asia/Jerusalem';//time zone
         $dateTime = Carbon::createFromDate($year, $month, $day, $tz);
-        $date = $date->format('Y-m-d');
+        $date = $dateTime->format('Y-m-d');
 
         return $date;
+    }
+
+    //Not is use yet, might be needed soon
+    /*
+    public function stringToDateTime($string){
+        $dateString = explode(" ",$string);
+
+
+        $dateParts = explode("-",$dateString[0]);
+        $year = $dateParts[0];
+        $month = $dateParts[1];
+        $day = $dateParts[2];
+
+        $timeParts = explode(":",$dateString[1]);
+        $hour = $timeParts[0];
+        $minute = $timeParts[1];
+        $second = $timeParts[2];
+
+        $tz='Asia/Jerusalem';//time zone
+
+        $dateTime = Carbon::create($year, $month, $day, $hour, $minute,$second, 'Asia/Jerusalem'	);
+        $date = $dateTime->format('Y-m-d H:i:s');
+        dd($date);
+        return $date;
+    }
+    */
+    public function diffBetweenDates($openTime, $closeTime){
+        $dateString = explode(" ",$openTime);
+
+        $date_OpenTime = explode("-",$dateString[0]);
+        $year_OpenTime = $date_OpenTime[0];
+        $month_OpenTime = $date_OpenTime[1];
+        $day_OpenTime = $date_OpenTime[2];
+
+        $time_OpenTime = explode(":",$dateString[1]);
+        $hour_OpenTime = $time_OpenTime[0];
+        $minute_OpenTime = $time_OpenTime[1];
+        $second_OpenTime = $time_OpenTime[2];
+
+        $dateString = explode(" ",$closeTime);
+
+
+        $date_CloseTime = explode("-",$dateString[0]);
+        $year_CloseTime = $date_CloseTime[0];
+        $month_CloseTime = $date_CloseTime[1];
+        $day_CloseTime = $date_CloseTime[2];
+
+        $time_CloseTime = explode(":",$dateString[1]);
+        $hour_CloseTime = $time_CloseTime[0];
+        $minute_CloseTime = $time_CloseTime[1];
+        $second_CloseTime = $time_CloseTime[2];
+
+        $diff = "";
+        $diffYear = $year_CloseTime- $year_OpenTime;
+        $diffMonth = $month_CloseTime - $month_OpenTime;
+        $diffDay = $day_CloseTime - $day_OpenTime;
+        $diffHour = $hour_CloseTime - $hour_OpenTime;
+        $diffMinute = $minute_CloseTime - $minute_OpenTime;
+        $diffSecond = $second_CloseTime - $second_OpenTime;
+
+        if($diffYear > 0){
+            if($diffYear == 1){
+                $diff = $diff . $diffYear . "year ";
+            }else{
+                $diff = $diff . $diffYear . "years ";
+            }
+        }
+        if($diffMonth > 0){
+            if($diffMonth == 1){
+                $diff = $diff . $diffMonth . " month ";
+            }else{
+                $diff = $diff . $diffMonth . " months ";
+            }
+        }
+        if($diffDay > 0){
+            if($diffDay == 1){
+                $diff = $diff . $diffDay . " day ";
+            }else{
+                $diff = $diff . $diffDay . " days ";
+            }
+        }
+        if($diffHour > 0){
+            if($diffHour == 1){
+                $diff = $diff . $diffHour . " hour ";
+            }else{
+                $diff = $diff . $diffHour . " hours ";
+            }
+        }
+        if($diffMinute > 0){
+            if($diffYear == 1){
+                $diff = $diff . $diffMinute . " minute ";
+            }else{
+                $diff = $diff . $diffMinute . " minutes ";
+            }
+        }
+        if($diffSecond > 0){
+            $diff = $diff . $diffSecond . " seconds";
+        }
+        if($diff==""){
+            return "FoodBox didnt open";
+        }
+
+        return $diff;
+
     }
 
     public function myCats(){

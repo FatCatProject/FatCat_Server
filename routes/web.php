@@ -40,7 +40,7 @@ Route::post('/cataction',['uses' => 'CatController@requestFromCatFields']);
 
 
 Route::get('/temp' , 'CatController@myCats');
-Route::get('temp/{date}',['uses' => 'CatController@stringToDate']);
+Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
 Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
 
 
