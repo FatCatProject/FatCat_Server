@@ -79,12 +79,6 @@ class CatController extends Controller
 
     }
 
-    public function requestFromCatFields(Request $request){
-        if(strpos($_SERVER['HTTP_REFERER'],"addCat")==true){
-            $this->store($request);
-        }
-    }
-
     public function store(Request $request){
         $status="success";
         $currentUser = auth()->user();
@@ -132,38 +126,21 @@ class CatController extends Controller
 
     #TO DO sort all Feeding logs by date
     public function allReportsByID($id){
-        $cat = Cat::find($id);
-        $card_ids = array();
-        $card_ids = DB::table('cards')->where('cat_id',$cat->id)->get();
-        $allFeedingLogs= Array();
-        foreach ($card_ids as $card_id){
-            $FeedingLogs = DB::table('feeding_logs')->where('card_id',$card_id->card_id)->get();
-            array_push($allFeedingLogs,$FeedingLogs);
-        }
-        $result = array_collapse($allFeedingLogs);
+        $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
+            ->join('cards','cards.card_id','=','feeding_logs.card_id')
+            ->where('cards.cat_id',$id)
+            ->orderBy('open_time','desc')
+            ->get();
         return $result;
     }
 
     public function dailyFeedingLogs($id,$date){
-        $allFeedingLogs = $this->allReportsByID($id);
-
-        $todayFeedingLogs = Array();
-        if($date == null){
-            $date = new DateTime();
-            $date->format('Y-m-d');
-        }
-        foreach ($allFeedingLogs as $feedingLog){
-            $openTime = $feedingLog->open_time;
-            $date = $this->stringToDate($openTime);
-            dd($date);
-
-            $openTime = format('Y-m-d');
-            dd($openTime);
-            if($openTime->format("Y-m-d") == $date->format("Y-m-d")){
-                array_push($todayFeedingLogs,$feedingLog);
-            }
-        }
-        dd($todayFeedingLogs);
+        $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
+            ->join('cards','cards.card_id','=','feeding_logs.card_id')
+            ->where(['cards.cat_id'=>$id,'feeding_logs.open_time'=>$date])
+            ->orderBy('open_time','desc')
+            ->get();
+        return $result;
     }
 
     public function stringToDate($string){
