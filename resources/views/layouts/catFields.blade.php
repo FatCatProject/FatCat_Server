@@ -3,7 +3,14 @@
         <h3 class="blank1" id="title">Tile</h3>
         <div class="tab-content">
             <div class="tab-pane active" id="horizontal-form">
-                <form class="form-horizontal" method="POST" action="cataction" id="catFields">
+                @if(empty($cat))
+                    <form class="form-horizontal" method="POST" action="addcat" id="catFields">
+                @endif
+                @if(!empty($cat))
+                    <form class="form-horizontal" method="POST" action="editcat" id="catFields">
+                    <input type="hidden" name="id" value="{!! $cat['id'] !!}">
+                    {{ method_field('PUT') }}
+                @endif
                     {!! csrf_field() !!}
                     <div class="form-group">
                         <label for="focusedinput" class="col-sm-2 control-label">Name:</label>
