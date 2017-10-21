@@ -36,7 +36,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //works and needed
 Route::post('/addcat',['uses' => 'CatController@store']);
 Route::put('/catPage/editcat',['uses' => 'CatController@update']);
-Route::get('/catPage/{id}',['uses' =>'CatController@catPage']);
+Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
 //tests
 Route::get('/temp/{id}' , 'CatController@allReportsByID');
 Route::get('/temp/{id}/{date}' , 'CatController@dailyFeedingLogs');

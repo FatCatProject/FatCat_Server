@@ -46,9 +46,26 @@ class CatController extends Controller
         ]);
     }
 
-    public function catPage($id)
+    public function catPage($id,$date='null')
     {
-        $cat = Cat::find($id);
+        //incase $date isnt passed, date = today
+        if($date =="null"){
+            $date = new DateTime();
+            $date = $date->format('Y-m-d');
+        }
+        //all feeding logs for a cat in a single day (by date)
+        $feedingLogsByDate = $this->dailyFeedingLogs($id,$date);
+        $ateDuringDay = array();
+
+        //calculate all how much cat ate during each meal
+        foreach ($feedingLogsByDate as $dailyLog){
+            array_push($ateDuringDay,$dailyLog->start_weight - $dailyLog->end_weight);
+        }
+        array_collapse($ateDuringDay);
+
+        $cat = Cat::find($id); // used for catname
+
+        //all logs which are displayed at the lower half of catPage
         $feedingLogs = $this->allReportsByID($id);
         $data = array();
         foreach ($feedingLogs as $log){
@@ -59,8 +76,12 @@ class CatController extends Controller
                 "diff"=>$diff);
             array_push($data,$improvedLog);
         }
+
+        //number of pages that for 10 logs == 1 page
         $numberOfPages = intval(count($data)/10)+1;
-        return view('pages.catPage', compact('cat'), compact('data'),compact('numberOfPages'));
+        //dd($ateDuringDay);
+        return view('pages.catPage', compact('cat'), compact('data'),
+            compact('numberOfPages'),compact('ateDuringDay'));
     }
 
     public function catVetPage(){
@@ -137,7 +158,8 @@ class CatController extends Controller
     public function dailyFeedingLogs($id,$date){
         $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
             ->join('cards','cards.card_id','=','feeding_logs.card_id')
-            ->where(['cards.cat_id'=>$id,'feeding_logs.open_time'=>$date])
+            ->where('cards.cat_id',$id)
+            ->whereDate('open_time',$date)
             ->orderBy('open_time','desc')
             ->get();
         return $result;
