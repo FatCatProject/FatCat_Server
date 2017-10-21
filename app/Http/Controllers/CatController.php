@@ -50,7 +50,6 @@ class CatController extends Controller
     {
         $cat = Cat::find($id);
         $feedingLogs = $this->allReportsByID($id);
-        //$timeDiffrence = array();
         $data = array();
         foreach ($feedingLogs as $log){
             $diff = $this->diffBetweenDates($log->open_time,$log->close_time);
@@ -90,8 +89,10 @@ class CatController extends Controller
         $status="success";
         $currentUser = auth()->user();
         if($request->cat_name ==null){
-            $status = "failed";
+            $status = "failed, no input for cat name";
         }else{
+            $breed = DB::table('cat_breeds')->where('breed_name',$request->cat_breed)->get();
+            if(count($breed)==1){
             $profile_picture=base64_encode($request->profile_picture);
             $dob = (new DateTime($request->dob))->format('Y-m-d');
             $now = new DateTime();
@@ -102,8 +103,10 @@ class CatController extends Controller
                     'target_weight'=>$request->target_weight , 'daily_calories'=>$request->daily_calories , 'created_at'=>$now ,
                     'updated_at'=>$now]
             );
+            }else{
+                $status = "failed, cat breed wasmt selected properly";
+            }
         }
-
         return view('pages.addCat');
     }
 
@@ -115,13 +118,15 @@ class CatController extends Controller
         }
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
-        $cat->cat_breed = $request->cat_breed;
+        if(CatBreed::find($request->cat_breed)!=null){
+            $cat->cat_breed = $request->cat_breed;
+        }
+
         $cat->current_weight = $request->current_weight;
         $cat->target_weight = $request->target_weight;
         $cat->daily_calories = $request->daily_calories;
 
         $cat->update();
-        $view = "pages.catPage/$cat->id";
         return redirect()->back();
     }
 
@@ -284,6 +289,22 @@ class CatController extends Controller
         $user = User::find(Auth::id());
         $cats = DB::table('cats')->where('user_email',$user->email)->get();
         return $cats;
+    }
+
+    public function test(){
+        //$feedingLogs = DB::table('feeding_logs')->orderBy('open_time','desc')->get();
+        //return $feedingLogs;
+
+        /*$feedingLogs = DB::table('feeding_logs')
+            ->join('feeding_logs','card.id','=','feeding_logs.card_id')
+            ->join('cards','card.id','=','cards.card_id')
+            ->select('feedinglogs.*','cards.*')
+            ->get();
+        dd($feedingLogs);
+        */
+        dd(DB::table('feeding_logs')->select('feeding_logs.*','cards.*')->join('cards','cards.card_id','=','feeding_logs.card_id')->orderBy('open_time','desc')->get());
+
+
     }
 
 }
