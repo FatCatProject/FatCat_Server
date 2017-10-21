@@ -48,7 +48,6 @@ class CatController extends Controller
 
     public function catPage($id)
     {
-//  IMPORTANT:  getting all cats and all logs - just for view checking purposes !!!
         $cat = Cat::find($id);
         $feedingLogs = $this->allReportsByID($id);
         //$timeDiffrence = array();
@@ -84,8 +83,6 @@ class CatController extends Controller
     public function requestFromCatFields(Request $request){
         if(strpos($_SERVER['HTTP_REFERER'],"addCat")==true){
             $this->store($request);
-        }else{
-        return "action not found";
         }
     }
 
@@ -96,8 +93,7 @@ class CatController extends Controller
             $status = "failed";
         }else{
             $profile_picture=base64_encode($request->profile_picture);
-            $dob = new DateTime($request->dob);
-            $dob->format('Y-d-m');
+            $dob = (new DateTime($request->dob))->format('Y-m-d');
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $id = DB::table('cats')->insertGetId(
@@ -108,10 +104,25 @@ class CatController extends Controller
             );
         }
 
-
-        //return view('pages.addCat',compact('status'));
-        //return redirect('http://127.0.0.1:8000/addCat');
         return view('pages.addCat');
+    }
+
+    public function update(Request $request){
+        $cat = Cat::find($request->id);
+        $cat->cat_name = $request->cat_name;
+        if($request->profile_picture != null){
+            $cat->profile_picture = $request->profile_picture;
+        }
+        $cat->dob = $request->dob;
+        $cat->gender = $request->gender;
+        $cat->cat_breed = $request->cat_breed;
+        $cat->current_weight = $request->current_weight;
+        $cat->target_weight = $request->target_weight;
+        $cat->daily_calories = $request->daily_calories;
+
+        $cat->update();
+        $view = "pages.catPage/$cat->id";
+        return redirect()->back();
     }
 
     #TO DO sort all Feeding logs by date
