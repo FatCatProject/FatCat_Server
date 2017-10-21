@@ -36,9 +36,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //added by michael
-Route::post('/cataction',['uses' => 'CatController@requestFromCatFields']);
-
-
+Route::post('/addcat',['uses' => 'CatController@store']);
+Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/temp' , 'CatController@myCats');
 Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
 Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
