@@ -71,9 +71,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Table-->
                 <!-- Stats-->
-                <div class="col-sm-4" style="margin-top: 3px;">
+                <div class="col-sm-4" style="min-width:500px;">
                     <div class="tab-content">
                         <div class="panel panel-warning" style="margin-top:0px"
                              data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
@@ -94,28 +93,35 @@
                                         <p style="margin:5px 0 10px 0">Yearly expenses</p>
                                     </div>
                                 </div>
-                                <div class="col-sm-8" style="color: #999; font-size: 13px; margin-bottom: 30px">
-                                    Pick a year to see the expenses for a specific year
+                                <div class="row" style="margin-left:2px;">
+                                    <div class="col-sm-12" style="color: #999; font-size: 13px; margin-bottom: 30px">
+                                        Pick a year to see the expenses for a specific year
+                                    </div>
                                 </div>
-                                <div align="center">
-                                    <canvas id="bar1" height="207" width="450"
-                                            style="width: 450px; height: 100px;"></canvas>
-                                    <script>
-                                        var barChartData = {
+                                <div class="row">
+                                    <div align="center">
+                                        <canvas id="bar1" height="207" width="450px" style="width:450px; height: 100px;"></canvas>
+                                        <script>
+                                            var barChartData = {
                                             labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                            datasets: [
-                                                {
-                                                    fillColor: "#8BC34A",
-                                                    strokeColor: "#8BC34A",
-                                                    data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4, 20, 30]
-                                                },
-                                            ]
-                                        };
-                                        new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
-                                    </script>
-                                    <h3 align="left" , style="padding: 0px 0px 10px 10px; color: #999;">Total amout:
-                                        $SUM</h3>
+                                                datasets: [
+                                                    {
+
+                                                        fillColor: "#00BCD4",
+                                                        strokeColor: "#00BCD4",
+                                                        data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4, 20, 30]
+                                                    },
+                                                ]
+                                            };
+                                            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData).fontcolor("999");
+                                        </script>
+                                    </div>
+
                                 </div>
+                                <div class="row" style="margin-left: 15px">
+                                    <h3 style="color: #999;">Total amout:$SUM</h3>
+                                </div>
+
                             </div>
 
                         </div>
@@ -125,6 +131,7 @@
                 </div>
                 <!--End Stats-->
             </div>
+            <!--Table-->
             <div class="tab-content">
                 <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
                      data-widget-static="">
@@ -138,8 +145,8 @@
                                        type="text" style="width: 90px; "/>
                             </div>
                         </div>
-                        <div class="col-sm-10" style="margin:8px 0 0 15px;color: #999; font-size: 13px;">
-                            Pick amonth or view 10 last visits
+                        <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
+                            Pick a month or view 10 last visits
                         </div>
                     </div>
                     <table class="table table-striped">
@@ -155,21 +162,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>2017-10-14</td>
-                            <td>Clinic1</td>
-                            <td>Vaccination</td>
-                            <td>The act was bla bla bla and then bla bla bla</td>
-                            <td>Picture</td>
-                            <td>100</td>
+                        <tr id="1">
+                            <td class="editableColumns">2017-10-14</td>
+                            <td class="editableColumns">Clinic1</td>
+                            <td class="editableColumns">Vaccination</td>
+                            <td class="editableColumns">The act was bla bla bla and then bla bla bla</td>
+                            <td class="editableColumns">Picture</td>
+                            <td class="editableColumns">100</td>
                             <td>
                                 <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
                                 </ul>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="2">
                             <td>2017-10-14</td>
                             <td>Clinic2</td>
                             <td>Vaccination</td>
@@ -183,7 +190,7 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="3">
                             <td>2017-10-14</td>
                             <td>Clinic3</td>
                             <td>Vaccination</td>
@@ -197,7 +204,7 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="4">
                             <td>2017-10-14</td>
                             <td>Clinic4</td>
                             <td>Vaccination</td>
@@ -234,4 +241,17 @@
         </div>
         <br><br><br>
     </div>
+
+    <script>
+        $('.editValues').click(function () {
+            $(this).parents('tr').find('td.editableColumns').each(function() {
+                var html = $(this).text();
+                var input = $('<input class="editableColumnsStyle" type="text" />');
+                input.val(html);
+                $(this).html(input);
+            });
+        });
+
+
+    </script>
 @endsection
