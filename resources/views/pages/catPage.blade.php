@@ -3,6 +3,12 @@
     <div id="page-wrapper">
         <div class="row"> <h3 class="blank1">$CatName information</h3></div>
         <div class="row">
+{{--
+            <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
+            <!---728x90--->
+
+            <div class="col-md-4 grid_2 grid_2_bot">
+--}}
             {{--chart 1--}}
             <div class="col-sm-4">
                 <div class="grid_1">
@@ -161,72 +167,19 @@
                     <tr class="warning">
                         <th>Opened time</th>
                         <th>Closed time</th>
-                        <th>Toatl time</th>
+                        <th>Total time</th>
                         <th>Amout of food</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    <tr>
-                        <td>2017-10-14 00:00:00</td>
-                        <td>2017-10-14 00:00:05</td>
-                        <td>5 sec</td>
-                        <td>50 gram</td>
-                    </tr>
-                    </tbody>
+                    @foreach($data as $row)
+                        <tr>
+                            <td> {!! $row['open_time'] !!} </td>
+                            <td> {!! $row['close_time'] !!} </td>
+                            <td> {!! $row['diff'] !!} </td>
+                            <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
                 </table>
                 <div align="right" class="col-md-12 page_1">
                     <nav>
@@ -259,7 +212,7 @@
                                        data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                        aria-controls="collapseThree">
                                         <span class="lnr lnr-chevron-down"></span><i
-                                                class="lnr lnr-chevron-up"></i><label>Edit $Cat's information</label>
+                                                class="lnr lnr-chevron-up"></i><label>Edit {!! $cat['cat_name'] !!}'s information</label>
                                     </a>
                                 </h4>
                             </div>
