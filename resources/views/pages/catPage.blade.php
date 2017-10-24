@@ -168,21 +168,19 @@
                         <th>Amout of food</th>
                     </tr>
                     </thead>
-                    <tbody>
                     @foreach($data as $row)
-                    <tr>
-                        <td> {!! $row['open_time'] !!} </td>
-                        <td> {!! $row['close_time'] !!} </td>
-                        <td> {!! $row['diff'] !!} </td>
-                        <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
+                        <tr>
+                            <td> {!! $row['open_time'] !!} </td>
+                            <td> {!! $row['close_time'] !!} </td>
+                            <td> {!! $row['diff'] !!} </td>
+                            <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
                 </table>
                 <div align="right" class="col-md-12 page_1">
                     <nav>
                         <ul class="pagination">
-
                             <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
                             </li>
                             <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>

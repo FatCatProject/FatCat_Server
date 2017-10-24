@@ -39,7 +39,7 @@ Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
 //tests
 Route::get('/temp/{id}' , 'CatController@allReportsByID');
-Route::get('/temp/{id}/{date}' , 'CatController@dailyFeedingLogs');
+Route::get('/temp/{id}/{date}' , 'CatController@monthlyFeedingLogs');
 //not in use
 //Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
 //Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
