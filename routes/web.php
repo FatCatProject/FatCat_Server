@@ -16,7 +16,9 @@
 //});
 Route::get('/' , 'PagesController@index');
 Route::get('/addCat' , ['uses'=>'CatController@addCat']);
-Route::get('/catPage' , ['uses'=>'CatController@catPage']);
+
+
+
 //Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
 //Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
@@ -26,6 +28,19 @@ Route::get('/catVetPage', 'CatController@catVetPage');
 
 Auth::routes();
 
-Route::get('/homePage', 'PagesController@home');
-Route::get('/shoppingPage', 'PagesController@shop');
-Route::get('/shopsPage', 'PagesController@shopList');
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+//added by michael
+//works and needed
+Route::post('/addcat',['uses' => 'CatController@store']);
+Route::put('/catPage/editcat',['uses' => 'CatController@update']);
+Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
+//tests
+Route::get('/temp/{id}' , 'CatController@allReportsByID');
+Route::get('/temp/{id}/{date}' , 'CatController@monthlyFeedingLogs');
+//not in use
+//Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
+//Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
+
