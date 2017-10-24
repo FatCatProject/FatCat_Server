@@ -68,7 +68,6 @@ class CatController extends Controller
         foreach ($monthlyFeedingLogs as $log){
             $logDate = explode(" ",$log->open_time);
             $logDay = intval((explode("-",$logDate[0]))[2]);
-
             $ateDuringTheMonth[$logDay]= $ateDuringTheMonth[$logDay]+($log->start_weight - $log->end_weight);
 
         }
@@ -95,7 +94,6 @@ class CatController extends Controller
 
         //number of pages that for 10 logs == 1 page
         $numberOfPages = intval(count($data)/10)+1;
-
         return view('pages.catPage', compact('cat'), compact('data'),
             compact('numberOfPages'),compact('ateDuringMonth'), compact('dailyMeals'));
     }
