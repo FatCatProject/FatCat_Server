@@ -30,8 +30,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
 //added by michael
 //works and needed
 Route::post('/addcat',['uses' => 'CatController@store']);
@@ -43,4 +41,8 @@ Route::get('/temp/{id}/{date}' , 'CatController@monthlyFeedingLogs');
 //not in use
 //Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
 //Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
+
+Route::get('/homePage', 'PagesController@home');
+Route::get('/shoppingPage', 'PagesController@shop');
+Route::get('/shopsPage', 'PagesController@shopList');
 

@@ -82,12 +82,18 @@
             jQuery('.custom-nav ul').attr('style','');
 
             jQuery(this).addClass('menu-collapsed');
+             $('.sticky-header .header-section').css({'width': '100%'});
 
          } else {
             body.removeClass('left-side-collapsed chat-view');
             jQuery('.custom-nav li.active ul').css({display: 'block'});
 
             jQuery(this).removeClass('menu-collapsed');
+            //ADDED TO FIX PROFILE IMG SLIDE
+             $('.sticky-header .header-section').css({'width': '90.5%'});
+             // page-wrapper
+
+
 
          }
       } else {

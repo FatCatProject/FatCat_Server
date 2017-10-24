@@ -6,7 +6,7 @@
         <h1><a href="index.html">Fat <span>Cat</span></a></h1>
     </div>
     <div class="logo-icon text-center">
-        <a href="index.html"><i class="lnr lnr-home"></i> </a>
+        <a href="./homePage"><i class="lnr lnr-home"></i></a>
     </div>
 
     <!--logo and iconic logo end-->
@@ -35,12 +35,19 @@
             <li class="menu-list"><a href="#"><i class="lnr lnr-heart-pulse"></i>
                     <span>Vet logs</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="some.html">Cat A</a></li>
-                    <li><a href="some.html">Cat B</a></li>
-                    <li><a href="some.html">Cat C</a></li>
+                    <li><a href="./catVetPage">Cat A</a></li>
+                    <li><a href="./catVetPage">Cat B</a></li>
+                    <li><a href="./catVetPage">Cat C</a></li>
                 </ul>
             </li>
-            <li><a href="forms.html"><i class="lnr lnr-cart"></i> <span>Shopping list</span></a></li>
+            <li class="menu-list"><a href="#"><i class="lnr lnr-cart"></i>
+                    <span>Shopping</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="./shoppingPage">Shopping list</a></li>
+                    <li><a href="./shopsPage">Favorite shops</a></li>
+                </ul>
+            </li>
+            {{--<li><a href="./shoppingPage"><i class="lnr lnr-cart"></i><span>Shopping list</span></a></li>--}}
         </ul>
             <!--sidebar nav end-->
     </div>
