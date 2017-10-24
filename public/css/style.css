@@ -2572,6 +2572,7 @@ h4.asd label {
 }
 .col-md-3.widget.widget1 {
   width: 23.5%;
+
 }
 .r3_counter_box {
   min-height: 100px;
@@ -2718,7 +2719,7 @@ canvas#doughnut, canvas#line, canvas#polarArea, #bar, #pie, #radar{
     font-size: 12px;
     border: 1px solid #E6E6E6;
     padding: 10px;
-    width: 100px;
+    width: 165px;
     margin: 0px 0px 0px 25px;
 }
 .legend div {
@@ -5762,8 +5763,8 @@ canvas#line1 {
     float: none;
 }
 canvas#pie {
-    width: 410px !important;
-    height: 270px !important;
+    width: 250px !important;
+    height: 250px !important;
 }
 canvas#bar1 {
     width: 410px !important;
@@ -5843,8 +5844,8 @@ canvas#bar1 {
 		padding:0 10px;
 	}
 	canvas#doughnut {
-		width: 266px !important;
-		height: 170px !important;
+		width: 250px !important;
+		height: 250px !important;
 	}
 	canvas#radar {
 		width: 265px !important;
@@ -6958,7 +6959,7 @@ span.email-title {
 	height: 70px;
 }
 .stats {
-    padding: 1.2em;
+    /*padding: 1.2em;*/
 }
 .grow {
     left: 35%;

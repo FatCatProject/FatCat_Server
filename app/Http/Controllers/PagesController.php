@@ -21,4 +21,23 @@ class PagesController extends Controller
         else
             return 'No pages.addCat view';
     }
+    public function home(){
+        if(View::exists('pages.homePage'))
+            return view('pages.homePage');
+        else
+            return 'No pages.homePage view';
+    }
+    public function shop(){
+        if(View::exists('pages.shoppingPage'))
+            return view('pages.shoppingPage');
+        else
+            return 'No pages.shoppingPage view';
+    }
+    public function shopList(){
+        if(View::exists('pages.shopsPage'))
+            return view('pages.shopsPage');
+        else
+            return 'No pages.shopsPage view';
+    }
+
 }
