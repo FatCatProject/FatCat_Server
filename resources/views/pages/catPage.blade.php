@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row"> <h3 class="blank1">$CatName information</h3></div>
+        <div class="row"> <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3></div>
         <div class="row">
 {{--
             <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
