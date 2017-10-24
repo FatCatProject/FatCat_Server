@@ -67,7 +67,8 @@ class CatController extends Controller
         //calculate all how much cat ate during each meal
         foreach ($monthlyFeedingLogs as $log){
             $logDate = explode(" ",$log->open_time);
-            $logDay = (explode("-",$logDate[0]))[2];
+            $logDay = intval((explode("-",$logDate[0]))[2]);
+
             $ateDuringTheMonth[$logDay]= $ateDuringTheMonth[$logDay]+($log->start_weight - $log->end_weight);
 
         }

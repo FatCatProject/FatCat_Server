@@ -6,7 +6,7 @@
         <h1><a href="index.html">Fat <span>Cat</span></a></h1>
     </div>
     <div class="logo-icon text-center">
-        <a href="./homePage"><i class="lnr lnr-home"></i></a>
+        <a href="/homePage"><i class="lnr lnr-home"></i></a>
     </div>
 
     <!--logo and iconic logo end-->
@@ -27,24 +27,24 @@
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Information</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="./catPage">Cat A</a></li>
-                    <li><a href="./catPage">Cat B</a></li>
-                    <li><a href="./catPage">Cat C</a></li>
+                    <li><a href="/catPage/1">Cat A</a></li>
+                    <li><a href="/catPage/2">Cat B</a></li>
+                    <li><a href="/catPage/3">Cat C</a></li>
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-heart-pulse"></i>
                     <span>Vet logs</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="./catVetPage">Cat A</a></li>
-                    <li><a href="./catVetPage">Cat B</a></li>
-                    <li><a href="./catVetPage">Cat C</a></li>
+                    <li><a href="/catVetPage">Cat A</a></li>
+                    <li><a href="/catVetPage">Cat B</a></li>
+                    <li><a href="/catVetPage">Cat C</a></li>
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-cart"></i>
                     <span>Shopping</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="./shoppingPage">Shopping list</a></li>
-                    <li><a href="./shopsPage">Favorite shops</a></li>
+                    <li><a href="/shoppingPage">Shopping list</a></li>
+                    <li><a href="/shopsPage">Favorite shops & products</a></li>
                 </ul>
             </li>
             {{--<li><a href="./shoppingPage"><i class="lnr lnr-cart"></i><span>Shopping list</span></a></li>--}}
