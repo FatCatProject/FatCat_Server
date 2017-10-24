@@ -8,14 +8,9 @@ use carboon;
 use App\User;
 use App\CatBreed;
 use App\Cat;
-use App\FeedingLog;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Console\Presets\Vue;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Scalar\String_;
+
 
 class CatController extends Controller
 {
@@ -98,10 +93,6 @@ class CatController extends Controller
             compact('numberOfPages'),compact('ateDuringMonth'), compact('dailyMeals'));
     }
 
-    public function catVetPage(){
-        return view('pages.catVetPage');
-    }
-
     public function autocomplete(Request $request){
         $breedSearch = $request->input('searchTerm');
         $queries = DB::table('cat_breeds')
@@ -110,12 +101,9 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-    public function storeVetEntry(Request $request){
-
-    }
-
     public function store(Request $request){
         $status="success";
+        date_default_timezone_set('Asia/Jerusalem');
         $currentUser = auth()->user();
         if($request->cat_name ==null){
             $status = "failed, no input for cat name";
@@ -141,6 +129,7 @@ class CatController extends Controller
 
     public function update(Request $request){
         $cat = Cat::find($request->id);
+        date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
         if($request->profile_picture != null){
             $cat->profile_picture = $request->profile_picture;
@@ -159,7 +148,6 @@ class CatController extends Controller
         return redirect()->back();
     }
 
-    #TO DO sort all Feeding logs by date
     public function allReportsByID($id){
         $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
             ->join('cards','cards.card_id','=','feeding_logs.card_id')
@@ -194,7 +182,6 @@ class CatController extends Controller
         return $result;
     }
 
-
     public function diffBetweenDates($openTime, $closeTime){
         $epochOpenTime = strtotime($openTime);
         $epochCloseTime = strtotime($closeTime);
@@ -222,10 +209,5 @@ class CatController extends Controller
         $cats = DB::table('cats')->where('user_email',$user->email)->get();
         return $cats;
     }
-
-    public function test(){
-        dd(DB::table('feeding_logs')->select('feeding_logs.*','cards.*')->join('cards','cards.card_id','=','feeding_logs.card_id')->orderBy('open_time','desc')->get());
-    }
-
 
 }
