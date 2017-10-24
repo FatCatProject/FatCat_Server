@@ -8,9 +8,14 @@ use carboon;
 use App\User;
 use App\CatBreed;
 use App\Cat;
+use App\FeedingLog;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Console\Presets\Vue;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Scalar\String_;
 
 class CatController extends Controller
 {
@@ -63,6 +68,7 @@ class CatController extends Controller
         foreach ($monthlyFeedingLogs as $log){
             $logDate = explode(" ",$log->open_time);
             $logDay = intval((explode("-",$logDate[0]))[2]);
+
             $ateDuringTheMonth[$logDay]= $ateDuringTheMonth[$logDay]+($log->start_weight - $log->end_weight);
 
         }
@@ -89,8 +95,13 @@ class CatController extends Controller
 
         //number of pages that for 10 logs == 1 page
         $numberOfPages = intval(count($data)/10)+1;
+
         return view('pages.catPage', compact('cat'), compact('data'),
             compact('numberOfPages'),compact('ateDuringMonth'), compact('dailyMeals'));
+    }
+
+    public function catVetPage(){
+        return view('pages.catVetPage');
     }
 
     public function autocomplete(Request $request){
@@ -101,9 +112,12 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
+    public function storeVetEntry(Request $request){
+
+    }
+
     public function store(Request $request){
         $status="success";
-        date_default_timezone_set('Asia/Jerusalem');
         $currentUser = auth()->user();
         if($request->cat_name ==null){
             $status = "failed, no input for cat name";
@@ -129,7 +143,6 @@ class CatController extends Controller
 
     public function update(Request $request){
         $cat = Cat::find($request->id);
-        date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
         if($request->profile_picture != null){
             $cat->profile_picture = $request->profile_picture;
@@ -148,6 +161,7 @@ class CatController extends Controller
         return redirect()->back();
     }
 
+    #TO DO sort all Feeding logs by date
     public function allReportsByID($id){
         $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
             ->join('cards','cards.card_id','=','feeding_logs.card_id')
@@ -182,26 +196,85 @@ class CatController extends Controller
         return $result;
     }
 
+
     public function diffBetweenDates($openTime, $closeTime){
-        $epochOpenTime = strtotime($openTime);
-        $epochCloseTime = strtotime($closeTime);
-        $epochDiff = $epochCloseTime - $epochOpenTime;
-        $result = "";
-        if($epochDiff > 3600){
-            $diffHours = intval($epochDiff/3600);
-            $epochDiff = $epochDiff-($diffHours*3600);
-            $result = "Hours:".$diffHours;
+        $dateString = explode(" ",$openTime);
+
+        $date_OpenTime = explode("-",$dateString[0]);
+        $year_OpenTime = $date_OpenTime[0];
+        $month_OpenTime = $date_OpenTime[1];
+        $day_OpenTime = $date_OpenTime[2];
+
+        $time_OpenTime = explode(":",$dateString[1]);
+        $hour_OpenTime = $time_OpenTime[0];
+        $minute_OpenTime = $time_OpenTime[1];
+        $second_OpenTime = $time_OpenTime[2];
+
+        $dateString = explode(" ",$closeTime);
+
+
+        $date_CloseTime = explode("-",$dateString[0]);
+        $year_CloseTime = $date_CloseTime[0];
+        $month_CloseTime = $date_CloseTime[1];
+        $day_CloseTime = $date_CloseTime[2];
+
+        $time_CloseTime = explode(":",$dateString[1]);
+        $hour_CloseTime = $time_CloseTime[0];
+        $minute_CloseTime = $time_CloseTime[1];
+        $second_CloseTime = $time_CloseTime[2];
+
+        $diff = "";
+        $diffYear = $year_CloseTime- $year_OpenTime;
+        $diffMonth = $month_CloseTime - $month_OpenTime;
+        $diffDay = $day_CloseTime - $day_OpenTime;
+        $diffHour = $hour_CloseTime - $hour_OpenTime;
+        $diffMinute = $minute_CloseTime - $minute_OpenTime;
+        $diffSecond = $second_CloseTime - $second_OpenTime;
+
+        if($diffYear > 0){
+            if($diffYear == 1){
+                $diff = $diff . $diffYear . "year ";
+            }else{
+                $diff = $diff . $diffYear . "years ";
+            }
         }
-        if($epochDiff>60){
-            $diffMinutes = intval($epochDiff/60);
-            $epochDiff = $epochDiff-($diffMinutes*60);
-            $result = $result." Minutes:".$diffMinutes;
+        if($diffMonth > 0){
+            if($diffMonth == 1){
+                $diff = $diff . $diffMonth . " month ";
+            }else{
+                $diff = $diff . $diffMonth . " months ";
+            }
+        }
+        if($diffDay > 0){
+            if($diffDay == 1){
+                $diff = $diff . $diffDay . " day ";
+            }else{
+                $diff = $diff . $diffDay . " days ";
+            }
+        }
+        if($diffHour > 0){
+            if($diffHour == 1){
+                $diff = $diff . $diffHour . " hour ";
+            }else{
+                $diff = $diff . $diffHour . " hours ";
+            }
+        }
+        if($diffMinute > 0){
+            if($diffYear == 1){
+                $diff = $diff . $diffMinute . " minute ";
+            }else{
+                $diff = $diff . $diffMinute . " minutes ";
+            }
+        }
+        if($diffSecond > 0){
+            $diff = $diff . $diffSecond . " seconds";
+        }
+        if($diff==""){
+            return "FoodBox didnt open";
         }
 
-        if($epochDiff>0){
-            $result = $result." Seconds:".$epochDiff;
-        }
-        return $result;
+        return $diff;
+
     }
 
     public function myCats(){
@@ -209,5 +282,12 @@ class CatController extends Controller
         $cats = DB::table('cats')->where('user_email',$user->email)->get();
         return $cats;
     }
+
+    public function test(){
+        dd(DB::table('feeding_logs')->select('feeding_logs.*','cards.*')->join('cards','cards.card_id','=','feeding_logs.card_id')->orderBy('open_time','desc')->get());
+
+
+    }
+
 
 }
