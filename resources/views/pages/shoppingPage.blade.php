@@ -3,7 +3,7 @@
     @include('layouts.datePicker')
     <div id="page-wrapper">
         <div class="graphs">
-            <h3 class="blank1">Vet entries:</h3>
+            <h3 class="blank1">Shopping history:</h3>
             <!---728x90--->
             <div class="row">
                 <div class="col-sm-7">
@@ -23,12 +23,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-2 control-label">Clinic:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="clinicLogName" placeholder="">
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
                                     <div class="col-sm-8">
@@ -43,14 +38,7 @@
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
-                                    <div class="col-sm-8">
-                                        <input type="file" id="vetLogPicture" class="filestyle" data-buttonBefore="true"
-                                               style="margin-top: 6px">
-                                    </div>
 
-                                </div>
                                 <div class="form-group">
                                     <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
                                     <div class="col-sm-8">
@@ -95,7 +83,7 @@
                                 </div>
                                 <div class="row" style="margin-left:2px;">
                                     <div class="col-sm-12" style="color: #999; font-size: 13px; margin-bottom: 30px">
-                                        Pick a year to see the expenses for a specific year
+                                        Pick a year to see the shopping expenses for a specific year
                                     </div>
                                 </div>
                                 <div class="row">
@@ -103,7 +91,7 @@
                                         <canvas id="bar1" height="207" width="450px" style="width:450px; height: 100px;"></canvas>
                                         <script>
                                             var barChartData = {
-                                            labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                                 datasets: [
                                                     {
 
@@ -146,17 +134,15 @@
                             </div>
                         </div>
                         <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
-                            Pick a month or view 10 last visits
+                            Pick a month or view 10 last purchases
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped"   >
                         <thead>
                         <tr class="warning">
                             <th>Date</th>
-                            <th>Clinic</th>
                             <th>Subject</th>
                             <th>Description</th>
-                            <th>Picture</th>
                             <th>Price</th>
                             <th>Action</th>
                         </tr>
@@ -164,10 +150,8 @@
                         <tbody>
                         <tr id="1">
                             <td class="editableColumns">2017-10-14</td>
-                            <td class="editableColumns">Clinic1</td>
-                            <td class="editableColumns">Vaccination</td>
-                            <td class="editableColumns">The act was bla bla bla and then bla bla bla</td>
-                            <td class="editableColumns">Picture</td>
+                            <td class="editableColumns">Food for Ellie</td>
+                            <td class="editableColumns">15kg royal canin for Ellie, had 10% disscount</td>
                             <td class="editableColumns">100</td>
                             <td>
                                 <ul class="nav nav-pills">
@@ -178,10 +162,8 @@
                         </tr>
                         <tr id="2">
                             <td>2017-10-14</td>
-                            <td>Clinic2</td>
-                            <td>Vaccination</td>
-                            <td>bbb</td>
-                            <td>Picture</td>
+                            <td>Sand</td>
+                            <td>Sand "Apple tree", item was on sale</td>
                             <td>200</td>
                             <td>
                                 <ul class="nav nav-pills">
@@ -192,11 +174,9 @@
                         </tr>
                         <tr id="3">
                             <td>2017-10-14</td>
-                            <td>Clinic3</td>
-                            <td>Vaccination</td>
-                            <td>ccc</td>
-                            <td>Picture</td>
-                            <td>200</td>
+                            <td>Treats and food</td>
+                            <td>3kg laCat and 2 boxed of tuna</td>
+                            <td>30</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
@@ -206,10 +186,8 @@
                         </tr>
                         <tr id="4">
                             <td>2017-10-14</td>
-                            <td>Clinic4</td>
-                            <td>Vaccination</td>
-                            <td>ddd</td>
-                            <td>Picture</td>
+                            <td>Scratching stand</td>
+                            <td>Scratching stand with 3 floors</td>
                             <td>100</td>
                             <td>
                                 <ul class="nav nav-pills">

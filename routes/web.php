@@ -26,4 +26,6 @@ Route::get('/catVetPage', 'CatController@catVetPage');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/homePage', 'PagesController@home');
+Route::get('/shoppingPage', 'PagesController@shop');
+Route::get('/shopsPage', 'PagesController@shopList');

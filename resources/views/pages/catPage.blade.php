@@ -1,25 +1,23 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
+        <div class="row"> <h3 class="blank1">$CatName information</h3></div>
         <div class="row">
-            <h3 class="blank1">$CatName information</h3>
-            <!---728x90--->
-
-            <div class="col-md-4 grid_2 grid_2_bot">
+            {{--chart 1--}}
+            <div class="col-sm-4">
                 <div class="grid_1">
-
                     <div class="row">
-                        <div class="col-lg-1">
-                            <div class="input-group" style="margin: 15px 0px 0px 15px; width: 20%">
-                                <div class="input-group-addon">
+                        <div class="col-lg-2">
+                            <div class="input-group" style="margin: 15px 0px 0px 25px; width: 20%">
+                                <div class="input-group-addon" >
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
-                                       type="text" style="width: 120px;"/>
+                                       type="text" style="width: 110px;"/>
                             </div>
                             @include('layouts.datePicker')
                         </div>
-                        <div class="col-lg-11">
+                        <div class="col-lg-10">
                             <h4 style="margin-left: 80px; margin-top: -5px;">Daily consumption</h4>
                         </div>
                     </div>
@@ -36,10 +34,6 @@
                                 value: 10,
                                 color: "#ef553a"
                             },
-//                                {
-//                                    value: 50,
-//                                    color: "#00aced"
-//                                },
                             {
                                 value: 100,
                                 color: "#8BC34A"
@@ -50,28 +44,29 @@
                     </script>
                 </div>
             </div>
-            <div class="col-md-4 grid_2 grid_2_bot">
+            {{--chart 2--}}
+            <div class="col-sm-4">
                 <div class="grid_1">
                     <div class="switch-right-grid">
-                        <div class="col-lg-1">
+                        <div class="col-lg-2">
                             <div class="input-group" style="margin: 15px 0px 0px 15px; width: 20%">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
-                                       type="text" style="width: 120px;" onkeypress=""/>
+                                       type="text" style="width: 110px;" onkeypress=""/>
                             </div>
                             @include('layouts.datePicker')
                         </div>
-                        <div class="col-lg-11" style="margin-left: -40px">
+                        <div class="col-lg-10" style="margin-left: -40px">
                             <h4 style="margin-left: 50px; margin-top: -5px;">Daily</h4>
                         </div>
                         <div class="switch-right-grid1">
                             <p>All daily meals by eaten amount of food per meal</p>
                             <br/> <br/>
                         </div>
+                        <div class="row" align="center"><canvas id="line1" height="137" width="400" style="width: 450px; height: 100px;"></canvas></div>
 
-                        <canvas id="line1" height="137" width="450" style="width: 600px; height: 100px;"></canvas>
                         <script>
                             var lineChartData = {
                                 labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
@@ -91,28 +86,31 @@
                         </script>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-4 grid_2 grid_2_bot">
+            {{--chart 3--}}
+            <div class="col-sm-4">
                 <div class="grid_1">
                     <div class="switch-right-grid">
-                        <div class="col-lg-1">
+                        <div class="col-lg-2">
                             <div class="input-group" style="margin: 15px 0px 0px 15px; width: 20%">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="catDob" name="dateMonth" placeholder="MM/YYYY"
-                                       type="text" style="width: 120px;"/>
+                                       type="text" style="width: 110px;"/>
                             </div>
                             @include('layouts.datePicker')
                         </div>
-                        <div class="col-lg-11" style="margin-left: -40px">
+                        <div class="col-lg-10" style="margin-left: -40px">
                             <h4 style="margin-left: 80px; margin-top: -5px;">Monthly</h4>
                         </div>
                         <div class="switch-right-grid1">
                             <p>All monthly meals by eaten amount of food per day</p>
                             <br/> <br/>
                         </div>
-                        <canvas id="bar1" height="137" width="440" style="width: 600px; height: 100px;"></canvas>
+                        <div class="row" align="center"><canvas id="bar1" height="137" width="415"></canvas></div>
+
                     </div>
 
                     <script>
@@ -132,9 +130,8 @@
                         new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
                     </script>
                 </div>
-            </div>
 
-            <div class="clearfix"></div>
+            </div>
         </div>
 
         <!-- Table-->
@@ -146,16 +143,16 @@
             <div class="panel-body no-padding">
                 <div class="row">
 
-                    <div class="col-sm-2">
+                        <div class="col-sm-2">
                         <div class="input-group" style="margin: 0px 0px 10px 0px; width: 20%">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
-                                   type="text" style="width: 120px; "/>
+                                   type="text" style="width: 100px; "/>
                         </div>
                     </div>
-                    <div class="col-sm-10" style="color: #999; font-size: 13px;margin: 10px 0px 10px -50px">Pick a month or view 10 last feeding logs</div>
+                    <div class="col-sm-10" style="color: #999; font-size: 13px;margin: 10px 0px 10px -60px">Pick a month or view 10 last feeding logs</div>
 
 
                 </div>
