@@ -53,16 +53,31 @@ class CatController extends Controller
             $date = new DateTime();
             $date = $date->format('Y-m-d');
         }
-        //all feeding logs for a cat in a single day (by date)
-        $feedingLogsByDate = $this->dailyFeedingLogs($id,$date);
-        $ateDuringDay = array();
+
+        $ateDuringTheMonth = array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0,"6"=>0,"7"=>0,"8"=>0,"9"=>0,"10"=>0,"11"=>0,"12"=>0,
+            "13"=>0,"14"=>0,"15"=>0,"16"=>0,"17"=>0,"18"=>0,"19"=>0,"20"=>0,"21"=>0,"22"=>0,"23"=>0,"24"=>0,
+            "25"=>0,"26"=>0,"27"=>0,"28"=>0,"29"=>0,"30"=>0,"31"=>0);
+
+
+        //all feeding logs for a cat in a month (by date)
+        $monthlyFeedingLogs = $this->monthlyFeedingLogs($id,$date);
+
+        $amountEatenDuringTheDay = 0;
 
         //calculate all how much cat ate during each meal
-        foreach ($feedingLogsByDate as $dailyLog){
-            array_push($ateDuringDay,$dailyLog->start_weight - $dailyLog->end_weight);
-        }
-        array_collapse($ateDuringDay);
+        foreach ($monthlyFeedingLogs as $log){
+            $logDate = explode(" ",$log->open_time);
+            $logDay = (explode("-",$logDate[0]))[2];
+            $ateDuringTheMonth[$logDay]= $ateDuringTheMonth[$logDay]+($log->start_weight - $log->end_weight);
 
+        }
+
+        $dailyFeedingLogs = $this->dailyFeedingLogs($id,$date);
+        $dailyMeals = array();
+        foreach ($dailyFeedingLogs as $dailyLog){
+            array_push($dailyMeals,$dailyLog->start_weight - $dailyLog->end_weight);
+        }
+        array_collapse($dailyMeals);
         $cat = Cat::find($id); // used for catname
 
         //all logs which are displayed at the lower half of catPage
@@ -79,9 +94,9 @@ class CatController extends Controller
 
         //number of pages that for 10 logs == 1 page
         $numberOfPages = intval(count($data)/10)+1;
-        //dd($ateDuringDay);
+
         return view('pages.catPage', compact('cat'), compact('data'),
-            compact('numberOfPages'),compact('ateDuringDay'));
+            compact('numberOfPages'),compact('ateDuringMonth'), compact('dailyMeals'));
     }
 
     public function catVetPage(){
@@ -160,50 +175,27 @@ class CatController extends Controller
             ->join('cards','cards.card_id','=','feeding_logs.card_id')
             ->where('cards.cat_id',$id)
             ->whereDate('open_time',$date)
-            ->orderBy('open_time','desc')
+            ->orderBy('open_time','asc')
             ->get();
         return $result;
     }
 
-    public function stringToDate($string){
-        $dateString = explode(" ",$string);
-        $temp = $dateString[0];
-
-        $dateParts = explode("-",$temp);
+    public function monthlyFeedingLogs($id,$date){
+        $dateParts = explode("-",$date);
         $year = $dateParts[0];
         $month = $dateParts[1];
-        $day = $dateParts[2];
-        $tz='Asia/Jerusalem';//time zone
-        $dateTime = Carbon::createFromDate($year, $month, $day, $tz);
-        $date = $dateTime->format('Y-m-d');
 
-        return $date;
+        $result =DB::table('feeding_logs')->select('feeding_logs.*','cards.*')
+            ->join('cards','cards.card_id','=','feeding_logs.card_id')
+            ->where('cards.cat_id',$id)
+            ->whereMonth('open_time',$month)
+            ->whereYear('open_time',$year)
+            ->orderBy('open_time','asc')
+            ->get();
+        return $result;
     }
 
-    //Not is use yet, might be needed soon
-    /*
-    public function stringToDateTime($string){
-        $dateString = explode(" ",$string);
 
-
-        $dateParts = explode("-",$dateString[0]);
-        $year = $dateParts[0];
-        $month = $dateParts[1];
-        $day = $dateParts[2];
-
-        $timeParts = explode(":",$dateString[1]);
-        $hour = $timeParts[0];
-        $minute = $timeParts[1];
-        $second = $timeParts[2];
-
-        $tz='Asia/Jerusalem';//time zone
-
-        $dateTime = Carbon::create($year, $month, $day, $hour, $minute,$second, 'Asia/Jerusalem'	);
-        $date = $dateTime->format('Y-m-d H:i:s');
-        dd($date);
-        return $date;
-    }
-    */
     public function diffBetweenDates($openTime, $closeTime){
         $dateString = explode(" ",$openTime);
 
@@ -291,19 +283,10 @@ class CatController extends Controller
     }
 
     public function test(){
-        //$feedingLogs = DB::table('feeding_logs')->orderBy('open_time','desc')->get();
-        //return $feedingLogs;
-
-        /*$feedingLogs = DB::table('feeding_logs')
-            ->join('feeding_logs','card.id','=','feeding_logs.card_id')
-            ->join('cards','card.id','=','cards.card_id')
-            ->select('feedinglogs.*','cards.*')
-            ->get();
-        dd($feedingLogs);
-        */
         dd(DB::table('feeding_logs')->select('feeding_logs.*','cards.*')->join('cards','cards.card_id','=','feeding_logs.card_id')->orderBy('open_time','desc')->get());
 
 
     }
+
 
 }
