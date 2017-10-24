@@ -24,7 +24,7 @@ Route::get('/addCat' , ['uses'=>'CatController@addCat']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
 
-Route::get('/catVetPage', 'CatController@catVetPage');
+
 
 Auth::routes();
 
@@ -37,10 +37,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/addcat',['uses' => 'CatController@store']);
 Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
+Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage');
+Route::post('/addvetlog',['uses' => 'VetController@store']);
+
 //tests
-Route::get('/temp/{openTime}/{closeTime}' , 'CatController@diffBetweenDates');
-Route::get('/temp/{id}/{date}' , 'CatController@monthlyFeedingLogs');
-//not in use
-//Route::get('temp/{string}',['uses' => 'CatController@stringToDateTime']);
-//Route::get('catPage/{id}/{date}',['uses' => 'CatController@dailyFeedingLogs']);
+Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
+
 
