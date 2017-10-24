@@ -196,83 +196,25 @@ class CatController extends Controller
 
 
     public function diffBetweenDates($openTime, $closeTime){
-        $dateString = explode(" ",$openTime);
-
-        $date_OpenTime = explode("-",$dateString[0]);
-        $year_OpenTime = $date_OpenTime[0];
-        $month_OpenTime = $date_OpenTime[1];
-        $day_OpenTime = $date_OpenTime[2];
-
-        $time_OpenTime = explode(":",$dateString[1]);
-        $hour_OpenTime = $time_OpenTime[0];
-        $minute_OpenTime = $time_OpenTime[1];
-        $second_OpenTime = $time_OpenTime[2];
-
-        $dateString = explode(" ",$closeTime);
-
-
-        $date_CloseTime = explode("-",$dateString[0]);
-        $year_CloseTime = $date_CloseTime[0];
-        $month_CloseTime = $date_CloseTime[1];
-        $day_CloseTime = $date_CloseTime[2];
-
-        $time_CloseTime = explode(":",$dateString[1]);
-        $hour_CloseTime = $time_CloseTime[0];
-        $minute_CloseTime = $time_CloseTime[1];
-        $second_CloseTime = $time_CloseTime[2];
-
-        $diff = "";
-        $diffYear = $year_CloseTime- $year_OpenTime;
-        $diffMonth = $month_CloseTime - $month_OpenTime;
-        $diffDay = $day_CloseTime - $day_OpenTime;
-        $diffHour = $hour_CloseTime - $hour_OpenTime;
-        $diffMinute = $minute_CloseTime - $minute_OpenTime;
-        $diffSecond = $second_CloseTime - $second_OpenTime;
-
-        if($diffYear > 0){
-            if($diffYear == 1){
-                $diff = $diff . $diffYear . "year ";
-            }else{
-                $diff = $diff . $diffYear . "years ";
-            }
+        $epochOpenTime = strtotime($openTime);
+        $epochCloseTime = strtotime($closeTime);
+        $epochDiff = $epochCloseTime - $epochOpenTime;
+        $result = "";
+        if($epochDiff > 3600){
+            $diffHours = intval($epochDiff/3600);
+            $epochDiff = $epochDiff-($diffHours*3600);
+            $result = "Hours:".$diffHours;
         }
-        if($diffMonth > 0){
-            if($diffMonth == 1){
-                $diff = $diff . $diffMonth . " month ";
-            }else{
-                $diff = $diff . $diffMonth . " months ";
-            }
-        }
-        if($diffDay > 0){
-            if($diffDay == 1){
-                $diff = $diff . $diffDay . " day ";
-            }else{
-                $diff = $diff . $diffDay . " days ";
-            }
-        }
-        if($diffHour > 0){
-            if($diffHour == 1){
-                $diff = $diff . $diffHour . " hour ";
-            }else{
-                $diff = $diff . $diffHour . " hours ";
-            }
-        }
-        if($diffMinute > 0){
-            if($diffYear == 1){
-                $diff = $diff . $diffMinute . " minute ";
-            }else{
-                $diff = $diff . $diffMinute . " minutes ";
-            }
-        }
-        if($diffSecond > 0){
-            $diff = $diff . $diffSecond . " seconds";
-        }
-        if($diff==""){
-            return "FoodBox didnt open";
+        if($epochDiff>60){
+            $diffMinutes = intval($epochDiff/60);
+            $epochDiff = $epochDiff-($diffMinutes*60);
+            $result = $result." Minutes:".$diffMinutes;
         }
 
-        return $diff;
-
+        if($epochDiff>0){
+            $result = $result." Seconds:".$epochDiff;
+        }
+        return $result;
     }
 
     public function myCats(){
@@ -283,8 +225,6 @@ class CatController extends Controller
 
     public function test(){
         dd(DB::table('feeding_logs')->select('feeding_logs.*','cards.*')->join('cards','cards.card_id','=','feeding_logs.card_id')->orderBy('open_time','desc')->get());
-
-
     }
 
 
