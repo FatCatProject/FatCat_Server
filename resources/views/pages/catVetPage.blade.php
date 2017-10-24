@@ -4,12 +4,13 @@
     <div id="page-wrapper">
         <div class="graphs">
             <h3 class="blank1">Vet entries:</h3>
-            <!---728x90--->
             <div class="row">
                 <div class="col-sm-7">
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="POST" action="/addvetlog" id="addvetlog">
+                                {!! csrf_field() !!}
+                                <input type="hidden" name="id" value="{!! $cat['id'] !!}">
                                 <div class="form-group">
                                     <label for="catDob" class="col-sm-2 control-label">Date:</label>
                                     <div class="row" style="padding: 10px">
@@ -17,7 +18,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetDate" name="date"
+                                            <input class="form-control" id="vetDate" name="visit_date"
                                                    placeholder="MM/DD/YYYY"
                                                    type="text" style="width: 120px;"/>
                                         </div>
@@ -26,19 +27,19 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Clinic:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="clinicLogName" placeholder="">
+                                        <input type="text" name="clinic_name" class="form-control1" id="clinicLogName" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="vetLogSubject" placeholder="">
+                                        <input type="text" name="subject" class="form-control1" id="vetLogSubject" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
-                                    <div class="col-sm-8"><textarea name="vetLogDescription" id="vetLogDescription"
+                                    <div class="col-sm-8"><textarea name="description" id="vetLogDescription"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
@@ -46,7 +47,7 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" id="vetLogPicture" class="filestyle" data-buttonBefore="true"
+                                        <input type="file" name="prescription_picture" id="vetLogPicture" class="filestyle" data-buttonBefore="true"
                                                style="margin-top: 6px">
                                     </div>
 
@@ -54,14 +55,14 @@
                                 <div class="form-group">
                                     <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
                                     <div class="col-sm-8">
-                                        <input type="number" step="any" min="0" max="100" class="form-control1 input-sm"
+                                        <input type="number" name="price" step="any" min="0" max="10000" class="form-control1 input-sm"
                                                id="vetLogPrice" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn">Add</button>
+                                            <button class="btn-success btn" form="addvetlog">Add</button>
                                             <button class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
