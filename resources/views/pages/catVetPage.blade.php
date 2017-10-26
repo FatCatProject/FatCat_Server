@@ -163,13 +163,14 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($vetLogs as $log)
                         <tr id="1">
-                            <td class="editableColumns">2017-10-14</td>
-                            <td class="editableColumns">Clinic1</td>
-                            <td class="editableColumns">Vaccination</td>
-                            <td class="editableColumns">The act was bla bla bla and then bla bla bla</td>
-                            <td class="editableColumns">Picture</td>
-                            <td class="editableColumns">100</td>
+                            <td class="editableColumns">{!! $log->visit_date !!}</td>
+                            <td class="editableColumns">{!! $log->clinic_name !!}</td>
+                            <td class="editableColumns">{!! $log->subject !!}</td>
+                            <td class="editableColumns">{!! $log->description !!}</td>
+                            <td class="editableColumns">{!! $log->prescription_picture !!}</td>
+                            <td class="editableColumns">{!! $log->price !!}</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
@@ -177,48 +178,7 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr id="2">
-                            <td>2017-10-14</td>
-                            <td>Clinic2</td>
-                            <td>Vaccination</td>
-                            <td>bbb</td>
-                            <td>Picture</td>
-                            <td>200</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr id="3">
-                            <td>2017-10-14</td>
-                            <td>Clinic3</td>
-                            <td>Vaccination</td>
-                            <td>ccc</td>
-                            <td>Picture</td>
-                            <td>200</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr id="4">
-                            <td>2017-10-14</td>
-                            <td>Clinic4</td>
-                            <td>Vaccination</td>
-                            <td>ddd</td>
-                            <td>Picture</td>
-                            <td>100</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <div align="right" class="col-md-12 page_1">
