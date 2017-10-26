@@ -30,8 +30,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
 //added by michael
 //works and needed
 Route::post('/addcat',['uses' => 'CatController@store']);
@@ -44,3 +42,7 @@ Route::post('/addvetlog',['uses' => 'VetController@store']);
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
 
 
+Route::get('/homePage', 'PagesController@home');
+Route::get('/shoppingPage', 'PagesController@shop');
+Route::get('/shopsPage', 'PagesController@shopList');
+Route::get('/userPage', 'PagesController@userPage');
