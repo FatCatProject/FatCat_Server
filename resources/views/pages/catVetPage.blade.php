@@ -169,7 +169,7 @@
                             <td class="editableColumns">{!! $log->clinic_name !!}</td>
                             <td class="editableColumns">{!! $log->subject !!}</td>
                             <td class="editableColumns">{!! $log->description !!}</td>
-                            <td class="editableColumns">{!! $log->prescription_picture !!}</td>
+                            <td class="editableColumns">{!! base64_decode($log->prescription_picture) !!}</td>
                             <td class="editableColumns">{!! $log->price !!}</td>
                             <td>
                                 <ul class="nav nav-pills">
