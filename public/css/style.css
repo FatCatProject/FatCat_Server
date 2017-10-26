@@ -4,6 +4,15 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+.vr {
+	/*margin-left: 0px;*/
+	/*margin-right: 0px;*/
+	height: 350px;
+	border: 0;
+	border-left: 1px solid #eeeeee;
+	display: inline-block;
+	vertical-align: bottom;
+}
 h4, h5, h6,
 h1, h2, h3 {margin-top: 0;
 color: #999999}
