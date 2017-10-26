@@ -87,10 +87,11 @@ class CatController extends Controller
             array_push($data,$improvedLog);
         }
 
-        //number of pages that for 10 logs == 1 page
+
         $numberOfPages = intval(count($data)/10)+1;
+        //dd($data);
         return view('pages.catPage', compact('cat'), compact('data'),
-            compact('numberOfPages'),compact('ateDuringMonth'), compact('dailyMeals'));
+            compact('ateDuringMonth'), compact('dailyMeals'), compact('numberOfPages')) ->with('numberOfPages',$numberOfPages);
     }
 
     public function autocomplete(Request $request){
