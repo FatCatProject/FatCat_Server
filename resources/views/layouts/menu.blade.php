@@ -27,14 +27,17 @@
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Information</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="/catPage/1">Cat A</a></li>
-                    <li><a href="/catPage/2">Cat B</a></li>
-                    <li><a href="/catPage/3">Cat C</a></li>
+                    @foreach($mycats as $cat)
+                    <li><a href="/catPage/{!! $cat->id !!}">{!! $cat->cat_name !!}</a></li>
+                    @endforeach
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-heart-pulse"></i>
                     <span>Vet logs</span></a>
                 <ul class="sub-menu-list">
+                    @foreach($mycats as $cat)
+                        <li><a href="/catVetPage/{!! $cat->id !!}">{!! $cat->cat_name !!}</a></li>
+                    @endforeach
                     <li><a href="/catVetPage">Cat A</a></li>
                     <li><a href="/catVetPage">Cat B</a></li>
                     <li><a href="/catVetPage">Cat C</a></li>

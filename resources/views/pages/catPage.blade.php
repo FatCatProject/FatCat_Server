@@ -180,12 +180,16 @@
                             <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
                         </tr>
                     @endforeach--}}
-                    @for($index=0;$index<10;$index++)
+                    @for($index=0;$index<10 && count($data)>0;$index++)
                         <tr>
+                            @if(empty($data[$index]))
+                                @endif
+                            @if(!empty($data[$index]))
                             <td> {!! $data[$index]['open_time'] !!} </td>
                             <td> {!! $data[$index]['close_time'] !!} </td>
                             <td> {!! $data[$index]['diff'] !!} </td>
                             <td> {!! $data[$index]['start_weight'] - $data[$index]['end_weight'] !!} grams </td>
+                            @endif
                         </tr>
                     @endfor
                         </tbody>
