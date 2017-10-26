@@ -166,7 +166,7 @@
                     <li class="dropdown profile_details_drop">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div class="profile_img">
-                                <span style="background:url(images/1.jpg) no-repeat center"> </span>
+                                <span style="background:url(/images/1.jpg) no-repeat center"> </span>
                                 <div class="user-name">
                                     <p>Hello &nbsp<span>{{ $userName }}</span></p>
                                 </div>
