@@ -14,24 +14,29 @@ class VetController extends Controller
             $year = new DateTime();
             $year = explode('-',$year->format('Y-m-d'))[0];
         }
-        $expensesPerMonth = array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0,"6"=>0,"7"=>0,"8"=>0,
-            "9"=>0, "10"=>0,"11"=>0,"12"=>0);
+
         $cat = Cat::find($id);
         $currentUser = auth()->user();
+
         $vetLogs = $this->yearlyVetLogs($year,$cat->cat_name,$currentUser->email);
-        dd($vetLogs);
         $totalExpenses = 0;
+        $expensesPerMonth = array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0,"6"=>0,"7"=>0,"8"=>0,
+            "9"=>0, "10"=>0,"11"=>0,"12"=>0);
         foreach ($vetLogs as $vetLog){
             $logDate = explode(" ",$vetLog->visit_date);
             $logMonth = intval((explode("-",$logDate[0]))[1]);
             $expensesPerMonth[$logMonth]= $expensesPerMonth[$logMonth]+$vetLog->price;
-
+            $totalExpenses = $totalExpenses + $vetLog->price;
         }
-        //dd($allVetLogs);
-        return view('pages.catVetPage',compact('cat'),compact('expensesPerMonth'))->with('vetLogs',$vetLogs);
+
+
+        //dd($totalExpenses);
+        return view('pages.catVetPage',compact('cat'),compact('expensesPerMonth'))
+            ->with('vetLogs',$vetLogs)->with('totalExpenses',$totalExpenses);
     }
 
     public function store(Request $request){
+        //adds the same cat vet log after refresh
         $status="success";
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
@@ -48,9 +53,8 @@ class VetController extends Controller
                         'prescription_picture'=>$prescription_picture, 'price'=>$request->price ,
                         'cat_name'=>$cat->cat_name]
                 );
-
         }
-        return view('pages.catVetPage',['id'=>$cat->id,$year='null'],compact('cat'));
+        return $this->catVetPage($request->id,$year = 'null');
     }
 
     public function yearlyVetLogs($year,$name,$user_email){
