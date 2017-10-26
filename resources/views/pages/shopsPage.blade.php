@@ -4,64 +4,6 @@
     <div id="page-wrapper">
         <div class="graphs">
             <h3 class="blank1">Favorite shops & products:</h3>
-
-
-
-            {{--add items--}}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="banner-bottom-video-grid-left">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingShop">
-                                    <h4 class="panel-title asd">
-                                        <a class="pa_italic collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                           aria-controls="collapseThree">
-                                            <span class="lnr lnr-chevron-down"></span><i
-                                                    class="lnr lnr-chevron-up"></i><label>Add shop</label>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingThree">
-                                    <div class="panel-body panel_text">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-md-6">
-                    <div class="banner-bottom-video-grid-left">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingItem">
-                                    <h4 class="panel-title asd">
-                                        <a class="pa_italic collapsed" role="button" data-toggle="collapse"
-                                           data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                           aria-controls="collapseThree">
-                                            <span class="lnr lnr-chevron-down"></span><i
-                                                    class="lnr lnr-chevron-up"></i><label>Add product</label>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                     aria-labelledby="headingThree">
-                                    <div class="panel-body panel_text">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
             {{--add shop--}}
             <div class="row">
                 <div class="col-sm-6">
@@ -120,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                {{--add shop--}}
+                {{--add product--}}
                 <div class="col-sm-6">
                     <h4 class="blank1">Add product:</h4>
                     <div class="tab-content" style="padding:0px">
@@ -147,19 +89,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="radio" class="col-sm-3 control-label">Type:</label>
+                                    <label for="checkbox" class="col-sm-3 control-label">Food product? </label>
                                     <div class="col-sm-8">
-                                        <div class="radio-inline"><label><input type="radio" name="itemType"
-                                                                                value="food">Food<br></label>
-                                        </div>
-                                        <div class="radio-inline"><label><input type="radio" name="itemType"
-                                                                                value="sand"
-                                                                                checked="true">Sand<br></label>
-                                        </div>
-                                        <div class="radio-inline"><label><input type="radio" name="itemType"
-                                                                                value="other"
-                                                                                checked="true">Other<br></label>
-                                        </div>
+                                        <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -184,40 +116,32 @@
                     </div>
                 </div>
             </div>
-            <!--Table-->
+            <!--Table of shops-->
             <div class="tab-content">
                 <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
                      data-widget-static="">
-                    <div class="row" style="padding: 10px">
-                        <div class="col-sm-1">
-                            <div class="input-group" style="margin: 0px 0px 0px 0px; width: 30%">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
-                                       type="text" style="width: 90px; "/>
-                            </div>
-                        </div>
-                        <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
-                            Pick a month or view 10 last purchases
-                        </div>
+                    <div class="row" style="padding: 14px 0px 6px 30px;">
+                       <h4>Favorite shops:</h4>
                     </div>
                     <table class="table table-striped">
                         <thead>
                         <tr class="warning">
-                            <th>Date</th>
-                            <th>Subject</th>
-                            <th>Description</th>
-                            <th>Price</th>
+                            <th>Shop name</th>
+                            <th>Url</th>
+                            <th>Address</th>
+                            <th>Opening hours</th>
+                            <th>Phone number</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr id="1">
-                            <td class="editableColumns">2017-10-14</td>
-                            <td class="editableColumns">Food for Ellie</td>
-                            <td class="editableColumns">15kg royal canin for Ellie, had 10% disscount</td>
-                            <td class="editableColumns">100</td>
+                            {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
+                            <td class="editableColumns">Best Pet</td>
+                            <td class="editableColumns"><a href="https://www.chewy.com/" target="_blank">https://www.chewy.com/</a></td>
+                            <td class="editableColumns">228 Park Ave S, New York</td>
+                            <td class="editableColumns">Sunday-Thursday: 8:00-18-00 , Friday:8:00- 14:00</td>
+                            <td class="editableColumns">0544-444444</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
@@ -227,10 +151,11 @@
                             </td>
                         </tr>
                         <tr id="2">
-                            <td>2017-10-14</td>
-                            <td>Sand</td>
-                            <td>Sand "Apple tree", item was on sale</td>
-                            <td>200</td>
+                            <td class="">Best Pet</td>
+                            <td class="">https://www.chewy.com/</td>
+                            <td class="">228 Park Ave S, New York</td>
+                            <td class="">Sunday-Thursday: 8:00-18-00 , Friday:8:00- 14:00</td>
+                            <td class="">0544-444444</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
@@ -239,10 +164,11 @@
                             </td>
                         </tr>
                         <tr id="3">
-                            <td>2017-10-14</td>
-                            <td>Treats and food</td>
-                            <td>3kg laCat and 2 boxed of tuna</td>
-                            <td>30</td>
+                            <td class="">Best Pet</td>
+                            <td class="">https://www.chewy.com/</td>
+                            <td class="">228 Park Ave S, New York</td>
+                            <td class="">Sunday-Thursday: 8:00-18-00 , Friday:8:00- 14:00</td>
+                            <td class="">0544-444444</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
@@ -251,10 +177,11 @@
                             </td>
                         </tr>
                         <tr id="4">
-                            <td>2017-10-14</td>
-                            <td>Scratching stand</td>
-                            <td>Scratching stand with 3 floors</td>
-                            <td>100</td>
+                            <td class="">Best Pet</td>
+                            <td class="">https://www.chewy.com/</td>
+                            <td class="">228 Park Ave S, New York</td>
+                            <td class="">Sunday-Thursday: 8:00-18-00 , Friday:8:00- 14:00</td>
+                            <td class="">0544-444444</td>
                             <td>
                                 <ul class="nav nav-pills">
                                     <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
@@ -282,6 +209,97 @@
             </div>
             <!--END Table -->
             <br>
+            <!--Table of products-->
+            <div class="tab-content">
+                <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+                     data-widget-static="">
+                    <div class="row" style="padding: 14px 0px 6px 30px;">
+                        <h4>Favorite products:</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="warning">
+                            <th>Product name</th>
+                            <th>Weight</th>
+                            <th>Type</th>
+                            <th>Picture</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="1">
+                            <td class="editableColumns">Royal canin fit 32</td>
+                            <td class="editableColumns">15kg</td>
+                            <td class="editableColumns">Food</td>
+                            <td class="editableColumns">Some img</td>
+                            <td class="editableColumns">300nis</td>
+                            <td>
+                                <ul class="nav nav-pills">
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
+                                                                         onclick=""></i></a></li>
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr id="2">
+                            <td class="">Royal canin fit</td>
+                            <td class="">2kg</td>
+                            <td class="">Food</td>
+                            <td class="">Some img</td>
+                            <td class="">100nis</td>
+                            <td>
+                                <ul class="nav nav-pills">
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr id="3">
+                            <td class="">Apple sand</td>
+                            <td class="">12kg</td>
+                            <td class=""></td>
+                            <td class="">Some img</td>
+                            <td class="">100nis</td>
+                            <td>
+                                <ul class="nav nav-pills">
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr id="4">
+                            <td class="">LaCat chicken</td>
+                            <td class="">1kg</td>
+                            <td class="">Food</td>
+                            <td class="">Some img</td>
+                            <td class="">30nis</td>
+                            <td>
+                                <ul class="nav nav-pills">
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
+                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div align="right" class="col-md-12 page_1">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--END Table -->
         </div>
         <br><br><br>
     </div>
