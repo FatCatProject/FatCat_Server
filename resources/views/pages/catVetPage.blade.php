@@ -104,7 +104,7 @@
                                         <canvas id="bar1" height="207" width="450px" style="width:450px; height: 100px;"></canvas>
                                         <script>
                                             var barChartData = {
-                                            labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                                 datasets: [
                                                     {
 
@@ -120,7 +120,7 @@
 
                                 </div>
                                 <div class="row" style="margin-left: 15px">
-                                    <h3 style="color: #999;">Total amout:$SUM</h3>
+                                    <h3 style="color: #999;">Total amout:{!! $totalExpenses !!}</h3>
                                 </div>
 
                             </div>
@@ -169,7 +169,7 @@
                             <td class="editableColumns">{!! $log->clinic_name !!}</td>
                             <td class="editableColumns">{!! $log->subject !!}</td>
                             <td class="editableColumns">{!! $log->description !!}</td>
-                            <td class="editableColumns">{!! $log->prescription_picture !!}</td>
+                            <td class="editableColumns">{!! base64_decode($log->prescription_picture) !!}</td>
                             <td class="editableColumns">{!! $log->price !!}</td>
                             <td>
                                 <ul class="nav nav-pills">

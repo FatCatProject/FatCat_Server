@@ -10,6 +10,7 @@
             <div class="col-md-4 grid_2 grid_2_bot">
 --}}
             {{--chart 1--}}
+
             <div class="col-sm-4">
                 <div class="grid_1">
                     <div class="row">
@@ -168,19 +169,51 @@
                         <th>Opened time</th>
                         <th>Closed time</th>
                         <th>Total time</th>
-                        <th>Amout of food</th>
+                        <th>Amount of food</th>
                     </tr>
                     </thead>
-                    @foreach($data as $row)
+                    {{--AllReports@foreach($data as $row)
                         <tr>
                             <td> {!! $row['open_time'] !!} </td>
                             <td> {!! $row['close_time'] !!} </td>
                             <td> {!! $row['diff'] !!} </td>
                             <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
                         </tr>
-                        @endforeach
+                    @endforeach--}}
+                    @for($index=0;$index<10 && count($data)>0;$index++)
+                        <tr>
+                            @if(empty($data[$index]))
+                                @endif
+                            @if(!empty($data[$index]))
+                            <td> {!! $data[$index]['open_time'] !!} </td>
+                            <td> {!! $data[$index]['close_time'] !!} </td>
+                            <td> {!! $data[$index]['diff'] !!} </td>
+                            <td> {!! $data[$index]['start_weight'] - $data[$index]['end_weight'] !!} grams </td>
+                            @endif
+                        </tr>
+                    @endfor
                         </tbody>
                 </table>
+                {{-- Needs work
+                <div align="right" class="col-md-12 page_1">
+                    <nav>
+                        <ul class="pagination">
+                            @if($numberOfPages == 1)
+                                <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
+                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                <li class="disabled"><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+                            @endif
+                            @if($numberOfPages >1)
+                                <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a></li>
+                                @for($i=1;$i<$numberOfPages+1;$i++)
+                                <li class="active"><a href="#">{!! $i !!} <span class="sr-only">(current)</span></a></li>
+                                @endfor
+                                <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>
+                --}}
                 <div align="right" class="col-md-12 page_1">
                     <nav>
                         <ul class="pagination">
@@ -239,6 +272,7 @@
     </div>
     <br/><br/>
     <br/><br/>
+
 
 
 
