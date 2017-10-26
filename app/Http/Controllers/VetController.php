@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cat;
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 
 class VetController extends Controller
 {
@@ -36,6 +37,7 @@ class VetController extends Controller
     }
 
     public function store(Request $request){
+        $file = $request->file('prescription_picture');
         //adds the same cat vet log after refresh
         $status="success";
         $cat = Cat::find($request->id);
@@ -44,7 +46,8 @@ class VetController extends Controller
         if($currentUser == null){
             $status = "Failed, you need to sign in";
         }else{
-            $prescription_picture=base64_encode($request->profile_picture);
+            $prescription_picture=base64_encode($request->prescription_picture);
+            //dd($prescription_picture);
             $visit_date = (new DateTime($request->visit_date))->format('Y-m-d');
             $now = new DateTime();
             DB::table('cats_vet_logs')->insert(
