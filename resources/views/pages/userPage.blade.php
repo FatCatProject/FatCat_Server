@@ -3,125 +3,104 @@
     @include('layouts.datePicker')
     <div id="page-wrapper">
         <div class="graphs">
-            <h3 class="blank1">Favorite shops & products:</h3>
-            {{--add shop--}}
+            <h3 class="blank1">User Manager:</h3>
+            {{--User information--}}
             <div class="row">
-                <div class="col-sm-6">
-                    <h4 class="blank1">Add shop:</h4>
+                <div class="col-sm-12">
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Shop name:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="shopName" placeholder="">
+
+                                <div class="col-sm-6">
+                                    <h4 class="blank1">User Information:</h4>
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Email:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control1" id="shopName" placeholder="">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Url:</label>
-                                    <div class="col-sm-8">
-                                        <input type="url" class="form-control1" id="shopUrl" placeholder="">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">First name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="txtarea1" class="col-sm-3 control-label">Address:</label>
-                                    <div class="col-sm-8"><textarea name="shopAddress" id="shopAddress"
-                                                                    cols="50"
-                                                                    rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="txtarea1" class="col-sm-3 control-label">Opening hours:</label>
-                                    <div class="col-sm-8"><textarea name="shopHours" id="shopHours"
-                                                                    cols="50"
-                                                                    rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="shopTel"
-                                               pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Last name:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                        </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Country:</label>
+                                        <div class="col-sm-8">
+                                            <input type="url" class="form-control1" id="shopUrl" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control1" id="shopTel"
+                                                   pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profilePicture" class="col-sm-3 control-label">Profile picture:</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" name="itemPicture" id="itemPicture" class="filestyle"
+                                                   data-buttonBefore="true" style="margin-top: 6px">
+                                        </div>
+                                    </div>
+
                                 </div>
 
+                                <div class="col-sm-6">
+                                    <h4 class="blank1">Reminders & Notifications:</h4>
+                                    {{--reminders / mail notifications--}}
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-6 control-label">Reminder to buy food when only 10% is left :</label>
+                                        <div class="col-sm-6">
+                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-6 control-label">Reseive Daily reports via email:</label>
+                                        <div class="col-sm-6">
+                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-6 control-label">Receive notification twice a day if cat is not eating</label>
+                                        <div class="col-sm-6">
+                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br><br>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
+                                        <div class="col-sm-12 col-sm-offset-2">
+                                            <button class="btn-success btn">Save changes</button>
+                                            <button class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
 
                         </div>
                     </div>
                 </div>
-                {{--add product--}}
-                <div class="col-sm-6">
-                    <h4 class="blank1">Add product:</h4>
-                    <div class="tab-content" style="padding:0px">
-                        <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="itemName" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Weight:</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control1" id="itemWeight" step="any" min="0"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Price:</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control1" id="itemPrice" step="any" min="0"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="checkbox" class="col-sm-3 control-label">Food product? </label>
-                                    <div class="col-sm-8">
-                                        <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="profilePicture" class="col-sm-3 control-label">Picture:</label>
-                                    <div class="col-sm-8">
-                                        <input type="file" name="itemPicture" id="itemPicture" class="filestyle"
-                                               data-buttonBefore="true" style="margin-top: 6px">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
-                        </div>
-                    </div>
-                </div>
             </div>
             <!--Table of shops-->
             <div class="tab-content">
                 <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
                      data-widget-static="">
                     <div class="row" style="padding: 14px 0px 6px 30px;">
-                       <h4>Favorite shops:</h4>
+                        <h4>Favorite shops:</h4>
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -138,7 +117,8 @@
                         <tr id="1">
                             {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
                             <td class="editableColumns">Best Pet</td>
-                            <td class="editableColumns"><a href="https://www.chewy.com/" target="_blank">https://www.chewy.com/</a></td>
+                            <td class="editableColumns"><a href="https://www.chewy.com/" target="_blank">https://www.chewy.com/</a>
+                            </td>
                             <td class="editableColumns">228 Park Ave S, New York</td>
                             <td class="editableColumns">Sunday-Thursday: 8:00-18-00 , Friday:8:00- 14:00</td>
                             <td class="editableColumns">0544-444444</td>

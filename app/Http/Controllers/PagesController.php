@@ -39,5 +39,11 @@ class PagesController extends Controller
         else
             return 'No pages.shopsPage view';
     }
+    public function userPage(){
+        if(View::exists('pages.userPage'))
+            return view('pages.userPage');
+        else
+            return 'No pages.userPage view';
+    }
 
 }
