@@ -25,8 +25,9 @@
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
-                    <span>Cats Information</span></a>
+                    <span>Cats Manager</span></a>
                 <ul class="sub-menu-list">
+                    <li><a href="/addCat">Manage cats</a></li>
                     @foreach($mycats as $cat)
                     <li><a href="/catPage/{!! $cat->id !!}">{!! $cat->cat_name !!}</a></li>
                     @endforeach
