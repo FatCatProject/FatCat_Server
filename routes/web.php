@@ -45,4 +45,4 @@ Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
 Route::get('/homePage', 'PagesController@home');
 Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/shopsPage', 'PagesController@shopList');
-
+Route::get('/userPage', 'PagesController@userPage');
