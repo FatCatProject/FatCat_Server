@@ -3,7 +3,7 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <h1><a href="index.html">Fat <span>Cat</span></a></h1>
+        <h1><a href="/homePage">Fat&nbsp;&nbsp;<span class="lnr lnr-paw"> Cat</span></a></h1>
     </div>
     <div class="logo-icon text-center">
         <a href="/homePage"><i class="lnr lnr-home"></i></a>
@@ -39,9 +39,6 @@
                     @foreach($mycats as $cat)
                         <li><a href="/catVetPage/{!! $cat->id !!}">{!! $cat->cat_name !!}</a></li>
                     @endforeach
-                    <li><a href="/catVetPage">Cat A</a></li>
-                    <li><a href="/catVetPage">Cat B</a></li>
-                    <li><a href="/catVetPage">Cat C</a></li>
                 </ul>
             </li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-cart"></i>
