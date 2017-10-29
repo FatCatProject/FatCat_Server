@@ -4,6 +4,7 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+/*Added by Natalie*/
 .vr {
 	/*margin-left: 0px;*/
 	/*margin-right: 0px;*/
@@ -13,6 +14,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	display: inline-block;
 	vertical-align: bottom;
 }
+.catCardTable tr{
+	text-align: center;
+
+}
+.catCardTable td{
+	text-align: left;
+	padding: 2px 50px;
+	font-size: 0.85em;
+
+}
+/*End of aded changes*/
+
 h4, h5, h6,
 h1, h2, h3 {margin-top: 0;
 color: #999999}
@@ -1935,6 +1948,15 @@ i.pull-left.fa.fa-bolt.icon-rounded {
     width: 95px;
     height: 30px;
     padding: .4em 0 0;
+}
+.groww{
+	position: absolute;
+	top:30%;
+	left:35%;
+	background:#8BC34A;
+	width: 95px;
+	height: 30px;
+	padding: .4em 0 0;
 }
 .grow1 {
     background: #00BCD4;
@@ -5281,6 +5303,10 @@ div#container-rpm1{
 .grow {
     left:32%;
 }
+	.groww {
+		left:35%;
+		top:23%;
+	}
 .r3_counter_box h5 {
     font-size: 2.2em;
 }
@@ -5646,6 +5672,10 @@ div#container-rpm1{
     left: 28%;
     top: 41%;
 }
+.groww {
+	left:27%;
+	top:15%;
+}
 .switch-right-grid ul {
     padding: 1em 0 1em;
 }
@@ -5788,6 +5818,10 @@ canvas#bar1 {
 	.social_icons {
 		width: 41%;
 	}
+	.groww {
+		left:30%;
+		top:15%;
+	}
 }
 @media (max-width:991px){
 	.social_icons {
@@ -5888,6 +5922,7 @@ canvas#bar1 {
 	.error-main-right img {
 		width: 50%;
 	}
+
 	
 }
 @media (max-width:966px){
@@ -6049,6 +6084,10 @@ div#char {
 .sign-up {
     width: 90%;
 }
+	.groww {
+		left:41%;
+		top:20%;
+	}
 }
 @media (max-width:960px){
 	.social_icons {
@@ -6084,7 +6123,7 @@ div#char {
 		padding-top: 100px;
 	}
 	.grow {
-		left: 43%;
+		 left: 43%;
 	}
 	.switch-right {
 		width: 100%;
@@ -6161,6 +6200,10 @@ div#char {
 	}
 	.main-content2copy {
 		min-height: 1100px !important;
+	}
+	.groww {
+		left:40%;
+		top:20%;
 	}
 }
 @media (max-width:768px){
@@ -6332,17 +6375,29 @@ div#container-rpm1{
 	height:200px !important;
 }
 .grow {
-    left: 41%;
-}
+	 left: 41%;
+ }
+	.groww {
+		left:36%;
+		top:20%;
+	}
 }
 @media (max-width:655px){
 	.social_icons {
 		width: 64%;
 	}
+	.groww {
+		left:36%;
+		top:20%;
+	}
 }
 @media (max-width:642px){
 	.social_icons {
 		width: 63%;
+	}
+	.groww {
+		left:36%;
+		top:20%;
 	}
 }
 @media (max-width:640px){
@@ -6488,6 +6543,10 @@ body.sticky-header {
 	.user-panel-top li {
 		margin-top: 8px;
 	}
+	.groww {
+		left:36%;
+		top:20%;
+	}
 }
 @media (max-width:600px){
 	.main-content {
@@ -6560,6 +6619,10 @@ div#page-wrapper {
 .error-main-right {
     margin-top: 1em;
 }
+	.groww {
+		left:36%;
+		top:20%;
+	}
 }
 @media (max-width:568px){
 div#container-speed{
@@ -6587,6 +6650,10 @@ div#page-wrapper {
 div#page-wrapper {
     padding: 1em 1em .1em;
 }
+	.groww {
+		left:36%;
+		top:20%;
+	}
 }
 @media (max-width:480px){
 	.user-panel-top li {
@@ -6600,6 +6667,10 @@ div#page-wrapper {
 	}
 	.main-content {
 		min-height: 855px;
+	}
+	.groww {
+		left:0%;
+		top:15%;
 	}
 span.label.label-default{
   line-height: 2em;
