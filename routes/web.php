@@ -46,3 +46,5 @@ Route::get('/homePage', 'PagesController@home');
 Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/shopsPage', 'PagesController@shopList');
 Route::get('/userPage', 'PagesController@userPage');
+Route::get('/boxManagePage', 'PagesController@boxManagePage');
+Route::get('/editBoxPage', 'PagesController@editBoxPage');

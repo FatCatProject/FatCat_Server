@@ -20,7 +20,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 }
 .catCardTable td{
 	text-align: left;
-	padding: 2px 50px;
+	padding: 2px 40px;
 	font-size: 0.85em;
 
 }
@@ -1861,7 +1861,7 @@ ul.dropdown-menu.drp-mnu li a i {
 .main-content {
     margin-left: 200px;
     background:#F8F8F8;
-    min-height: 1000px;
+    /*min-height: 1000px;*/
 }
 .main-content2{
 	min-height: 1250px !important;

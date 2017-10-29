@@ -14,16 +14,8 @@
 
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
-            <li class="active"><a href="#"><i class="lnr lnr-user"></i><span>User Information</span></a></li>
-            <li class="menu-list">
-                <a href="#"><i class="lnr lnr-cog"></i>
-                    <span>Manage Boxes</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="some.html">CatA` Box</a></li>
-                    <li><a href="some.html">CatB` Box</a></li>
-                    <li><a href="some.html">CatC` Box</a></li>
-                </ul>
-            </li>
+            <li class="active"><a href="/userPage"><i class="lnr lnr-user"></i><span>User Information</span></a></li>
+            <li class=""><a href="/boxManagePage"><i class="lnr lnr-cog"></i><span>Food boxes</span></a></li>
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Manager</span></a>
                 <ul class="sub-menu-list">

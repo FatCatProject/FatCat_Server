@@ -15,7 +15,7 @@
                             <i class="fa" style="width: 150px; margin-left: -30px"><img
                                     src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png"
                                     width="100px"></i>
-                            <div class="stats" style="padding-bottom: 10px">
+                            <div  align="center" class="stats" style="padding-bottom: 10px">
                                 <div class="grow groww">
                                     <p>Cat name</p>
                                 </div>
@@ -74,7 +74,7 @@
                             <i class="fa" style="width: 150px; margin-left: -30px"><img
                                     src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_paper.png"
                                     width="100px"></i>
-                            <div class="stats" style="padding-bottom: 10px">
+                            <div align="center" class="stats" style="padding-bottom: 10px">
                                 <div class="grow grow1 groww">
                                     <p>Cat name</p>
                                 </div>
@@ -132,7 +132,7 @@
                             <i class="fa" style="width: 150px; margin-left: -30px"><img
                                     src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_upsidedown.png"
                                     width="100px"></i>
-                            <div class="stats" style="padding-bottom: 10px">
+                            <div align="center" class="stats" style="padding-bottom: 10px">
                                 <div class="grow grow3 groww">
                                     <p>Cat name</p>
                                 </div>
