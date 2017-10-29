@@ -27,7 +27,6 @@
         <!-- //content starts -->
         @yield('content')
         <!-- //content ends -->
-
         <!--body wrapper end-->
     </div>
 
