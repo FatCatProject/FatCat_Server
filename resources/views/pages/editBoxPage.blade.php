@@ -99,10 +99,8 @@
                         <form class="form-horizontal">
                             <div class="">
                                 <div class="row" style="margin-left: 250px">
-
                                         <button class="btn-success btn">Save changes</button>
                                         <button class="btn-inverse btn">Cancel</button>
-
                                 </div>
                             </div>
                         </form>
