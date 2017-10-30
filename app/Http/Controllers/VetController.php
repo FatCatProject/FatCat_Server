@@ -7,6 +7,8 @@ use App\Cat;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Input;
+use function PHPSTORM_META\type;
 
 class VetController extends Controller
 {
@@ -37,7 +39,13 @@ class VetController extends Controller
     }
 
     public function store(Request $request){
-        $file = $request->file('prescription_picture');
+        if(Input::hasFile('prescription_picture')){
+            $file= Input::file('prescription_picture');
+            $file->move('uploads',$file->getClientOriginalName());
+            $encodedPrescriptionPicture=base64_encode($file);
+        }else
+            $encodedPrescriptionPicture = "";
+
         //adds the same cat vet log after refresh
         $status="success";
         $cat = Cat::find($request->id);
@@ -46,14 +54,12 @@ class VetController extends Controller
         if($currentUser == null){
             $status = "Failed, you need to sign in";
         }else{
-            $prescription_picture=base64_encode($request->prescription_picture);
-            //dd($prescription_picture);
             $visit_date = (new DateTime($request->visit_date))->format('Y-m-d');
             $now = new DateTime();
             DB::table('cats_vet_logs')->insert(
                     ['user_email'=>$currentUser->email ,'visit_date'=>$visit_date ,'subject'=>$request->subject,
                         'description'=>$request->description ,'clinic_name'=>$request->clinic_name ,
-                        'prescription_picture'=>$prescription_picture, 'price'=>$request->price ,
+                        'prescription_picture'=>$encodedPrescriptionPicture, 'price'=>$request->price ,
                         'cat_name'=>$cat->cat_name]
                 );
         }
