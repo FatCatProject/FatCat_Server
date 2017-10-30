@@ -29,12 +29,12 @@
                         </div>
                     </div>
 
-                    <div class="legend">
+                    <div class="legend" style="width: 129px;">
                         <div id="os-Mac-lbl">Food left<span></span></div>
                         <div id="os-Win-lbl">Food eaten<span></span></div>
                     </div>
 
-                    <canvas id="pie" height="200" width="250" style="width: 470px; height: 315px;"></canvas>
+                    <center> <canvas id="pie" height="200" width="250" style="width: 470px; height: 315px;"></canvas></center>
                     <script>
                         var pieData = [
                             {

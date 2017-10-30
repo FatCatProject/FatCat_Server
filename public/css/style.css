@@ -20,8 +20,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 }
 .catCardTable td{
 	text-align: left;
-	padding: 2px 40px;
+	padding: 2px 35px;
 	font-size: 0.85em;
+}
+
+.tblCardsForBox{
+	text-align: left;
+	box-shadow: none !important;
+	min-height: 40px;
+	font-size: 0.85em;
+	border-radius: 0;
+	color: #616161;
+	border: 1px solid #e0e0e0;
+}
+.tblCardsForBox td{
+	text-align: left;
+	padding: 2px 15px 0 15px ;
 
 }
 /*End of aded changes*/
