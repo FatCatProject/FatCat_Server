@@ -46,4 +46,16 @@ class PagesController extends Controller
             return 'No pages.userPage view';
     }
 
+    public function boxManagePage(){
+        if(View::exists('pages.boxManagePage'))
+            return view('pages.boxManagePage');
+        else
+            return 'No pages.boxManagePage view';
+    }
+    public function editBoxPage(){
+        if(View::exists('pages.editBoxPage'))
+            return view('pages.editBoxPage');
+        else
+            return 'No pages.editBoxPage view';
+    }
 }
