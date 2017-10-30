@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
     @include('layouts.datePicker')
+
+    add food products
     <div id="page-wrapper">
         <div class="graphs">
             <h3 class="blank1">User Manager:</h3>
