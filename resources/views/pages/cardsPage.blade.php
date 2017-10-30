@@ -3,10 +3,11 @@
     @include('layouts.datePicker')
     <div id="page-wrapper">
         <div class="graphs">
+            <h3 class="blank1">Cards Manager:</h3>
             {{--Cards Manager--}}
             <div class="row">
-                <div class="col-sm-5">
-                    <h3 class="blank1">Cards Manager:</h3>
+                <div class="col-sm-6">
+                    <h4 class="blank1">Add cat card:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal">
@@ -25,19 +26,36 @@
                                             <input type="text" class="form-control1" id="shopUrl" placeholder="">
                                         </div>
                                     </div>
-
-
+                                    {{--Choose cat--}}
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Belongs to:</label>
+                                        <!--Full dropdown without ajax-->
+                                        <div class="col-sm-9">
+                                            <select name="foodBox" id="foodBox" class="form-control1">
+                                                <option value="" name="" selected disabled>Please choose a cat for this card:
+                                                </option>
+                                                <option value="1" name="1">Ellie</option>
+                                                <option value="2" name="2">Elf</option>
+                                                <option value="3" name="3">Chavka</option>
+                                                {{--@foreach ($breeds as $breed)--}}
+                                                {{--<option value="{!! $breed !!}"--}}
+                                                {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
+                                                {{--@endforeach--}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{--Choose which box to open--}}
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox:</label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
                                             <select name="foodBox" id="foodBox" class="form-control1">
-                                                <option value="" name="" selected disabled>Please select a foodbox this
+                                                <option value="" name="" selected disabled>Please choose a foodbox this
                                                     card can open:
                                                 </option>
-                                                <option value="1" name="1">1</option>
-                                                <option value="2" name="2">2</option>
-                                                <option value="3" name="3">3</option>
+                                                <option value="1" name="1">box 1</option>
+                                                <option value="2" name="2">box 2</option>
+                                                <option value="3" name="3">box 3</option>
                                                 {{--@foreach ($breeds as $breed)--}}
                                                 {{--<option value="{!! $breed !!}"--}}
                                                 {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
@@ -55,7 +73,52 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:50px 0 0 15px">
-                                        <button class="btn-success btn">Add Card</button>
+                                        <button class="btn-success btn">Add Cat Card</button>
+                                        <button class="btn-inverse btn">Reset</button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                {{--admin cards--}}
+                <div class="col-sm-6 vr">
+                    <h4 class="blank1">Add admin card:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control1" id="cardID"
+                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-3 control-label">Active:</label>
+                                        <div class="col-sm-9">
+                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                        </div>
+                                    </div>
+
+                                    <h6>* This card will open all available food boxes</h6>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-sm-5" style="margin:50px 0 0 15px">
+                                        <button class="btn-success btn">Add Admin Card</button>
                                         <button class="btn-inverse btn">Reset</button>
                                     </div>
 
@@ -68,6 +131,7 @@
                 </div>
 
             </div>
+            <br><br>
             <div class="row">
                 <div class="col-sm-12" >
                     <!--Table of cards-->
