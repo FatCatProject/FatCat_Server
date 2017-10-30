@@ -37,6 +37,10 @@ Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage');
 Route::post('/addvetlog',['uses' => 'VetController@store']);
+Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage']);
+Route::post('/addShopping',['uses' => 'ShopController@storeShopLog']);
+
+
 
 //tests
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
