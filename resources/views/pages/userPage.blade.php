@@ -104,11 +104,6 @@
         </div>
         <br><br>
     </div>
-
-
-
-
-
     <script>
         $('.editValues').click(function () {
             $(this).parents('tr').find('td.editableColumns').each(function () {
