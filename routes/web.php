@@ -37,6 +37,13 @@ Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage');
 Route::post('/addvetlog',['uses' => 'VetController@store']);
+Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage']);
+Route::post('/addShopping',['uses' => 'ShopController@storeShopLog']);
+Route::get('/shopsPage', 'ShopController@shopsPage');
+Route::post('/addShop',['uses' => 'ShopController@storeShop']);
+Route::post('/addProduct',['uses' => 'ShopController@storeProduct']);
+
+
 
 //tests
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
@@ -44,7 +51,6 @@ Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
 
 Route::get('/homePage', 'PagesController@home');
 Route::get('/shoppingPage', 'PagesController@shop');
-Route::get('/shopsPage', 'PagesController@shopList');
 Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
