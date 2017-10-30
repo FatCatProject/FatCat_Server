@@ -171,7 +171,7 @@
                         <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
                              data-widget-static="" style="margin-top: 0px">
                             <div class="row" style="padding: 14px 0px 6px 30px;">
-                                <h4>Registered cards: //show only 3!</h4>
+                                <h4>Registered cards: //show only 3$</h4>
                             </div>
                             <table class="table table-striped">
                                 <thead>
