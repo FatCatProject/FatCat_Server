@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Input;
 use function PHPSTORM_META\type;
+use Image;
 
 class VetController extends Controller
 {
@@ -32,34 +33,35 @@ class VetController extends Controller
             $totalExpenses = $totalExpenses + $vetLog->price;
         }
 
-
-        //dd($totalExpenses);
         return view('pages.catVetPage',compact('cat'),compact('expensesPerMonth'))
             ->with('vetLogs',$vetLogs)->with('totalExpenses',$totalExpenses);
     }
 
+    //fixme
+    //base_64 encoded encodes to xammp folder.
     public function store(Request $request){
-        if(Input::hasFile('prescription_picture')){
-            $file= Input::file('prescription_picture');
-            $file->move('uploads',$file->getClientOriginalName());
-            $encodedPrescriptionPicture=base64_encode($file);
+        $cat = Cat::find($request->id);
+        if($request->hasFile('prescription_picture')){
+            $file= $request->file('prescription_picture');
+            $fileName = $cat->id . ".png";
+            Image::make($file)->save(public_path('/uploads/prescription_picturses/' . $fileName));
+
         }else
             $encodedPrescriptionPicture = "";
 
         //adds the same cat vet log after refresh
         $status="success";
-        $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $currentUser = auth()->user();
-        if($currentUser == null){
-            $status = "Failed, you need to sign in";
+        if($currentUser == null || $request->cat_name == null || $request->visit_date == null){
+            $status = "Failed, something missing";
         }else{
             $visit_date = (new DateTime($request->visit_date))->format('Y-m-d');
             $now = new DateTime();
             DB::table('cats_vet_logs')->insert(
                     ['user_email'=>$currentUser->email ,'visit_date'=>$visit_date ,'subject'=>$request->subject,
                         'description'=>$request->description ,'clinic_name'=>$request->clinic_name ,
-                        'prescription_picture'=>$encodedPrescriptionPicture, 'price'=>$request->price ,
+                        'prescription_picture'=>$fileName, 'price'=>$request->price ,
                         'cat_name'=>$cat->cat_name]
                 );
         }
