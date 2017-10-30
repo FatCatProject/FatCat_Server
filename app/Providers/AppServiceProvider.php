@@ -21,7 +21,11 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         View::share('userName','SomeUser');
         View::composer('*',function ($view){
-            $cats = DB::table('cats')->where('user_email',Auth::user()->email)->get();
+            if(Auth::user()!=null){
+                $cats = DB::table('cats')->where('user_email',Auth::user()->email)->get();
+            }else{
+                $cats = null;
+            }
             $view->with('mycats',$cats);
         });
     }
