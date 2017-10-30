@@ -3,7 +3,7 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <h1><a href="index.html">Fat <span>Cat</span></a></h1>
+        <h1><a href="/homePage">Fat&nbsp;&nbsp;<span class="lnr lnr-paw"> Cat</span></a></h1>
     </div>
     <div class="logo-icon text-center">
         <a href="/homePage"><i class="lnr lnr-home"></i></a>
@@ -14,16 +14,19 @@
 
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
-            <li class="active"><a href="#"><i class="lnr lnr-user"></i><span>User Information</span></a></li>
-            <li class="menu-list">
-                <a href="#"><i class="lnr lnr-cog"></i>
-                    <span>Manage Boxes</span></a>
+
+            <li class="active"><a href="#"><i class="lnr lnr-cog"></i>
+                    <span>Settings</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="some.html">CatA` Box</a></li>
-                    <li><a href="some.html">CatB` Box</a></li>
-                    <li><a href="some.html">CatC` Box</a></li>
+                    <li><a href="/userPage">User</a></li>
+                    <li><a href="/cardsPage">Cards</a></li>
+                    <li><a href="/userPage">Food products</a></li>
                 </ul>
             </li>
+
+            <li class="menu-list"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>
+            <li class="menu-list"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>
+
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Manager</span></a>
                 <ul class="sub-menu-list">

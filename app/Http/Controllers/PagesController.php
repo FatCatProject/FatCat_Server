@@ -58,4 +58,10 @@ class PagesController extends Controller
         else
             return 'No pages.editBoxPage view';
     }
+    public function cardsPage(){
+        if(View::exists('pages.cardsPage'))
+            return view('pages.cardsPage');
+        else
+            return 'No pages.cardsPage view';
+    }
 }
