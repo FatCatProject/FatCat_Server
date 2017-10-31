@@ -64,4 +64,11 @@ class PagesController extends Controller
         else
             return 'No pages.cardsPage view';
     }
+    public function foodProductsPage(){
+        if(View::exists('pages.foodProductsPage'))
+            return view('pages.foodProductsPage');
+        else
+            return 'No pages.foodProductsPage view';
+    }
+
 }
