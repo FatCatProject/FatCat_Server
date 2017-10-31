@@ -1,14 +1,25 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row"> <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3></div>
-        <div class="row">
-{{--
-            <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
-            <!---728x90--->
+        <div class="row"><h3 class="blank1">{!! $cat['cat_name'] !!} information</h3></div>
 
-            <div class="col-md-4 grid_2 grid_2_bot">
---}}
+
+
+
+        {{----}}
+
+
+
+
+        {{----}}
+
+        <div class="row">
+            {{--
+                        <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
+                        <!---728x90--->
+
+                        <div class="col-md-4 grid_2 grid_2_bot">
+            --}}
             {{--chart 1--}}
 
             <div class="col-sm-4">
@@ -16,7 +27,7 @@
                     <div class="row">
                         <div class="col-lg-2">
                             <div class="input-group" style="margin: 15px 0px 0px 25px; width: 20%">
-                                <div class="input-group-addon" >
+                                <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
@@ -72,7 +83,9 @@
                             <p>All daily meals by eaten amount of food per meal</p>
                             <br/> <br/>
                         </div>
-                        <div class="row" align="center"><canvas id="line1" height="137" width="400" style="width: 450px; height: 100px;"></canvas></div>
+                        <div class="row" align="center">
+                            <canvas id="line1" height="137" width="400" style="width: 450px; height: 100px;"></canvas>
+                        </div>
 
                         <script>
                             var lineChartData = {
@@ -116,7 +129,9 @@
                             <p>All monthly meals by eaten amount of food per day</p>
                             <br/> <br/>
                         </div>
-                        <div class="row" align="center"><canvas id="bar1" height="137" width="415"></canvas></div>
+                        <div class="row" align="center">
+                            <canvas id="bar1" height="137" width="415"></canvas>
+                        </div>
 
                     </div>
 
@@ -146,11 +161,10 @@
              data-widget-static="">
 
 
-
             <div class="panel-body no-padding">
                 <div class="row">
 
-                        <div class="col-sm-2">
+                    <div class="col-sm-2">
                         <div class="input-group" style="margin: 0px 0px 10px 0px; width: 20%">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -159,7 +173,9 @@
                                    type="text" style="width: 100px; "/>
                         </div>
                     </div>
-                    <div class="col-sm-10" style="color: #999; font-size: 13px;margin: 10px 0px 10px -60px">Pick a month or view 10 last feeding logs</div>
+                    <div class="col-sm-10" style="color: #999; font-size: 13px;margin: 10px 0px 10px -60px">Pick a month
+                        or view 10 last feeding logs
+                    </div>
 
 
                 </div>
@@ -183,15 +199,15 @@
                     @for($index=0;$index<10 && count($data)>0;$index++)
                         <tr>
                             @if(empty($data[$index]))
-                                @endif
+                            @endif
                             @if(!empty($data[$index]))
-                            <td> {!! $data[$index]['open_time'] !!} </td>
-                            <td> {!! $data[$index]['close_time'] !!} </td>
-                            <td> {!! $data[$index]['diff'] !!} </td>
-                            <td> {!! $data[$index]['start_weight'] - $data[$index]['end_weight'] !!} grams </td>
+                                <td> {!! $data[$index]['open_time'] !!} </td>
+                                <td> {!! $data[$index]['close_time'] !!} </td>
+                                <td> {!! $data[$index]['diff'] !!} </td>
+                                <td> {!! $data[$index]['start_weight'] - $data[$index]['end_weight'] !!} grams</td>
                             @endif
                         </tr>
-                    @endfor
+                        @endfor
                         </tbody>
                 </table>
                 {{-- Needs work
@@ -245,7 +261,8 @@
                                        data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                        aria-controls="collapseThree">
                                         <span class="lnr lnr-chevron-down"></span><i
-                                                class="lnr lnr-chevron-up"></i><label>Edit {!! $cat['cat_name'] !!}'s information</label>
+                                                class="lnr lnr-chevron-up"></i><label>Edit {!! $cat['cat_name'] !!}'s
+                                            information</label>
                                     </a>
                                 </h4>
                             </div>
