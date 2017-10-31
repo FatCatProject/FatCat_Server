@@ -10,12 +10,13 @@
                     <h4 class="blank1">Add cat card:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="POST" action="addCard" id="addCardForm">
+                                {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="cardID"
+                                            <input type="text" class="form-control1" id="cardID" name="card_id"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
                                         </div>
                                     </div>
@@ -23,7 +24,7 @@
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                            <input type="text" class="form-control1" name="card_name" id="shopUrl" placeholder="">
                                         </div>
                                     </div>
                                     {{--Choose cat--}}
@@ -32,11 +33,12 @@
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
                                             <select name="foodBox" id="foodBox" class="form-control1">
-                                                <option value="" name="" selected disabled>Please choose a cat for this card:
-                                                </option>
-                                                <option value="1" name="1">Ellie</option>
-                                                <option value="2" name="2">Elf</option>
-                                                <option value="3" name="3">Chavka</option>
+                                                <option value="" name="" selected disabled>Please choose a cat for this card:</option>
+                                                @if(!empty($mycats))
+                                                    @foreach($mycats as $cat)
+                                                        <option value="{!! $cat->id !!}" name="1">{!! $cat->cat_name !!}</option>
+                                                    @endforeach
+                                                @endif
                                                 {{--@foreach ($breeds as $breed)--}}
                                                 {{--<option value="{!! $breed !!}"--}}
                                                 {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
@@ -51,11 +53,12 @@
                                         <div class="col-sm-9">
                                             <select name="foodBox" id="foodBox" class="form-control1">
                                                 <option value="" name="" selected disabled>Please choose a foodbox this
-                                                    card can open:
-                                                </option>
-                                                <option value="1" name="1">box 1</option>
-                                                <option value="2" name="2">box 2</option>
-                                                <option value="3" name="3">box 3</option>
+                                                    card can open:</option>
+                                                @if(!empty($myFoodBoxes))
+                                                    @foreach($myFoodBoxes as $FoodBox)
+                                                        <option value="{!! $FoodBox->id !!}" name="1">{!! $FoodBox->foodbox_name !!}</option>
+                                                    @endforeach
+                                                @endif
                                                 {{--@foreach ($breeds as $breed)--}}
                                                 {{--<option value="{!! $breed !!}"--}}
                                                 {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
@@ -73,7 +76,7 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button class="btn-success btn">Add Cat Card</button>
+                                        <button class="btn-success btn" form="addCardForm">Add Cat Card</button>
                                         <button class="btn-inverse btn">Reset</button>
                                     </div>
 

@@ -1,19 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-//Route::get('/', function () {
-//    return view('layouts/master');
-//});
 Route::get('/' , 'PagesController@index');
 Route::get('/addCat' , ['uses'=>'CatController@addCat']);
 
@@ -42,6 +28,8 @@ Route::post('/addShopping',['uses' => 'ShopController@storeShopLog']);
 Route::get('/shopsPage', 'ShopController@shopsPage');
 Route::post('/addShop',['uses' => 'ShopController@storeShop']);
 Route::post('/addProduct',['uses' => 'ShopController@storeProduct']);
+Route::get('/cardsPage', 'CardController@cardsPage');
+Route::post('/addCard',['uses' => 'CardController@storeCard']);
 
 
 
@@ -54,5 +42,4 @@ Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
-Route::get('/cardsPage', 'PagesController@cardsPage');
 Route::get('/foodProductsPage', 'PagesController@foodProductsPage');
