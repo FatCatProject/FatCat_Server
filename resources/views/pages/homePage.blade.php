@@ -73,7 +73,7 @@
                             <br/>
                         </div>
                         <div class="row" align="center">
-                            <canvas id="bar1" height="155" width="415"></canvas>
+                            <canvas id="bar1" height="155" width="390"></canvas>
                         </div>
                     </div>
                     <script>
