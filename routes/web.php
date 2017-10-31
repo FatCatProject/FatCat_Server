@@ -55,3 +55,4 @@ Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
 Route::get('/cardsPage', 'PagesController@cardsPage');
+Route::get('/foodProductsPage', 'PagesController@foodProductsPage');

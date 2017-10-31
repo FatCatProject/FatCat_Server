@@ -20,7 +20,7 @@
                 <ul class="sub-menu-list">
                     <li><a href="/userPage">User</a></li>
                     <li><a href="/cardsPage">Cards</a></li>
-                    <li><a href="/userPage">Food products</a></li>
+                    <li><a href="/foodProductsPage">Food products</a></li>
                 </ul>
             </li>
 

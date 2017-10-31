@@ -3,7 +3,7 @@
     @include('layouts.datePicker')
     <div id="page-wrapper">
         <div class="graphs">
-            <h3 class="blank1">Cards Manager:</h3>
+            <h3 class="blank1">Food Products Manager:</h3>
             {{--Cards Manager--}}
             <div class="row">
                 <div class="col-sm-6">
@@ -64,64 +64,16 @@
                                         </div>
                                     </div>
                                     {{--<div class="form-group">--}}
-                                        {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                        {{--</div>--}}
+                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
+                                    {{--<div class="col-sm-9">--}}
+                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
+                                    {{--</div>--}}
                                     {{--</div>--}}
                                 </div>
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
                                         <button class="btn-success btn">Add Cat Card</button>
-                                        <button class="btn-inverse btn">Reset</button>
-                                    </div>
-
-                                </div>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-                {{--admin cards--}}
-                <div class="col-sm-6 vr">
-                    <h4 class="blank1">Add admin card:</h4>
-                    <div class="tab-content" style="padding:0px">
-                        <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="cardID"
-                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
-                                        </div>
-                                    </div>
-                                    {{--<div class="form-group">--}}
-                                        {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    <h6 style="line-height: 2em; margin: 45px 0 9px 20px ">* Admin card will open all available food boxes. <br>
-                                        Designed to be used by cat owner to refill the food boxes.<br>
-                                        This card has no activity logs.
-                                    </h6>
-                                </div>
-
-                                <div class="form-group">
-
-                                    <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button class="btn-success btn">Add Admin Card</button>
                                         <button class="btn-inverse btn">Reset</button>
                                     </div>
 
