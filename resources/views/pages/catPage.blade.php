@@ -1,28 +1,11 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
+
         <div class="row"><h3 class="blank1">{!! $cat['cat_name'] !!} information</h3></div>
-
-
-
-
-        {{----}}
-
-
-
-
-        {{----}}
-
-        <div class="row">
-            {{--
-                        <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
-                        <!---728x90--->
-
-                        <div class="col-md-4 grid_2 grid_2_bot">
-            --}}
-            {{--chart 1--}}
-
-            <div class="col-sm-4">
+        <div class="graph_box">
+{{--Chart1--}}
+            <div class="col-sm-4" >
                 <div class="grid_1">
                     <div class="row">
                         <div class="col-lg-2">
@@ -40,12 +23,12 @@
                         </div>
                     </div>
 
-                    <div class="legend" style="width: 129px;">
+                    <div class="legend" style="width: 105px; margin: 0 0 0 25px">
                         <div id="os-Mac-lbl">Food left<span></span></div>
                         <div id="os-Win-lbl">Food eaten<span></span></div>
                     </div>
 
-                    <center> <canvas id="pie" height="200" width="250" style="width: 470px; height: 315px;"></canvas></center>
+                    <center> <canvas id="pie" height="200" width="250" style="background: none; width: 470px; height: 315px;"></canvas></center>
                     <script>
                         var pieData = [
                             {
@@ -155,7 +138,7 @@
 
             </div>
         </div>
-
+        <div class="clearfix"></div>
         <!-- Table-->
         <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
              data-widget-static="">

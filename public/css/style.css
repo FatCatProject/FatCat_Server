@@ -2769,8 +2769,8 @@ canvas#doughnut, canvas#line, canvas#polarArea, #bar, #pie, #radar{
     font-size: 12px;
     border: 1px solid #E6E6E6;
     padding: 10px;
-    width: 165px;
-    margin: 0px 0px 0px 25px;
+    width: 176px;
+    margin: 7em 0 0 6em;
 }
 .legend div {
 	margin:3px 0;
@@ -5146,16 +5146,16 @@ canvas#polarArea {
 .legend {
     margin: 7em 0 0 2em;
 }
-canvas#pie {
-    width: 415px !important;
-    height: 267px !important;
-}
-canvas#line1 {
-    height: 76px !important;
-}
-canvas#bar1 {
-    height: 75px !important;
-}
+/*canvas#pie {*/
+    /*width: 415px !important;*/
+    /*height: 267px !important;*/
+/*}*/
+/*canvas#line1 {*/
+    /*height: 76px !important;*/
+/*}*/
+/*canvas#bar1 {*/
+    /*height: 75px !important;*/
+/*}*/
 .sign-in-form {
     width: 39%;
 }
@@ -5180,6 +5180,83 @@ canvas#doughnut {
 @media (max-width:1371px){
 	.social_icons {
 		width: 30%;
+	}
+}
+@media (max-width:1346px){
+
+
+	canvas#pie {
+	width:240px !important;
+	height: 192px !important;
+	margin: 3px;
+	}
+
+
+
+}
+@media (max-width:1346px){
+	canvas#pie {
+		width:240px !important;
+		height: 192px !important;
+		margin: 3px;
+	}
+}
+@media (max-width:1334px){
+	canvas#pie {
+		width:230px !important;
+		height: 184px !important;
+		/*margin: 6px;*/
+		margin-bottom: 16px;
+	}
+}
+@media (max-width:1304px){
+	canvas#pie {
+		width:220px !important;
+		height: 176px !important;
+		/*margin: 6px;*/
+		margin-bottom: 16px;
+	}
+}
+@media (max-width:1282px){
+	canvas#pie {
+		width:210px !important;
+		height: 168px !important;
+		/*margin: 6px;*/
+		margin-bottom: 21px;
+	}
+}
+@media (max-width:1245px){
+	canvas#pie {
+		width:200px !important;
+		height: 168px !important;
+	}
+}
+@media (max-width:1215px){
+	canvas#pie {
+		width:180px !important;
+		height: 144px !important;
+		margin-bottom: 30px;
+	}
+}
+@media (max-width:1155px){
+	canvas#pie {
+		width:160px !important;
+		height: 128px !important;
+		margin-bottom: 30px;
+	}
+}
+@media (max-width:1095px){
+	canvas#pie {
+		width:140px !important;
+		height: 128px !important;
+		margin-bottom: 30px;
+	}
+}
+@media (max-width:768px){
+	canvas#pie {
+		width:250px !important;
+		height: 200px !important;
+		margin: 0;
 	}
 }
  /*-- responsive design --*/
@@ -5254,10 +5331,10 @@ canvas#polarArea {
     width: 375px !important;
     height: 242px !important;
 }
-canvas#pie {
-    width:393px !important;
-    height: 266px !important;
-}
+/*canvas#pie {*/
+    /*width:393px !important;*/
+    /*height: 266px !important;*/
+/*}*/
 .error-main h3 {
     font-size: 5em;
 }
@@ -5359,27 +5436,27 @@ canvas.overlay,canvas.base  {
 .scrollbar1 {
     height: 400px;
 }
-canvas#doughnut {
-    width: 364px !important;
-}
-canvas#radar {
-    width: 364px !important;
-}
-canvas#polarArea {
-    width: 364px !important;
-}
-canvas#line1 {
-    width: 530px !important;
-	height: 63px !important;
-}
-canvas#bar1 {
-    width: 540px !important;
-	height: 50px !important;
-}
-canvas#pie {
-    width: 340px !important;
-    height: 225px !important;
-}
+/*canvas#doughnut {*/
+    /*width: 364px !important;*/
+/*}*/
+/*canvas#radar {*/
+    /*width: 364px !important;*/
+/*}*/
+/*canvas#polarArea {*/
+    /*width: 364px !important;*/
+/*}*/
+/*canvas#line1 {*/
+    /*width: 530px !important;*/
+	/*height: 63px !important;*/
+/*}*/
+/*canvas#bar1 {*/
+    /*width: 540px !important;*/
+	/*height: 50px !important;*/
+/*}*/
+/*canvas#pie {*/
+    /*width: 340px !important;*/
+    /*height: 225px !important;*/
+/*}*/
 .editor {
     padding: 1em 1.2em 2.5em 1.2em;
 }
@@ -5828,10 +5905,11 @@ canvas#line1 {
     margin: 1em auto 2em;
     float: none;
 }
-canvas#pie {
-    width: 250px !important;
-    height: 250px !important;
-}
+/*canvas#pie {*/
+	/*width:160px !important;*/
+	/*height: 128px !important;*/
+	/*margin-bottom: 30px;*/
+/*}*/
 canvas#bar1 {
     width: 410px !important;
     height: 140px !important;
@@ -5914,8 +5992,8 @@ canvas#bar1 {
 		padding:0 10px;
 	}
 	canvas#doughnut {
-		width: 250px !important;
-		height: 250px !important;
+		width: 266px !important;
+		height: 170px !important;
 	}
 	canvas#radar {
 		width: 265px !important;
@@ -7077,7 +7155,7 @@ span.email-title {
 	height: 70px;
 }
 .stats {
-    /*padding: 1.2em;*/
+    padding: 1.2em;
 }
 .grow {
     left: 35%;
