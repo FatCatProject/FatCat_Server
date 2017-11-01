@@ -1,3 +1,4 @@
+
 @extends('layouts.master')
 @section('content')
     @include('layouts.datePicker')
@@ -16,7 +17,7 @@
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="cardID" name="card_id"
+                                            <input type="text" class="form-control1" id="card_id" name="card_id"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
                                         </div>
                                     </div>
@@ -24,7 +25,8 @@
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" name="card_name" id="shopUrl" placeholder="">
+                                            <input type="text" class="form-control1" name="card_name" id="shopUrl"
+                                                   placeholder="">
                                         </div>
                                     </div>
                                     {{--Choose cat--}}
@@ -32,11 +34,14 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">Belongs to:</label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="foodBox" id="foodBox" class="form-control1">
-                                                <option value="" name="" selected disabled>Please choose a cat for this card:</option>
+                                            <select name="cat_id" id="foodBox" class="form-control1">
+                                                <option value="" name="" selected disabled>Please choose a cat for this
+                                                    card:
+                                                </option>
                                                 @if(!empty($mycats))
                                                     @foreach($mycats as $cat)
-                                                        <option value="{!! $cat->id !!}" name="1">{!! $cat->cat_name !!}</option>
+                                                        <option value="{!! $cat->id !!}"
+                                                                name="cat_id">{!! $cat->cat_name !!}</option>
                                                     @endforeach
                                                 @endif
                                                 {{--@foreach ($breeds as $breed)--}}
@@ -51,12 +56,14 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox:</label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="foodBox" id="foodBox" class="form-control1">
+                                            <select name="foodbox_id" id="foodBox" class="form-control1">
                                                 <option value="" name="" selected disabled>Please choose a foodbox this
-                                                    card can open:</option>
+                                                    card can open:
+                                                </option>
                                                 @if(!empty($myFoodBoxes))
                                                     @foreach($myFoodBoxes as $FoodBox)
-                                                        <option value="{!! $FoodBox->id !!}" name="1">{!! $FoodBox->foodbox_name !!}</option>
+                                                        <option value="{!! $FoodBox->id !!}"
+                                                                name="foodbox_id">{!! $FoodBox->foodbox_name !!}</option>
                                                     @endforeach
                                                 @endif
                                                 {{--@foreach ($breeds as $breed)--}}
@@ -67,10 +74,10 @@
                                         </div>
                                     </div>
                                     {{--<div class="form-group">--}}
-                                        {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                        {{--</div>--}}
+                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
+                                    {{--<div class="col-sm-9">--}}
+                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
+                                    {{--</div>--}}
                                     {{--</div>--}}
                                 </div>
                                 <div class="form-group">
@@ -93,12 +100,13 @@
                     <h4 class="blank1">Add admin card:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="POST" action="addAdminCard" id="adminCardForm">
+                                {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="cardID"
+                                            <input type="text" name="card_id" class="form-control1" id="cardID"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
                                         </div>
                                     </div>
@@ -106,16 +114,18 @@
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                            <input type="text" name="card_name" class="form-control1" id="shopUrl"
+                                                   placeholder="">
                                         </div>
                                     </div>
                                     {{--<div class="form-group">--}}
-                                        {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                        {{--<div class="col-sm-9">--}}
-                                            {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                        {{--</div>--}}
+                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
+                                    {{--<div class="col-sm-9">--}}
+                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
                                     {{--</div>--}}
-                                    <h6 style="line-height: 2em; margin: 45px 0 9px 20px ">* Admin card will open all available food boxes. <br>
+                                    {{--</div>--}}
+                                    <h6 style="line-height: 2em; margin: 45px 0 9px 20px ">* Admin card will open all
+                                        available food boxes. <br>
                                         Designed to be used by cat owner to refill the food boxes.<br>
                                         This card has no activity logs.
                                     </h6>
@@ -124,7 +134,7 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button class="btn-success btn">Add Admin Card</button>
+                                        <button class="btn-success btn" form="adminCardForm">Add Admin Card</button>
                                         <button class="btn-inverse btn">Reset</button>
                                     </div>
 
@@ -139,7 +149,7 @@
             </div>
             <hr>
             <div class="row" style="padding-top: 20px">
-                <div class="col-sm-12" >
+                <div class="col-sm-12">
                     <!--Table of cards-->
                     <div class="tab-content" style="margin-left: 25px">
                         <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
@@ -159,66 +169,47 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr id="1">
-                                    {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
-                                    <td class="editableColumns">111-111-111-111-111</td>
-                                    <td class="editableColumns">Ellie's Card</td>
-                                    <td class="editableColumns">Ellie</td>
-                                    <td class="editableColumns">1</td>
-                                    <td class="editableColumns">Yes</td>
-                                    <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
-                                                                                 onclick=""></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr id="2">
-                                    <td class="">222-222-222-222-222</td>
-                                    <td class="">Chavkas's Card</td>
-                                    <td class="">Chavkas</td>
-                                    <td class="">2</td>
-                                    <td class="">Yes</td>
-                                    <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr id="3">
-                                    <td class="">333-333-333-333-333</td>
-                                    <td class="">Elf's Card</td>
-                                    <td class="">Elf</td>
-                                    <td class="">3</td>
-                                    <td class="">No</td>
-                                    <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr id="4">
-                                    <td class="">000-000-000-000-000</td>
-                                    <td class="">My card</td>
-                                    <td class="">Admin</td>
-                                    <td class="">1,2,3</td>
-                                    <td class="">yes</td>
-                                    <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                @for($i=0;$i<10 && count($myCards)>0;$i++)
+                                    @if(empty($myCards[$i]))
+                                    @else
+                                        <tr id="{!! $i !!}">
+                                            {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
+                                            <td class="editableColumns">{!! $myCards[$i]['card_id'] !!}</td>
+                                            <td class="editableColumns">{!! $myCards[$i]['card_name'] !!}</td>
+                                            @if(empty($myCards[$i]['cat_id']))
+                                                <td class="editableColumns">Admin</td>
+                                            @else
+                                                <td class="editableColumns">{!! $myCards[$i]['cat_name'] !!}</td>
+                                            @endif
+                                            @if(empty($myCards[$i]['cat_id']))
+                                                <td class="editableColumns">Admin</td>
+                                            @else
+                                                <td class="editableColumns">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                            @endif
+                                            @if($myCards[$i]['active'] == 1)
+                                                <td class="editableColumns">Yes</td>
+                                            @else
+                                                <td class="editableColumns">No</td>
+                                            @endif
+                                            <td>
+                                                <ul class="nav nav-pills">
+                                                    <li class="menu-list"><a href="#"><i
+                                                                    class="lnr lnr-pencil editValues"
+                                                                    onclick=""></i></a></li>
+                                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endfor
                                 </tbody>
                             </table>
                             <div align="right" class="col-md-12 page_1">
                                 <nav>
                                     <ul class="pagination">
-                                        <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
+                                        <li class="disabled"><a href="#" aria-label="Previous"><i
+                                                        class="fa fa-angle-left"></i></a>
                                         </li>
                                         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
                                         <li><a href="#">2</a></li>
