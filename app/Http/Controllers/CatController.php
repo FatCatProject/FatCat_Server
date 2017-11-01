@@ -89,6 +89,7 @@ class CatController extends Controller
 
 
         $numberOfPages = intval(count($data)/10)+1;
+        //dd($data);
         return view('pages.catPage', compact('cat'), compact('data'),
             compact('ateDuringMonth'), compact('dailyMeals'), compact('numberOfPages')) ->with('numberOfPages',$numberOfPages);
     }
@@ -101,14 +102,12 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-    //fixme
-    //base_64 encoded encodes to xammp folder.
     public function store(Request $request){
         $status="success";
         date_default_timezone_set('Asia/Jerusalem');
         $currentUser = auth()->user();
-        if($request->cat_name ==null || $request->food_allowance == null){
-            $status = "failed, no input for cat name or food allowance";
+        if($request->cat_name ==null){
+            $status = "failed, no input for cat name";
         }else{
             $breed = DB::table('cat_breeds')->where('breed_name',$request->cat_breed)->get();
             if(count($breed)==1){
@@ -204,6 +203,12 @@ class CatController extends Controller
             $result = $result." Seconds:".$epochDiff;
         }
         return $result;
+    }
+
+    public function myCats(){
+        $user = User::find(Auth::id());
+        $cats = DB::table('cats')->where('user_email',$user->email)->get();
+        return $cats;
     }
 
 }

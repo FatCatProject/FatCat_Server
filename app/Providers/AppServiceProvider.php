@@ -18,7 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+//        //added by Natalie -
+//        if(!Auth::check()){
+//            return;
+//        }
+//        //
         Schema::defaultStringLength(191);
         View::share('userName','SomeUser');
         View::composer('*',function ($view){
