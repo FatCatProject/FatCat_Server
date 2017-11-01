@@ -12,12 +12,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'FatCat') }}</title>
+    <title>{{ config('FatCat', 'FatCat') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: #FFFFFF">
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top" style="background-color: #8BC34A">
             <div class="container">
