@@ -17,7 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="background-color: #FFFFFF">
+<body background="/images/paws_many.png" style="background-color: #FFFFFF;">
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top" style="background-color: #8BC34A">
             <div class="container">
