@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{--@include('layouts.styling')--}}
 @section('content')
 <div class="container">
     <div class="row">

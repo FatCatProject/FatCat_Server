@@ -20,7 +20,7 @@
                             <h4 style="margin-left: 80px; margin-top: -5px;">Monthly ratio of food</h4>
                         </div>
                     </div>
-                    <div class="legend">
+                    <div class="legend" style="margin:0 0 0 25px">
                         <div id="os-Mac-lbl">Cat 1<span>$x grams</span></div>
                         <div id="os-Win-lbl">Cat 2<span>$x grams</span></div>
                         <div id="os-Other-lbl">Cat 3<span>$x grams</span></div>
@@ -109,7 +109,7 @@
                             <h4 style="margin-left: 80px; margin-top: -5px;">Yearly vet visits</h4>
                         </div>
                     </div>
-                    <div class="legend">
+                    <div class="legend" style="margin:0 0 0 25px">
                         <div id="os-Mac-lbl">Cat 1<span>$x times</span></div>
                         <div id="os-Win-lbl">Cat 2<span>$x times</span></div>
                         <div id="os-Other-lbl">Cat 3<span>$x times</span></div>

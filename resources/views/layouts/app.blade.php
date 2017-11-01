@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<link href="/css/icon-font.min.css" rel='stylesheet' type='text/css' />
+<link href="/css/font-awesome.css" rel='stylesheet' type='text/css' />
+
+
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -8,14 +12,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'FatCat') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top" style="background-color: #8BC34A">
             <div class="container">
                 <div class="navbar-header">
 
@@ -28,8 +32,10 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a class="navbar-brand" href="{{ url('/') }}" style="font-family: 'Cabin', sans-serif;">
+{{--                        {{ config('FatCat', 'FatCat') }}--}}
+                        <span style="font-size:1.5em; color: #FFFFFF;">Fat </span><i style="font-size:1.5em; color: #000000;"class="lnr lnr-paw"></i><span style="font-size:1.5em; color: #000000";> Cat</span>
+
                     </a>
                 </div>
 

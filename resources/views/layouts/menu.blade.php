@@ -24,8 +24,8 @@
                 </ul>
             </li>
 
-            <li class="menu-list"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>
-            <li class="menu-list"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>
+            <li class="active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>
+            <li class="box or active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>
 
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Manager</span></a>
