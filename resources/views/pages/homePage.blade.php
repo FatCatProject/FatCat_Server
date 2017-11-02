@@ -11,7 +11,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="monthlyFoodRatio" name="dateMonth" placeholder="MM/YYYY"
+                                <input class="form-control" id="monthlyFoodRatio" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
                                        type="text" style="width: 90px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -58,7 +58,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" id="catDob" name="dateYear" placeholder="YYYY"
+                                    <input class="form-control" id="catDob" name="dateYear" alt="dateYear" placeholder="YYYY"
                                            type="text" style="width: 90px;"/>
                                 </div>
                                 @include('layouts.datePicker')
@@ -100,7 +100,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="monthlyFoodRatio" name="dateYear" placeholder="YYYY"
+                                <input class="form-control" id="monthlyFoodRatio" name="dateYear" alt="dateYear" placeholder="YYYY"
                                        type="text" style="width: 90px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -200,5 +200,10 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
     </div>
 @endsection

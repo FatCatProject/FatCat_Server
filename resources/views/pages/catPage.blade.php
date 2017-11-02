@@ -13,7 +13,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
+                                <input class="form-control" id="catDob" name="date" alt="date" placeholder="MM/DD/YYYY"
                                        type="text" style="width: 110px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -54,7 +54,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="catDob" name="date" placeholder="MM/DD/YYYY"
+                                <input class="form-control" id="catDob" name="date" alt="date" placeholder="MM/DD/YYYY"
                                        type="text" style="width: 110px;" onkeypress=""/>
                             </div>
                             @include('layouts.datePicker')
@@ -100,7 +100,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="catDob" name="dateMonth" placeholder="MM/YYYY"
+                                <input class="form-control" id="catDob" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
                                        type="text" style="width: 110px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -152,7 +152,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
+                            <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
                                    type="text" style="width: 100px; "/>
                         </div>
                     </div>

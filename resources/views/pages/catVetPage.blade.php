@@ -3,7 +3,7 @@
     @include('layouts.datePicker')
     <div id="page-wrapper">
         <div class="graphs">
-            <h3 class="blank1">Vet entries:</h3>
+            <h3 class="blank1">Vet entries for {!! $cat['cat_name'] !!}:</h3>
             <div class="row">
                 <div class="col-sm-7">
                     <div class="tab-content" style="padding:0px">
@@ -19,7 +19,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input class="form-control" id="vetDate" name="visit_date"
+                    <input class="form-control" id="visit_date" name="date" alt="date"
                            placeholder="MM/DD/YYYY"
                            type="text" style="width: 120px;"/>
                 </div>
@@ -86,7 +86,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input class="form-control" id="vetStatsYear" name="dateYear"
+                    <input class="form-control" id="vetStatsYear" name="dateYear" alt="dateYear"
                            placeholder="YYYY"
                            type="text" style="width: 60px; "/>
                 </div>
@@ -143,7 +143,7 @@ data-widget-static="">
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
+        <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
                type="text" style="width: 90px; "/>
     </div>
 </div>

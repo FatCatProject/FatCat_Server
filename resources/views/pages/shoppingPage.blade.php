@@ -17,7 +17,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetDate" name="date"
+                                            <input class="form-control" id="vetDate" name="date" alt="date"
                                                    placeholder="MM/DD/YYYY"
                                                    type="text" style="width: 120px;"/>
                                         </div>
@@ -72,7 +72,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetStatsYear" name="dateYear"
+                                            <input class="form-control" id="vetStatsYear" name="dateYear" alt="dateYear"
                                                    placeholder="YYYY"
                                                    type="text" style="width: 60px; "/>
                                         </div>
@@ -129,7 +129,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
+                                <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
                                        type="text" style="width: 90px; "/>
                             </div>
                         </div>

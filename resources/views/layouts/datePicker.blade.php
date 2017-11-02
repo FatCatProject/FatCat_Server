@@ -27,7 +27,7 @@
 
 <script>
     $(document).ready(function () {
-        var date_input = $('input[name="date"]'); //our date input has the name "date"
+        var date_input = $('input[alt="date"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
             format: 'mm/dd/yyyy',
@@ -40,7 +40,7 @@
 
 <script>
     $(document).ready(function () {
-        var date_input = $('input[name="dateMonth"]'); //our date input has the name "date"
+        var date_input = $('input[alt="dateMonth"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
             format: "mm/yyyy",
@@ -55,7 +55,7 @@
 
 <script>
     $(document).ready(function () {
-        var date_input = $('input[name="dateYear"]'); //our date input has the name "date"
+        var date_input = $('input[alt="dateYear"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
             format: "yyyy",
@@ -67,7 +67,6 @@
         })
     })
 </script>
-
 
 
 
