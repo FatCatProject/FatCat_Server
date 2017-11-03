@@ -61,7 +61,8 @@ class CardController extends Controller
                     'created_at' => $now, 'updated_at' => $now]
             );
         }
-        return view('pages.cardsPage', compact('myCards'), compact('myFoodBoxes'));
+        //return view('pages.cardsPage', compact('myCards'), compact('myFoodBoxes'));
+        return redirect()->back();
     }
 
     public function myCards($user_email)

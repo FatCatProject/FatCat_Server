@@ -127,7 +127,8 @@ class CatController extends Controller
                 $status = "failed, cat breed wasmt selected properly";
             }
         }
-        return view('pages.addCat');
+        return redirect()->back();
+        //return view('pages.addCat');
     }
 
     public function update(Request $request){

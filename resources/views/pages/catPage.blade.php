@@ -171,14 +171,6 @@
                         <th>Amount of food</th>
                     </tr>
                     </thead>
-                    {{--AllReports@foreach($data as $row)
-                        <tr>
-                            <td> {!! $row['open_time'] !!} </td>
-                            <td> {!! $row['close_time'] !!} </td>
-                            <td> {!! $row['diff'] !!} </td>
-                            <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
-                        </tr>
-                    @endforeach--}}
                     @for($index=0;$index<10 && count($data)>0;$index++)
                         <tr>
                             @if(empty($data[$index]))
