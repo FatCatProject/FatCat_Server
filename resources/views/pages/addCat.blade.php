@@ -9,7 +9,10 @@
         <div class="graphs">
             <h3 class="blank1">Your cat familly:</h3>
             <div class="col-sm-12">
+                @php ($index = 0)
+                @for($row=0;$row<$numberOfRows;$row++)
                 <div class="row">
+                    @for(;$index<count($allMyCats);$index++)
                     <div class="col-md-4"  style="padding-bottom: 25px;">
                         <div class="r3_counter_box">
                             <i class="fa" style="width: 150px; margin-left: -30px"><img
@@ -17,7 +20,7 @@
                                     width="100px"></i>
                             <div  align="center" class="stats" style="padding-bottom: 10px">
                                 <div class="grow groww">
-                                    <p>Cat name</p>
+                                    <p>{!! $allMyCats[$index]['cat_name']!!}</p>
                                 </div>
 
                                 <form class="form-horizontal">
@@ -25,35 +28,35 @@
                                         <tbody>
                                         <tr>
                                             <td>Name:</td>
-                                            <td>Ellie</td>
+                                            <td>{!! $allMyCats[$index]['cat_name']!!}</td>
                                         </tr>
                                         <tr>
                                             <td>Breed:</td>
-                                            <td>Devon rex</td>
+                                            <td>{!! $allMyCats[$index]['cat_breed'] !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Wiki page:</td>
-                                            <td>some link</td>
+                                            <td><a href="{!! $allMyCats[$index]['breed_link'] !!}" target="_blank">Learn more about your cat</a></td>
                                         </tr>
                                         <tr>
                                             <td>Gender:</td>
-                                            <td>Female</td>
+                                            <td>{!! $allMyCats[$index]['gender'] !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Birthday:</td>
-                                            <td>2007-10-10</td>
+                                            <td>{!! $allMyCats[$index]['dob'] !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Current weight:</td>
-                                            <td>5</td>
+                                            <td>{!! $allMyCats[$index]['current_weight'] !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Target weight:</td>
-                                            <td>4</td>
+                                            <td>{!! $allMyCats[$index]['target_weight'] !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Daily calories:</td>
-                                            <td>400</td>
+                                            <td>{!! $allMyCats[$index]['food_allowance'] !!}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -69,122 +72,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4"  style="padding-bottom: 25px;">
-                        <div class="r3_counter_box">
-                            <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                    src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_paper.png"
-                                    width="100px"></i>
-                            <div align="center" class="stats" style="padding-bottom: 10px">
-                                <div class="grow grow1 groww">
-                                    <p>Cat name</p>
-                                </div>
-                                <form class="form-horizontal">
-                                    <table class="catCardTable">
-                                        <tbody>
-                                        <tr>
-                                            <td>Name:</td>
-                                            <td>Ellie</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Breed:</td>
-                                            <td>Devon rex</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wiki page:</td>
-                                            <td>some link</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gender:</td>
-                                            <td>Female</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Birthday:</td>
-                                            <td>2007-10-10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Current weight:</td>
-                                            <td>5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Target weight:</td>
-                                            <td>4</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Daily calories:</td>
-                                            <td>400</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="row" style="float: right;">
-                                        <ul class="nav nav-pills">
-                                            {{--Edit will take to catPage--}}
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
-                                        </ul>
-
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4"  style="padding-bottom: 25px;">
-                        <div class="r3_counter_box">
-                            <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                    src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_upsidedown.png"
-                                    width="100px"></i>
-                            <div align="center" class="stats" style="padding-bottom: 10px">
-                                <div class="grow grow3 groww">
-                                    <p>Cat name</p>
-                                </div>
-                                <form class="form-horizontal">
-                                    <table class="catCardTable">
-                                        <tbody>
-                                        <tr>
-                                            <td>Name:</td>
-                                            <td>Ellie</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Breed:</td>
-                                            <td>Devon rex</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wiki page:</td>
-                                            <td>some link</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gender:</td>
-                                            <td>Female</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Birthday:</td>
-                                            <td>2007-10-10</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Current weight:</td>
-                                            <td>5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Target weight:</td>
-                                            <td>4</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Daily calories:</td>
-                                            <td>400</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="row" style="float: right;">
-                                        <ul class="nav nav-pills">
-                                            {{--Edit will take to catPage--}}
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
-                                        </ul>
-
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    @endfor
+                    @endfor
 
 
 
