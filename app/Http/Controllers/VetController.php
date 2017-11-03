@@ -32,7 +32,6 @@ class VetController extends Controller
 
     public function store(Request $request)
     {
-
         $year = new DateTime();
         $year = explode('-', $year->format('Y-m-d'))[0];
 
@@ -43,7 +42,6 @@ class VetController extends Controller
         } else
             $encodedPrescriptionPicture = "";
 
-        //adds the same cat vet log after refresh
         $status = "success";
         $cat = Cat::find($request->id);
 
@@ -62,12 +60,11 @@ class VetController extends Controller
             );
         }
 
-        $vetLogs = $this->yearlyVetLogs($year, $cat->cat_name, $currentUser->email);
-        $expensesPerMonth = $this->expensesPerMonth($vetLogs);
-        $totalExpenses = $this->spentDuringYear($expensesPerMonth);
-
+        return redirect()->back();
+        /*
         return view('pages.catVetPage', compact('cat'), compact('expensesPerMonth'))
             ->with('vetLogs', $vetLogs)->with('totalExpenses', $totalExpenses);
+        */
     }
 
     public function yearlyVetLogs($year, $name, $user_email)

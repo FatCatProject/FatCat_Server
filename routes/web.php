@@ -31,6 +31,7 @@ Route::get('/cardsPage', 'CardController@cardsPage');
 Route::post('/addCard',['uses' => 'CardController@storeCard']);
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard']);
 Route::get('/foodProductsPage', 'FoodController@foodProductsPage');
+Route::post('/addFood',['uses' => 'FoodController@store']);
 
 
 

@@ -128,7 +128,6 @@ class CatController extends Controller
             }
         }
         return redirect()->back();
-        //return view('pages.addCat');
     }
 
     public function update(Request $request){
