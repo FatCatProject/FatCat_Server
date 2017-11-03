@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use DateTime;
-use carboon;
-use App\User;
-use App\CatBreed;
 use App\Cat;
-use Illuminate\Support\Facades\DB;
+use App\CatBreed;
+use App\User;
+use DateTime;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use carboon;
 
 class CatController extends Controller
 {
@@ -102,38 +104,52 @@ class CatController extends Controller
         return response()->json($queries);
     }
 
-    public function store(Request $request){
-        $status="success";
-        date_default_timezone_set('Asia/Jerusalem');
-        $currentUser = auth()->user();
-        if($request->cat_name ==null){
-            $status = "failed, no input for cat name";
-        }else{
-            $breed = DB::table('cat_breeds')->where('breed_name',$request->cat_breed)->get();
-            if(count($breed)==1){
-            $profile_picture=base64_encode($request->profile_picture);
-            $dob = (new DateTime($request->dob))->format('Y-m-d');
-            $now = new DateTime();
-            $now->format('Y-m-d H:i:s');
-            $id = DB::table('cats')->insertGetId(
-                ['user_email'=>$currentUser->email ,'cat_name'=>$request->cat_name ,'profile_picture'=>$profile_picture,
-                    'dob'=>$dob ,'gender'=>$request->gender ,'cat_breed'=>$request->cat_breed , 'current_weight'=>$request->current_weight,
-                    'target_weight'=>$request->target_weight , 'daily_calories'=>$request->daily_calories , 'created_at'=>$now ,
-                    'updated_at'=>$now]
-            );
-            }else{
-                $status = "failed, cat breed wasmt selected properly";
-            }
-        }
-        return view('pages.addCat');
-    }
+	public function store(Request $request){
+		$current_user = auth()->user();
+
+		$my_cat = new \App\Cat(
+			[
+				"cat_name" => $request->cat_name,
+				"user_email" => $current_user->email
+			]
+		);
+
+		$my_cat->cat_breed = $request->cat_breed;
+		$my_cat->current_weight = $request->current_weight;
+		$my_cat->daily_calories = $request->daily_calories;
+		$my_cat->dob = $request->dob;
+		$my_cat->gender = $request->gender;
+		$my_cat->target_weight = $request->target_weight;
+
+		try{
+			if(!empty($request->profile_picture)){
+				$my_cat->profile_picture = str_replace(
+					["@", "."],
+					"_",
+					$current_user->email."_".$my_cat->cat_name
+				).".".$request->profile_picture->getClientOriginalExtension();
+			}
+
+			$my_cat->save();
+			if (!empty($my_cat->profile_picture)){
+				Storage::disk("user_pictures")->putFileAs(
+					str_replace(["@", "."], "_", $current_user->email),
+					$request->profile_picture,
+					$my_cat->profile_picture
+				);
+			}
+		}catch(QueryException $e){
+			return response("QueryException - Fixme.\n", 400);
+		}
+		return redirect()->action("CatController@catPage", ["id" => $my_cat->id]);
+	}
 
     public function update(Request $request){
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
-        if($request->profile_picture != null){
-            $cat->profile_picture = $request->profile_picture;
+        if($request->has("profile_picture")){
+            $cat->profile_picture = base64_encode(file_get_contents($request->file("profile_picture")->path()));
         }
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
