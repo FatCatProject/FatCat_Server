@@ -24,10 +24,8 @@ class CardController extends Controller
     public function storeCard(Request $request)
     {
         $currentUser = auth()->user();
-        $myCards = $this->myCards($currentUser->email);
-        $myAdminCards = $this->myAdminCards($currentUser->email);
-        $myFoodBoxes = $this->myFoodBoxes($currentUser->email);
         $status = "succes";
+        dd($currentUser->email);
         if ($currentUser == null || $request->card_id == null || $request->card_name == null || $request->foodbox_id == null) {
             $status = "failed, input lacking";
         } else {
@@ -38,6 +36,11 @@ class CardController extends Controller
                     'updated_at' => $now, 'cat_id' => $request->cat_id]
             );
         }
+        $myRegularCards = $this->myCards($currentUser->email);
+        $myAdminCards = $this->myAdminCards($currentUser->email);
+        $myCards = array_merge($myAdminCards,$myRegularCards);
+        $myFoodBoxes = $this->myFoodBoxes($currentUser->email);
+
         return view('pages.cardsPage', compact('myCards'), compact('myFoodBoxes'));
     }
 
@@ -75,6 +78,7 @@ class CardController extends Controller
         }
         return $result;
     }
+
     public function myAdminCards($user_email){
         $result = DB::table('admin_cards')->select('admin_cards.*')
             ->where('user_email', $user_email)

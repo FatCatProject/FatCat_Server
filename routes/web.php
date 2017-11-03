@@ -17,7 +17,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //added by michael
-//works and needed
 Route::post('/addcat',['uses' => 'CatController@store']);
 Route::put('/catPage/editcat',['uses' => 'CatController@update']);
 Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
@@ -31,6 +30,7 @@ Route::post('/addProduct',['uses' => 'ShopController@storeProduct']);
 Route::get('/cardsPage', 'CardController@cardsPage');
 Route::post('/addCard',['uses' => 'CardController@storeCard']);
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard']);
+Route::get('/foodProductsPage', 'FoodController@foodProductsPage');
 
 
 
@@ -43,4 +43,3 @@ Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
-Route::get('/foodProductsPage', 'PagesController@foodProductsPage');

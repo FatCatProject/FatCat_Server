@@ -18,8 +18,6 @@ class CatController extends Controller
     {
         $breeds = DB::table('cat_breeds')->pluck('breed_name');
         $allMyCats = $this->myCats();
-        //dd($allMyCats);
-        $numberOfRows = 0;
         if(count($allMyCats)/3>intval(count($allMyCats)/3))
             $numberOfRows=intval(count($allMyCats)/3)+1;
         else
@@ -63,8 +61,6 @@ class CatController extends Controller
 
         //all feeding logs for a cat in a month (by date)
         $monthlyFeedingLogs = $this->monthlyFeedingLogs($id,$date);
-
-        $amountEatenDuringTheDay = 0;
 
         //calculate all how much cat ate during each meal
         foreach ($monthlyFeedingLogs as $log){
