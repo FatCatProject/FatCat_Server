@@ -21,8 +21,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function homePage()
     {
-        return view('home');
+        $cats = \App::call('App\Http\Controllers\CatController@myCats');
+        if (count($cats) / 3 > intval(count($cats) / 3))
+            $numberOfRows = intval(count($cats) / 3) + 1;
+        else
+            $numberOfRows = intval(count($cats)) / 3;
+
+        return view('pages.homePage', compact('numberOfRows'), compact('cats'));
     }
 }
