@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CatVetLog;
 use Illuminate\Http\Request;
 use App\Cat;
 use DateTime;
@@ -65,6 +66,26 @@ class VetController extends Controller
         return view('pages.catVetPage', compact('cat'), compact('expensesPerMonth'))
             ->with('vetLogs', $vetLogs)->with('totalExpenses', $totalExpenses);
         */
+    }
+
+    public function update(Request $request){
+        $status = "success";
+        $vetLog = CatVetLog::find($request->id);
+        date_default_timezone_set('Asia/Jerusalem');
+        $vetLog->visit_date = $request->visit_date;
+        if($request->visit_date == null){
+            $status = "visit date is null";
+            return redirect()->back()->with('status',$status);
+        }
+        $vetLog->visit_date = $request->visit_date;
+        $vetLog->subject = $request->subject;
+        $vetLog->description = $request->description;
+        $vetLog->clinic_name = $request->clinic_name;
+        $vetLog->prescription_picture = $request->prescription_picture;
+        $vetLog->price = $request->price;
+
+        $vetLog->update();
+        return redirect()->back();
     }
 
     public function yearlyVetLogs($year, $name, $user_email)
