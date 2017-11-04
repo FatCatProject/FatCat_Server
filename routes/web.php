@@ -38,7 +38,6 @@ Route::post('/addFood',['uses' => 'FoodController@store']);
 //tests
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
 
-
 Route::get('/homePage', 'PagesController@home');
 Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/userPage', 'PagesController@userPage');
