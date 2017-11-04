@@ -1,11 +1,8 @@
 <?php
 
 Route::get('/' , 'PagesController@index');
-Route::get('/addCat' , ['uses'=>'CatController@addCat']);
 
 
-
-//Route::get('/addCat' ,['uses'=>'PagesController@addCat']);
 //Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
@@ -17,21 +14,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //added by michael
-Route::post('/addcat',['uses' => 'CatController@store']);
+
+Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
+Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']);
-Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
-Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage');
-Route::post('/addvetlog',['uses' => 'VetController@store']);
+Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage'])->middleware('privacy');
+Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
+Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage']);
-Route::post('/addShopping',['uses' => 'ShopController@storeShopLog']);
-Route::get('/shopsPage', 'ShopController@shopsPage');
-Route::post('/addShop',['uses' => 'ShopController@storeShop']);
-Route::post('/addProduct',['uses' => 'ShopController@storeProduct']);
-Route::get('/cardsPage', 'CardController@cardsPage');
-Route::post('/addCard',['uses' => 'CardController@storeCard']);
-Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard']);
-Route::get('/foodProductsPage', 'FoodController@foodProductsPage');
-Route::post('/addFood',['uses' => 'FoodController@store']);
+Route::post('/addShopping',['uses' => 'ShopController@storeShopLog'])->middleware('authenticated');
+Route::get('/shopsPage', 'ShopController@shopsPage')->middleware('authenticated');
+Route::post('/addShop',['uses' => 'ShopController@storeShop'])->middleware('authenticated');
+Route::post('/addProduct',['uses' => 'ShopController@storeProduct'])->middleware('authenticated');
+Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
+Route::post('/addCard',['uses' => 'CardController@storeCard'])->middleware('authenticated');
+Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
+Route::get('/foodProductsPage', 'FoodController@foodProductsPage')->middleware('authenticated');
+Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 
 
 
@@ -39,7 +38,6 @@ Route::post('/addFood',['uses' => 'FoodController@store']);
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
 
 Route::get('/homePage', 'PagesController@home');
-Route::get('/shoppingPage', 'PagesController@shop');
 Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
