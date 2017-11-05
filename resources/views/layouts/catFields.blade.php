@@ -15,7 +15,7 @@
 
             {{ csrf_field() }}
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="focusedinput">Name:</label>
+                <label class="col-sm-2 control-label" for="focusedinput"><span style="color: red;">*</span>Name:</label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
@@ -26,12 +26,11 @@
                         type="text"
                         value="{!! !empty($cat->cat_name) ? $cat->cat_name : '' !!}"
                     />
-                    <span style="color: red;">*</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="focusedinput" class="col-sm-2 control-label">Breed:</label>
+                <label for="focusedinput" class="col-sm-2 control-label"><span style="color: red;">*</span>Breed:</label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
@@ -41,7 +40,6 @@
                         type="text"
                         value="{!! !empty($cat) ? $cat->cat_breed : '' !!}"
                     />
-                    <span style="color: red;">*</span>
                 </div>
             </div>
 
@@ -64,7 +62,7 @@
             </div>
 
             <div class="form-group">
-                <label for="radio" class="col-sm-2 control-label">Gender:</label>
+                <label for="radio" class="col-sm-2 control-label"><span style="color: red;">*</span>Gender:</label>
                 <div class="col-sm-8">
                     <div class="radio-inline">
                         <label>
@@ -90,7 +88,6 @@
                             Female<br>
                         </label>
                     </div>
-                    <span style="color: red;">*</span>
                 </div>
             </div>
 
