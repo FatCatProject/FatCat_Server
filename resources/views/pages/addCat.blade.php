@@ -15,9 +15,12 @@
                     @for(;$index<count($allMyCats);$index++)
                     <div class="col-md-4"  style="padding-bottom: 25px;">
                         <div class="r3_counter_box">
-                            <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                    src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png"
-                                    width="100px"></i>
+                            <i class="fa" style="width: 150px; margin-left: -30px">
+                                <img
+                                    src="{!! $cat_profile_pictures[$allMyCats[$index]['cat_name']] !!}"
+                                    width="100px"
+                                >
+                            </i>
                             <div  align="center" class="stats" style="padding-bottom: 10px">
                                 <div class="grow groww">
                                     <p>{!! $allMyCats[$index]['cat_name']!!}</p>

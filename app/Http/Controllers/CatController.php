@@ -19,13 +19,31 @@ class CatController extends Controller
     public function addCat()
     {
         $breeds = DB::table('cat_breeds')->pluck('breed_name');
-        $allMyCats = $this->myCats();
+        $current_user = Auth::User();
+        $all_my_cats = $current_user->cats;
+        $allMyCats = $all_my_cats;
         if(count($allMyCats)/3>intval(count($allMyCats)/3))
             $numberOfRows=intval(count($allMyCats)/3)+1;
         else
             $numberOfRows = intval(count($allMyCats))/3;
 
-        return view('pages.addCat', compact('breeds'),compact('numberOfRows'))->with('allMyCats',$allMyCats);
+        $cat_profile_pictures = [];
+        $default_profile_picture = "/images/default_cat.png";
+        foreach($allMyCats as $cat){
+            if(!empty($cat->profile_picture)){
+                $profile_picture_path = str_replace(["@", "."], "_", $current_user->email)."/".$cat->profile_picture;
+                if(Storage::disk("user_pictures")->exists($profile_picture_path)){
+                    $cat_profile_pictures[$cat->cat_name] = "data:image/png;base64,".base64_encode(
+                        Storage::disk("user_pictures")->get($profile_picture_path)
+                    );
+                }else{
+                    $cat_profile_pictures[$cat->cat_name] = $default_profile_picture;
+                }
+            }else{
+                $cat_profile_pictures[$cat->cat_name] = $default_profile_picture;
+            }
+        }
+        return view('pages.addCat', compact('breeds'),compact('numberOfRows'))->with('allMyCats',$allMyCats)->with('cat_profile_pictures', $cat_profile_pictures);
     }
 
     public function breedInfo(Request $request)
@@ -192,7 +210,7 @@ class CatController extends Controller
             return response("QueryException - Fixme.\n", 400);
         }
 
-        return redirect()->action("CatController@catPage", ["id" => $my_cat->id]);
+        return redirect()->action("CatController@addCat");
     }
 
     public function update(Request $request){

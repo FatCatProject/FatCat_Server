@@ -7,3 +7,6 @@ Written in PHP.
 Dependencies:
 - doctrine/dbal (artisan)
 - laravel/laravel (artisan)
+
+Stock images from http://www.iconka.com
+
