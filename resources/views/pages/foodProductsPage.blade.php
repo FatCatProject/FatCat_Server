@@ -26,10 +26,10 @@
                                                class="col-sm-3 control-label label-input-sm">Weight: <span style="color: red;">*</span></label>
                                         <div class="col-sm-8">
                                             <input type="number" name="weight_left" step="any" min="0" max="1000"
-                                                   class="form-control1 input-sm" id="currentWeight" placeholder="Enter weight in Kg" required>
+                                                   class="form-control1 input-sm" id="currentWeight" placeholder="Enter weight in Grams" required>
                                         </div>
                                         <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
-                                            <p class="help-block">Kg</p>
+                                            <p class="help-block">Grams</p>
                                         </div>
                                     </div>
                                     {{--Product picture--}}
@@ -84,12 +84,16 @@
                                                 <div class="row" style="margin:-18px; float: right ">
                                                     <ul class="nav nav-pills">
                                                         {{--Edit will take to catPage--}}
-                                                        <li class="menu-list"><a href="#"><i
-                                                                        class="lnr lnr-plus-circle editValues"
-                                                                        onclick=""></i>Add</a>
+                                                        <li id="addMoreProduct" class=""><a href="#"><i class="lnr lnr-plus-circle editValues" onclick=""></i>Add</a>
                                                         </li>
                                                     </ul>
                                                 </div>
+
+                                                {{--Popup--}}
+                                                <div id="addDialog" title="Add more product:">
+                                                    <p></p>
+                                                </div>
+                                                {{--Popup--}}
                                             </div>
                                         </div>
                                     </div>
@@ -103,5 +107,13 @@
             </div>
         </div>
         <br><br><br>
+    <script>
 
+        $(document).ready(function () {
+            $("#addMoreProduct").click(function () {
+                $("#addDialog").dialog({modal: true, height: 590, width: 1005 });
+            });
+        });
+
+    </script>
 @endsection
