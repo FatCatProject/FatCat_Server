@@ -19,7 +19,7 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input class="form-control" id="vetDate" name="shopping_date" alt="date"
-                                                   placeholder="MM/DD/YYYY"
+                                                   placeholder="YYYY-MM-DD"
                                                    type="text" style="width: 120px;"/>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth"
-                                       placeholder="MM/YYYY"
+                                       placeholder="YYYY-MM"
                                        type="text" style="width: 90px; "/>
                             </div>
                         </div>

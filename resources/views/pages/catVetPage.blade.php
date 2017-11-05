@@ -20,7 +20,7 @@
                         <i class="fa fa-calendar"></i>
                     </div>
                     <input class="form-control" id="visit_date" name="date" alt="date"
-                           placeholder="MM/DD/YYYY"
+                           placeholder="YYYY-MM-DD"
                            type="text" style="width: 120px;"/>
                 </div>
             </div>
@@ -143,7 +143,7 @@ data-widget-static="">
         <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
         </div>
-        <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="MM/YYYY"
+        <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="YYYY-MM"
                type="text" style="width: 90px; "/>
     </div>
 </div>

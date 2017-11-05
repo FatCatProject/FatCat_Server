@@ -12,7 +12,7 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="monthlyFoodRatio" name="dateMonth" alt="dateMonth"
-                                       placeholder="MM/YYYY"
+                                       placeholder="YYYY-MM"
                                        type="text" style="width: 90px;"/>
                             </div>
                             @include('layouts.datePicker')
