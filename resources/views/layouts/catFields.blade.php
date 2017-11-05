@@ -156,7 +156,25 @@
                         >
                 </div>
             </div>
-
+                <div class="form-group">
+                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Wanted daily food amount: <span style="color: red;">*</span></label>
+                    <div class="col-sm-8">
+                        <input
+                            class="form-control1 input-sm"
+                            max="5000"
+                            min="1"
+                            name="food_allowance"
+                            placeholder=""
+                            step="any"
+                            type="number"
+                            value="{!! !empty($cat->food_allowance) ? $cat->food_allowance : '' !!}"
+                            required
+                        >
+                    </div>
+                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                        <p class="help-block">Grams</p>
+                    </div>
+                </div>
             <div class="form-group">
                 <label for="profilePicture" class="col-sm-2 control-label">Profile picture:</label>
                 <div class="col-sm-8">

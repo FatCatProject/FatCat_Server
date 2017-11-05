@@ -74,26 +74,30 @@
                                                         src="/images/food2.png"
                                                         width="100px"></i>
                                             <div class="stats">
-                                                <div class="row" style="margin:0px 0px 0 0">
+
+                                                <div id="gramsNow" class="row" style="margin:0px 0px 0 0">
                                                     <h5>{!! $myFoods[$index]->weight_left !!} <span>grams left</span>
                                                     </h5>
                                                 </div>
+
+                                                {{--<div id="gramsToAdd" class="row" style="margin:0px 0px 0 0">--}}
+                                                    {{--<h5><span>grams left</span>--}}
+                                                    {{--</h5>--}}
+                                                {{--</div>--}}
+
                                                 <div class="grow foodGrow">
                                                     <p>{!! $myFoods[$index]->food_name !!}</p>
                                                 </div>
-                                                <div class="row" style="margin:-18px; float: right ">
+                                                <div id="popup" class="row" style="margin:-18px; float: right ">
                                                     <ul class="nav nav-pills">
-                                                        {{--Edit will take to catPage--}}
-                                                        <li id="addMoreProduct" class=""><a href="#"><i class="lnr lnr-plus-circle editValues" onclick=""></i>Add</a>
+                                                        <li id="onclick" class=""><a href="#"><i
+                                                                        class="lnr lnr-plus-circle editValues"
+                                                                        onclick=""></i>Add</a>
                                                         </li>
                                                     </ul>
                                                 </div>
 
-                                                {{--Popup--}}
-                                                <div id="addDialog" title="Add more product:">
-                                                    <p></p>
-                                                </div>
-                                                {{--Popup--}}
+
                                             </div>
                                         </div>
                                     </div>
@@ -107,13 +111,26 @@
             </div>
         </div>
         <br><br><br>
-    <script>
 
-        $(document).ready(function () {
-            $("#addMoreProduct").click(function () {
-                $("#addDialog").dialog({modal: true, height: 590, width: 1005 });
-            });
-        });
+    {{--popup--}}
+    {{--<p id="p">If you click on the "Hide" button, I will disappear.</p>--}}
+    {{--<button id="hide">Hide</button>--}}
+    {{--<button id="show">Show</button>--}}
 
-    </script>
+
+
+    {{--<script>--}}
+        {{--$(document).ready(function(){--}}
+            {{--$("#hide").click(function(){--}}
+                {{--$("#p").hide();--}}
+            {{--});--}}
+            {{--$("#show").click(function(){--}}
+                {{--$("#p").show();--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
+
+  {{--popup--}}
+
+    {{--<br><br><br>--}}
 @endsection
