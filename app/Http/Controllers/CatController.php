@@ -104,7 +104,7 @@ class CatController extends Controller
         foreach($daily_logs_tmp as $tmp_data){
             $daily_logs .= $tmp_data.",";
         }
-      
+
         $daily_logs .= "]";
 
         $ate_today = intval(ceil($ate_today));
