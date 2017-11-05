@@ -14,19 +14,22 @@
                                 <div class="col-sm-12">
                                     {{--Product name--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
-                                        <div class="col-sm-9">
+                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control1" name="food_name" id="shopUrl"
-                                                   placeholder="">
+                                                   placeholder="" required>
                                         </div>
                                     </div>
                                     {{--product weight--}}
                                     <div class="form-group">
                                         <label for="foodWeight"
-                                               class="col-sm-3 control-label label-input-sm">Weight:</label>
-                                        <div class="col-sm-9">
+                                               class="col-sm-3 control-label label-input-sm">Weight: <span style="color: red;">*</span></label>
+                                        <div class="col-sm-8">
                                             <input type="number" name="weight_left" step="any" min="0" max="1000"
-                                                   class="form-control1 input-sm" id="currentWeight" placeholder="">
+                                                   class="form-control1 input-sm" id="currentWeight" placeholder="Enter weight in Kg" required>
+                                        </div>
+                                        <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                            <p class="help-block">Kg</p>
                                         </div>
                                     </div>
                                     {{--Product picture--}}

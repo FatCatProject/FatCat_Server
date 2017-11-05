@@ -18,7 +18,7 @@
                                                disabled="">Email:</label>
                                         <div class="col-sm-8">
                                             <input disabled="" type="email" class="form-control1" id="disabledinput"
-                                                   placeholder="">
+                                                   placeholder="" style="background-color: #F8F8F8">
                                         </div>
                                     </div>
 

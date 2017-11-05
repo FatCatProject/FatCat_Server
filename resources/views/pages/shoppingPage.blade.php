@@ -12,7 +12,7 @@
                             <form class="form-horizontal" method="POST" action="addShopping" id="addShoppingForm">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label for="catDob" class="col-sm-2 control-label">Date:</label>
+                                    <label for="catDob" class="col-sm-2 control-label">Date: <span style="color: red;">*</span></label>
                                     <div class="row" style="padding: 10px">
                                         <div class="input-group" style="margin: 0px 0px 0px 15px">
                                             <div class="input-group-addon">
@@ -20,7 +20,7 @@
                                             </div>
                                             <input class="form-control" id="vetDate" name="shopping_date" alt="date"
                                                    placeholder="YYYY-MM-DD"
-                                                   type="text" style="width: 120px;"/>
+                                                   type="text" required style="width: 120px;"/>
                                         </div>
                                     </div>
                                 </div>
@@ -34,11 +34,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
+                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="number" name="price" step="any" min="0" max="999"
                                                class="form-control1 input-sm"
-                                               id="vetLogPrice" placeholder="">
+                                               id="vetLogPrice" placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="form-group">

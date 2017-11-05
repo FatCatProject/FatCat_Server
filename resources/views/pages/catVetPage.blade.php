@@ -13,7 +13,7 @@
         <input type="hidden" name="id" value="{!! $cat['id'] !!}">
         <input type="hidden" value="{{csrf_token()}}" name="_token">
         <div class="form-group">
-            <label for="catDob" class="col-sm-2 control-label">Date:</label>
+            <label for="catDob" class="col-sm-2 control-label">Date: <span style="color: red;">*</span></label>
             <div class="row" style="padding: 10px">
                 <div class="input-group" style="margin: 0px 0px 0px 15px">
                     <div class="input-group-addon">
@@ -21,7 +21,7 @@
                     </div>
                     <input class="form-control" id="visit_date" name="date" alt="date"
                            placeholder="YYYY-MM-DD"
-                           type="text" style="width: 120px;"/>
+                           type="text" required style="width: 120px;"/>
                 </div>
             </div>
         </div>

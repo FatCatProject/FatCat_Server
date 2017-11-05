@@ -15,26 +15,26 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">ID: <span style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control1" id="card_id" name="card_id"
-                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
+                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control1" name="card_name" id="shopUrl"
-                                                   placeholder="">
+                                                   placeholder="" required>
                                         </div>
                                     </div>
                                     {{--Choose cat--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Belongs to:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">Belongs to: <span style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="cat_id" id="foodBox" class="form-control1">
+                                            <select name="cat_id" id="foodBox" class="form-control1" required>
                                                 <option value="" name="" selected disabled>Please choose a cat for this
                                                     card:
                                                 </option>
@@ -53,10 +53,10 @@
                                     </div>
                                     {{--Choose which box to open--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox: <span style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="foodbox_id" id="foodBox" class="form-control1">
+                                            <select name="foodbox_id" id="foodBox" class="form-control1" required>
                                                 <option value="" name="" selected disabled>Please choose a foodbox this
                                                     card can open:
                                                 </option>
@@ -104,18 +104,18 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">ID: <span style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_id" class="form-control1" id="cardID"
-                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="">
+                                                   pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
+                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_name" class="form-control1" id="shopUrl"
-                                                   placeholder="">
+                                                   placeholder="" required>
                                         </div>
                                     </div>
                                     {{--<div class="form-group">--}}
