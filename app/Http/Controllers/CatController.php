@@ -19,7 +19,13 @@ class CatController extends Controller
     public function addCat()
     {
         $breeds = DB::table('cat_breeds')->pluck('breed_name');
-        return view('pages.addCat', compact('breeds'));
+        $allMyCats = $this->myCats();
+        if(count($allMyCats)/3>intval(count($allMyCats)/3))
+            $numberOfRows=intval(count($allMyCats)/3)+1;
+        else
+            $numberOfRows = intval(count($allMyCats))/3;
+
+        return view('pages.addCat', compact('breeds'),compact('numberOfRows'))->with('allMyCats',$allMyCats);
     }
 
     public function breedInfo(Request $request)
@@ -98,6 +104,7 @@ class CatController extends Controller
         foreach($daily_logs_tmp as $tmp_data){
             $daily_logs .= $tmp_data.",";
         }
+      
         $daily_logs .= "]";
 
         $ate_today = intval(ceil($ate_today));
@@ -184,6 +191,7 @@ class CatController extends Controller
         }catch(QueryException $e){
             return response("QueryException - Fixme.\n", 400);
         }
+
         return redirect()->action("CatController@catPage", ["id" => $my_cat->id]);
     }
 
@@ -267,6 +275,16 @@ class CatController extends Controller
     public function myCats(){
         $user = User::find(Auth::id());
         $cats = DB::table('cats')->where('user_email',$user->email)->get();
+        $breeds = DB::table('cat_breeds')->get();
+        $cats = json_decode($cats,true);
+        for($i=0;$i<count($cats);$i++){
+            foreach ($breeds as $breed){
+                if($breed->breed_name == $cats[$i]['cat_breed']){
+                    $cats[$i]['breed_link']=$breed->link;
+                    break;
+                }
+            }
+        }
         return $cats;
     }
 

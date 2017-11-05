@@ -9,48 +9,43 @@
                 <div class="col-sm-7">
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="POST" action="addShopping" id="addShoppingForm">
+                                {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label for="catDob" class="col-sm-2 control-label">Date:</label>
+                                    <label for="catDob" class="col-sm-2 control-label">Date: <span style="color: red;">*</span></label>
                                     <div class="row" style="padding: 10px">
                                         <div class="input-group" style="margin: 0px 0px 0px 15px">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetDate" name="date"
-                                                   placeholder="MM/DD/YYYY"
-                                                   type="text" style="width: 120px;"/>
+                                            <input class="form-control" id="vetDate" name="shopping_date" alt="date"
+                                                   placeholder="YYYY-MM-DD"
+                                                   type="text" required style="width: 120px;"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control1" id="vetLogSubject" placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
-                                    <div class="col-sm-8"><textarea name="vetLogDescription" id="vetLogDescription"
+                                    <div class="col-sm-8"><textarea name="description" id="description"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
+                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="number" step="any" min="0" max="100" class="form-control1 input-sm"
-                                               id="vetLogPrice" placeholder="">
+                                        <input type="number" name="price" step="any" min="0" max="999"
+                                               class="form-control1 input-sm"
+                                               id="vetLogPrice" placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="addShoppingForm">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +67,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetStatsYear" name="dateYear"
+                                            <input class="form-control" id="vetStatsYear" name="dateYear" alt="dateYear"
                                                    placeholder="YYYY"
                                                    type="text" style="width: 60px; "/>
                                         </div>
@@ -88,7 +83,8 @@
                                 </div>
                                 <div class="row">
                                     <div align="center">
-                                        <canvas id="bar1" height="207" width="450px" style="width:450px; height: 100px;"></canvas>
+                                        <canvas id="bar1" height="207" width="450px"
+                                                style="width:450px; height: 100px;"></canvas>
                                         <script>
                                             var barChartData = {
                                                 labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -107,7 +103,7 @@
 
                                 </div>
                                 <div class="row" style="margin-left: 15px">
-                                    <h3 style="color: #999;">Total amout:$SUM</h3>
+                                    <h3 style="color: #999;">Total amout:{!! $totalExpenses !!}</h3>
                                 </div>
 
                             </div>
@@ -129,7 +125,8 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="logsMonth" name="dateMonth" placeholder="MM/YYYY"
+                                <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth"
+                                       placeholder="YYYY-MM"
                                        type="text" style="width: 90px; "/>
                             </div>
                         </div>
@@ -137,65 +134,33 @@
                             Pick a month or view 10 last purchases
                         </div>
                     </div>
-                    <table class="table table-striped"   >
+                    <table class="table table-striped">
                         <thead>
                         <tr class="warning">
                             <th>Date</th>
-                            <th>Subject</th>
                             <th>Description</th>
                             <th>Price</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr id="1">
-                            <td class="editableColumns">2017-10-14</td>
-                            <td class="editableColumns">Food for Ellie</td>
-                            <td class="editableColumns">15kg royal canin for Ellie, had 10% disscount</td>
-                            <td class="editableColumns">100</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr id="2">
-                            <td>2017-10-14</td>
-                            <td>Sand</td>
-                            <td>Sand "Apple tree", item was on sale</td>
-                            <td>200</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr id="3">
-                            <td>2017-10-14</td>
-                            <td>Treats and food</td>
-                            <td>3kg laCat and 2 boxed of tuna</td>
-                            <td>30</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr id="4">
-                            <td>2017-10-14</td>
-                            <td>Scratching stand</td>
-                            <td>Scratching stand with 3 floors</td>
-                            <td>100</td>
-                            <td>
-                                <ul class="nav nav-pills">
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                    <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
-                                </ul>
-                            </td>
-                        </tr>
+                        @for($index=0;$index<10 && count($shoppingLogs)>0;$index++)
+                            <tr id="{!! $index !!}">
+                                @if(empty($shoppingLogs[$index]))
+                                @endif
+                                @if(!empty($shoppingLogs[$index]))
+                                    <td> {!! $shoppingLogs[$index]->shopping_date !!} </td>
+                                    <td> {!! $shoppingLogs[$index]->description !!} </td>
+                                    <td> {!! $shoppingLogs[$index]->price !!} </td>
+                                    <td>
+                                        <ul class="nav nav-pills">
+                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
+                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                        </ul>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endfor
                         </tbody>
                     </table>
                     <div align="right" class="col-md-12 page_1">
@@ -222,7 +187,7 @@
 
     <script>
         $('.editValues').click(function () {
-            $(this).parents('tr').find('td.editableColumns').each(function() {
+            $(this).parents('tr').find('td.editableColumns').each(function () {
                 var html = $(this).text();
                 var input = $('<input class="editableColumnsStyle" type="text" />');
                 input.val(html);

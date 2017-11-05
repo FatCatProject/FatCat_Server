@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
@@ -17,7 +18,6 @@ class ShopController extends Controller
             $year = new DateTime();
             $year = explode('-',$year->format('Y-m-d'))[0];
         }
-
         $currentUser = auth()->user();
         $shoppingLogs = $this->yearlypurchases($year,$currentUser->email);
         $expensesPerMonth = $this->expensesPerMonth($year,$currentUser->email);
@@ -40,14 +40,7 @@ class ShopController extends Controller
                     'price' => $request->price]
             );
         }
-
-        $year = new DateTime();
-        $year = explode('-',$year->format('Y-m-d'))[0];
-        $shoppingLogs = $this->yearlypurchases($year,$currentUser->email);
-        $expensesPerMonth = $this->expensesPerMonth($year,$currentUser->email);
-        $totalExpenses = $this->spentDuringYear($expensesPerMonth);
-
-        return view('pages.shoppingPage',compact('expensesPerMonth'),compact('shoppingLogs'))->with('totalExpenses',$totalExpenses);
+        return redirect()->back();
     }
 
     public function yearlypurchases($year,$user_email){
@@ -101,12 +94,11 @@ class ShopController extends Controller
                     'address' => $request->address,'hours'=>$request->hours,'phone'=>$request->phone]
             );
         }
-        return view('pages.shopsPage');
+        return redirect()->back();
     }
 
     public function storeProduct(Request $request)
     {
-        //dd($request->is_food);
         $status = "success";
         $currentUser = auth()->user();
         $isfood=0;
@@ -121,7 +113,7 @@ class ShopController extends Controller
                     'price' => $request->price, 'is_food'=>$isfood]
             );
         }
-        return view('pages.shopsPage');
+        return redirect()->back();
     }
 
     public function usersProducts($user_email){

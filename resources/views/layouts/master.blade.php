@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     @include('layouts.styling')
 
+
     <script>
         new WOW().init();
     </script>

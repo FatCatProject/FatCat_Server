@@ -13,10 +13,10 @@
                             <form class="form-horizontal" method="POST" action="addShop" id="addShop">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Shop name:</label>
+                                    <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text" name="shop_name" class="form-control1" id="shopName"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
                                 </div>
 
@@ -54,8 +54,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn" form="addShop">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="addShop">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -72,30 +72,33 @@
                             <form class="form-horizontal" method="POST" action="addProduct" id="addProduct">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Name:</label>
+                                    <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text" name="product_name" class="form-control1" id="itemName"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Weight:</label>
+                                    <label for="focusedinput" class="col-sm-3 control-label">Weight: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control1" name="weight" id="itemWeight"
                                                step="any" min="0"
-                                               placeholder="">
+                                               placeholder="Enter weight in Kg" required>
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">Kg</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="focusedinput" class="col-sm-3 control-label">Price:</label>
+                                    <label for="focusedinput" class="col-sm-3 control-label">Price: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control1" name="price" id="itemPrice"
                                                step="any" min="0"
-                                               placeholder="">
+                                               placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkbox" class="col-sm-3 control-label">Food product? </label>
+                                    <label for="checkbox" class="col-sm-3 control-label">Food product?</label>
                                     <div class="col-sm-8">
                                         <div class="checkbox-inline"><label><input type="checkbox"
                                                                                    name="is_food">Yes</label></div>
@@ -112,8 +115,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn" form="addProduct">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="addProduct">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>

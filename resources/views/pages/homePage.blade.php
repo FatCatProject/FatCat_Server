@@ -11,7 +11,8 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="monthlyFoodRatio" name="dateMonth" placeholder="MM/YYYY"
+                                <input class="form-control" id="monthlyFoodRatio" name="dateMonth" alt="dateMonth"
+                                       placeholder="YYYY-MM"
                                        type="text" style="width: 90px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -58,7 +59,8 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" id="catDob" name="dateYear" placeholder="YYYY"
+                                    <input class="form-control" id="catDob" name="dateYear" alt="dateYear"
+                                           placeholder="YYYY"
                                            type="text" style="width: 90px;"/>
                                 </div>
                                 @include('layouts.datePicker')
@@ -100,7 +102,8 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="monthlyFoodRatio" name="dateYear" placeholder="YYYY"
+                                <input class="form-control" id="monthlyFoodRatio" name="dateYear" alt="dateYear"
+                                       placeholder="YYYY"
                                        type="text" style="width: 90px;"/>
                             </div>
                             @include('layouts.datePicker')
@@ -161,44 +164,26 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="r3_counter_box">
-                    <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png" width="100px"></i>
-                    <div class="stats">
-                        <h5>50 <span>gr</span></h5>
-                        <div class="grow">
-                            <p>Cat name</p>
+        @php ($index = 0)
+        @for($row=0;$row<$numberOfRows;$row++)
+            <div class="row">
+                @for(;$index<count($cats);$index++)
+                    <div class="col-md-4">
+                        <div class="r3_counter_box">
+                            <i class="fa" style="width: 150px; margin-left: -30px"><img
+                                        src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png"
+                                        width="100px"></i>
+                            <div class="stats">
+                                <h5>50 <span>gr</span></h5>
+                                <div class="grow">
+                                    <p>{!! $cats[$index]['cat_name'] !!}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endfor
             </div>
-            <div class="col-md-4">
-                <div class="r3_counter_box">
-                    <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_paper.png" width="100px"></i>
-                    <div class="stats">
-                        <h5>150 <span>gr</span></h5>
-                        <div class="grow grow1">
-                            <p>Cat name</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="r3_counter_box">
-                    <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                src="https://cdn3.iconfinder.com/data/icons/cat-force/128/cat_upsidedown.png"
-                                width="100px"></i>
-                    <div class="stats">
-                        <h5>10 <span>gr</span></h5>
-                        <div class="grow grow3">
-                            <p>Cat name</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <br>
+        @endfor
     </div>
 @endsection
