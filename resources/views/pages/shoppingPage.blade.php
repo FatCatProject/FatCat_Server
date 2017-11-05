@@ -44,8 +44,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button class="btn-success btn" form="addShoppingForm">Add</button>
-                                            <button class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="addShoppingForm">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>

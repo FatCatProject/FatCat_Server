@@ -83,8 +83,8 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button class="btn-success btn" form="addCardForm">Add Cat Card</button>
-                                        <button class="btn-inverse btn">Reset</button>
+                                        <button type="submit" class="btn-success btn" form="addCardForm">Add Cat Card</button>
+                                        <button type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
 
                                 </div>
@@ -134,8 +134,8 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button class="btn-success btn" form="adminCardForm">Add Admin Card</button>
-                                        <button class="btn-inverse btn">Reset</button>
+                                        <button type="submit" class="btn-success btn" form="adminCardForm">Add Admin Card</button>
+                                        <button type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
 
                                 </div>

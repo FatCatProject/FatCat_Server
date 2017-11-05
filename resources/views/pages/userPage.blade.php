@@ -88,8 +88,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12" style="margin:50px 0 0 15px">
-                                            <button class="btn-success btn">Save changes</button>
-                                            <button class="btn-inverse btn">Cancel</button>
+                                            <button type="submit" class="btn-success btn">Save changes</button>
+                                            <button type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
