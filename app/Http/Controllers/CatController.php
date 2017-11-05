@@ -43,86 +43,98 @@ class CatController extends Controller
         ]);
     }
 
-    public function catPage($id, $date=null)
+    public function catPage($id)
     {
-        if(empty($date)){
-            $date = date_create("Asia/Jerusalem");
-        }
+        $date = date_create("Asia/Jerusalem");
 
         $cat = Cat::find($id);
 
         $ate_today = 0;
-        $ate_during_month_tmp = [];
-        $ate_during_month_tmp_labels = [];
+        $daily_logs_tmp = [];
+        $daily_logs_tmp_labels = [];
+        $label_index_tmp = 0;
+        $month_logs_tmp = [];
+        $month_logs_tmp_labels = [];
+        $days_in_month = intval(date("t", mktime(0, 0, 0, intval($date->format("m")), 1, intval($date->format("Y")))));
+        for($day = 1; $day <= $days_in_month; $day++){
+            $day_tmp = str_pad(strval($day), 2, "0", STR_PAD_LEFT);
+            array_push($month_logs_tmp_labels, $day_tmp);
+            $month_logs_tmp[$day_tmp] = 0;
+        }
+        $feeding_logs = [];
         foreach($cat->cards as $card){
             $card_logs = DB::table("feeding_logs")
                 ->where("user_email", $card->user_email)
                 ->where("card_id", $card->card_id)
+                ->whereYear("open_time", $date->format("Y"))
                 ->whereMonth("open_time", $date->format("m"))
-                ->select("feeding_logs.start_weight", "feeding_logs.end_weight", "feeding_logs.open_time")
+                ->select(
+                    "feeding_logs.start_weight", "feeding_logs.end_weight", "feeding_logs.open_time",
+                    "feeding_logs.close_time"
+                )
                 ->get();
             foreach($card_logs as $log){
                 $ate_at_feedinglog = $log-> start_weight - $log->end_weight;
-                $ate_today += $ate_at_feedinglog;
 
-                $day_of_log = intval((new DateTime($log->open_time))->format("d"));
-                $ate_during_month_tmp[$day_of_log] =
-                    empty($ate_during_month_tmp[$day_of_log]) ?
-                        $ate_at_feedinglog :
-                        ($ate_during_month_tmp[$day_of_log] + $ate_at_feedinglog);
-                array_push($ate_during_month_tmp_labels, $day_of_log);
+                $day_of_log = (new DateTime($log->open_time))->format("d");
+                $month_logs_tmp[$day_of_log] += $ate_at_feedinglog;
+
+                array_push($feeding_logs, $log);
+                if ($day_of_log == $date->format("d")){
+                    $ate_today += $ate_at_feedinglog;
+                    $label_index_tmp += 1;
+                    array_push($daily_logs_tmp, strval($ate_at_feedinglog));
+                    array_push($daily_logs_tmp_labels, strval($label_index_tmp));
+                }
             }
         }
-        $ate_during_month_tmp_labels = array_unique($ate_during_month_tmp_labels);
-        sort($ate_during_month_tmp_labels);
-        $ate_during_month_labels = "[";
-        foreach($ate_during_month_tmp_labels as $tmp_label){
-            $ate_during_month_labels .= $tmp_label.",";
+
+        $daily_logs_labels = "[";
+        foreach($daily_logs_tmp_labels as $tmp_label){
+            $daily_logs_labels .= $tmp_label.",";
         }
-        $ate_during_month_labels .= "]";
-        $ate_during_month = "[";
-        foreach($ate_during_month_tmp as $tmp_data){
-            $ate_during_month .= $tmp_data.",";
+        $daily_logs_labels .= "]";
+        $daily_logs = "[";
+        foreach($daily_logs_tmp as $tmp_data){
+            $daily_logs .= $tmp_data.",";
         }
-        $ate_during_month .= "]";
+        $daily_logs .= "]";
 
         $ate_today = intval(ceil($ate_today));
         $daily_consumption = [
             "ate_allowance" => (($ate_today <= $cat->food_allowance) ? $ate_today : $cat->food_allowance),
             "food_left" => (($ate_today <= $cat->food_allowance) ? ($cat->food_allowance - $ate_today) : 0),
-            "over_ate" => (($ate_today <= $cat->food_allowance) ? 0 : ($ate_today - $cat->food_allowance))
+            "over_ate" => (
+                (($ate_today <= $cat->food_allowance) or ($cat->food_allowance == 0)) ?
+                0 : ($ate_today - $cat->food_allowance)
+            )
         ];
 
+        $month_logs_labels = "[";
+        foreach($month_logs_tmp_labels as $tmp_label){
+            $month_logs_labels .= $tmp_label.",";
+        }
+        $month_logs_labels .= "]";
+        $month_logs = "[";
+        foreach($month_logs_tmp as $tmp_label){
+            $month_logs .= $tmp_label.",";
+        }
+        $month_logs .= "]";
 
-        $daily_meals = [1, 3];
-        $data = [
-            [
-                "id" => 1,
-                "user_email" => "aaa@ddd.com",
-                "foodbox_id" => "1233333",
-                "card_id" => "123-123-123-123-123",
-                "feeding_id" => "2222222",
-                "open_time" => "2017-10-01 11:58:36",
-                "close_time" => "2017-10-01 12:00:05",
-                "start_weight" => 200,
-                "end_weight" => "160",
-                "diff" => "fff"
-            ]
-        ];
-        $number_of_pages = intval(count($data)/10)+1;
+        $number_of_pages = intval(count($feeding_logs)/10)+1;
 
-        array_collapse($daily_meals);
         return view(
             "pages.catPage",
             [
+                "today" => $date,
                 "daily_consumption" => $daily_consumption,
-                "ate_during_month" => $ate_during_month,
-                "ate_during_month_labels" => $ate_during_month_labels,
-                "ateDuringMonth" => $ate_during_month,
+                "daily_logs" => $daily_logs,
+                "daily_logs_labels" => $daily_logs_labels,
+                "month_logs" => $month_logs,
+                "month_logs_labels" => $month_logs_labels,
+                "feeding_logs" => $feeding_logs,
                 "cat" => $cat,
-                "dailyMeals" => $daily_meals,
-                "data" => $data,
-                "numberOfPages" => $number_of_pages
+                "number_of_pages" => $number_of_pages
             ]
         );
     }

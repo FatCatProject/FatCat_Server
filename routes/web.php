@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //works and needed
 Route::post('/addcat',['uses' => 'CatController@store']);
 Route::put('/catPage/editcat',['uses' => 'CatController@update']);
-Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage']);
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage']);
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage');
 Route::post('/addvetlog',['uses' => 'VetController@store']);
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage']);

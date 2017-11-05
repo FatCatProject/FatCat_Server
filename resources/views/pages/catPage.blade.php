@@ -19,12 +19,14 @@
                             </div>
 
                             <input
+                                alt="date"
                                 class="form-control"
                                 id="catDob"
                                 name="date"
                                 placeholder="YYYY-MM-DD"
                                 style="width: 110px;"
                                 type="text"
+                                value="{!! $today->format('Y-m-d') !!}"
                             />
                         </div>
                         @include('layouts.datePicker')
@@ -34,12 +36,17 @@
                     </div>
                 </div>
                 <div class="legend" style="width: 105px; margin: 0 0 0 25px">
-                    <div id="os-Mac-lbl">
-                        Food left
+                    <div id="os-Other-lbl">
+                        Food eaten
                         <span></span>
                     </div>
                     <div id="os-Win-lbl">
-                        Food eaten
+                        Food left
+                        <span></span>
+                    </div>
+
+                    <div id="os-Mac-lbl">
+                        Food overeaten
                         <span></span>
                     </div>
                 </div>
@@ -53,15 +60,15 @@
                     var pieData = [
                         {
                             value: {!! $daily_consumption['ate_allowance'] !!},
-                            color: "#ffff00"
+                            color: "#00ACED"
                         },
                         {
                             value: {!! $daily_consumption['food_left'] !!},
-                            color: "#00ff00"
+                            color: "#8BC34A"
                         },
                         {
                             value: {!! $daily_consumption['over_ate'] !!},
-                            color: "#ff0000"
+                            color: "#EF553A"
                         }
                     ];
                     new Chart(document.getElementById("pie").getContext("2d")).Pie(pieData);
@@ -80,6 +87,7 @@
                             </div>
 
                             <input
+                                alt="date"
                                 class="form-control"
                                 id="catDob"
                                 name="date"
@@ -87,6 +95,7 @@
                                 placeholder="YYYY-MM-DD"
                                 style="width: 110px;"
                                 type="text"
+                                value="{!! $today->format('Y-m-d') !!}"
                             />
                         </div>
                         @include('layouts.datePicker')
@@ -107,14 +116,14 @@
 
                     <script>
                         var lineChartData = {
-                            labels: {!! $ate_during_month_labels !!},
+                            labels: {!! $daily_logs_labels !!},
                             datasets: [
                                 {
                                     fillColor: "#fff",
                                     strokeColor: "#9358AC",
                                     pointColor: "#fbfbfb",
                                     pointStrokeColor: "#9358AC",
-                                    data: {!! $ate_during_month !!}
+                                    data: {!! $daily_logs !!}
                                 }
                             ]
                         };
@@ -135,12 +144,14 @@
                             </div>
 
                             <input
+                                alt="dateMonth"
                                 class="form-control"
                                 id="catDob"
                                 name="dateMonth"
                                 placeholder="YYYY-MM-DD"
                                 style="width: 110px;"
                                 type="text"
+                                value="{!! $today->format('Y-m') !!}"
                             />
                         </div>
                         @include('layouts.datePicker')
@@ -162,18 +173,12 @@
 
                 <script>
                     var barChartData = {
-                        labels: [
-                            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
-                            "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
-                        ],
+                        labels: {!! $month_logs_labels !!},
                         datasets: [
                             {
                                 fillColor: "#00ACED",
                                 strokeColor: "#00ACED",
-                                data: [
-                                    25, 40, 50, 65, 55, 30, 20, 30, 20, 33, 25, 40, 50, 65, 55, 30, 20, 30, 33, 22,
-                                    25, 40, 50, 65, 55, 30, 20, 30, 14, 11, 11
-                                ]
+                                data: {!! $month_logs !!}
                             }
                         ]
                     };
@@ -200,12 +205,14 @@
                             <i class="fa fa-calendar"></i>
                         </div>
                         <input
+                            alt="dateMonth"
                             class="form-control"
                             id="logsMonth"
                             name="dateMonth"
                             placeholder="YYYY-MM"
                             style="width: 100px; "
                             type="text"
+                            value="{!! $today->format("Y-m") !!}"
                         />
                     </div>
                 </div>
@@ -227,56 +234,16 @@
                 <th>Amount of food</th>
             </tr>
         </thead>
-                {{--AllReports@foreach($data as $row)
-                <tr>
-                <td> {!! $row['open_time'] !!} </td>
-                <td> {!! $row['close_time'] !!} </td>
-                <td> {!! $row['diff'] !!} </td>
-                <td> {!! $row['start_weight'] - $row['end_weight'] !!} grams </td>
-                </tr>
-                @endforeach--}}
-                {{--@for($index=0;$index<10 && count($data)>0;$index++)
-                <tr>
-                @if(empty($daata[$index]))
-                @endif
-                @if(!empty($daata[$index]))
-                <td> {!! $daata[$index]['open_time'] !!} </td>
-                <td> {!! $daata[$index]['close_time'] !!} </td>
-                <td> {!! $daata[$index]['diff'] !!} </td>
-                <td> {!! $daata[$index]['start_weight'] - $daata[$index]['end_weight'] !!} grams</td>
-                @endif
-                </tr>
-                @endfor --}}
-        @foreach($data as $row)
+        @foreach($feeding_logs as $row)
             <tr>
-                <td>{!! $row["open_time"] !!}</td>
-                <td>{!! $row["close_time"] !!}</td>
-                <td>{!! $row["diff"] !!}</td>
-                <td>{!! $row["start_weight"] - $row["end_weight"] !!}</td>
+                <td>{!! $row->open_time !!}</td>
+                <td>{!! $row->close_time !!}</td>
+                <td>{!! (date_create($row->close_time)->diff(date_create($row->open_time)))->format("%i minutes, %s seconds") !!}</td>
+                <td>{!! $row->start_weight - $row->end_weight !!}</td>
             </tr>
         @endforeach
     </table>
     <!--END Table-->
-        {{-- Needs work
-        <div align="right" class="col-md-12 page_1">
-        <nav>
-        <ul class="pagination">
-        @if($numberOfPages == 1)
-        <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
-        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-        <li class="disabled"><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
-        @endif
-        @if($numberOfPages >1)
-        <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a></li>
-        @for($i=1;$i<$numberOfPages+1;$i++)
-        <li class="active"><a href="#">{!! $i !!} <span class="sr-only">(current)</span></a></li>
-        @endfor
-        <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
-        @endif
-        </ul>
-        </nav>
-        </div>
-        --}}
     <div align="right" class="col-md-12 page_1">
         <nav>
             <ul class="pagination">
@@ -292,27 +259,14 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        2
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        3
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        4
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        5
-                    </a>
-                </li>
-                <li>
+                @for($i=1; $i < $number_of_pages; $i++)
+                    <li>
+                        <a href="#">
+                            {!! $i !!}
+                        </a>
+                    </li>
+                @endfor
+                <li class="{!! ($number_of_pages < 2) ? 'disabled' : '' !!}">
                     <a href="#" aria-label="Next">
                         <i class="fa fa-angle-right">
                         </i>

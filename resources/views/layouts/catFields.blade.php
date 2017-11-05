@@ -15,7 +15,7 @@
 
             {{ csrf_field() }}
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="focusedinput"><span style="color: red;">*</span>Name:</label>
+                <label class="col-sm-2 control-label" for="focusedinput">Name: <span style="color: red;">*</span></label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
@@ -30,7 +30,7 @@
             </div>
 
             <div class="form-group">
-                <label for="focusedinput" class="col-sm-2 control-label"><span style="color: red;">*</span>Breed:</label>
+                <label for="focusedinput" class="col-sm-2 control-label">Breed: <span style="color: red;">*</span></label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
@@ -62,7 +62,7 @@
             </div>
 
             <div class="form-group">
-                <label for="radio" class="col-sm-2 control-label"><span style="color: red;">*</span>Gender:</label>
+                <label for="radio" class="col-sm-2 control-label">Gender: <span style="color: red;">*</span></label>
                 <div class="col-sm-8">
                     <div class="radio-inline">
                         <label>
@@ -103,7 +103,7 @@
                         name="dob"
                         placeholder="YYYY-MM-DD"
                         type="text"
-                        value ="{!! !empty($cat->dob) ? $cat->dob : ''  !!}" style="width: 120px;"
+                        value ="{!! !empty($cat->dob) ? $cat->dob : '' !!}" style="width: 120px;"
                     />
                 </div>
                 @include('layouts.datePicker')
