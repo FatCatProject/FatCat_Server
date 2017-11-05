@@ -14,11 +14,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //added by michael
-
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
-Route::get('/catPage/{id}/{date?}',['uses' =>'CatController@catPage'])->middleware('privacy');
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->middleware('privacy');
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
@@ -32,7 +31,6 @@ Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middle
 Route::get('/foodProductsPage', 'FoodController@foodProductsPage')->middleware('authenticated');
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
-
 
 //tests
 Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');

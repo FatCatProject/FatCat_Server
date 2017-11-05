@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use DateTime;
-use carboon;
-use App\User;
-use App\CatBreed;
 use App\Cat;
-use Illuminate\Support\Facades\DB;
+use App\CatBreed;
+use App\User;
+use DateTime;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use carboon;
 
 class CatController extends Controller
 {
@@ -47,53 +49,101 @@ class CatController extends Controller
         ]);
     }
 
-    public function catPage($id,$date='null')
+    public function catPage($id)
     {
-        if($date =="null"){
-            $date = new DateTime();
-            $date = $date->format('Y-m-d');
+        $date = date_create("Asia/Jerusalem");
+
+        $cat = Cat::find($id);
+
+        $ate_today = 0;
+        $daily_logs_tmp = [];
+        $daily_logs_tmp_labels = [];
+        $label_index_tmp = 0;
+        $month_logs_tmp = [];
+        $month_logs_tmp_labels = [];
+        $days_in_month = intval(date("t", mktime(0, 0, 0, intval($date->format("m")), 1, intval($date->format("Y")))));
+        for($day = 1; $day <= $days_in_month; $day++){
+            $day_tmp = str_pad(strval($day), 2, "0", STR_PAD_LEFT);
+            array_push($month_logs_tmp_labels, $day_tmp);
+            $month_logs_tmp[$day_tmp] = 0;
+        }
+        $feeding_logs = [];
+        foreach($cat->cards as $card){
+            $card_logs = DB::table("feeding_logs")
+                ->where("user_email", $card->user_email)
+                ->where("card_id", $card->card_id)
+                ->whereYear("open_time", $date->format("Y"))
+                ->whereMonth("open_time", $date->format("m"))
+                ->select(
+                    "feeding_logs.start_weight", "feeding_logs.end_weight", "feeding_logs.open_time",
+                    "feeding_logs.close_time"
+                )
+                ->get();
+            foreach($card_logs as $log){
+                $ate_at_feedinglog = $log-> start_weight - $log->end_weight;
+
+                $day_of_log = (new DateTime($log->open_time))->format("d");
+                $month_logs_tmp[$day_of_log] += $ate_at_feedinglog;
+
+                array_push($feeding_logs, $log);
+                if ($day_of_log == $date->format("d")){
+                    $ate_today += $ate_at_feedinglog;
+                    $label_index_tmp += 1;
+                    array_push($daily_logs_tmp, strval($ate_at_feedinglog));
+                    array_push($daily_logs_tmp_labels, strval($label_index_tmp));
+                }
+            }
         }
 
-        $ateDuringTheMonth = array("1"=>0,"2"=>0,"3"=>0,"4"=>0,"5"=>0,"6"=>0,"7"=>0,"8"=>0,"9"=>0,"10"=>0,"11"=>0,"12"=>0,
-            "13"=>0,"14"=>0,"15"=>0,"16"=>0,"17"=>0,"18"=>0,"19"=>0,"20"=>0,"21"=>0,"22"=>0,"23"=>0,"24"=>0,
-            "25"=>0,"26"=>0,"27"=>0,"28"=>0,"29"=>0,"30"=>0,"31"=>0);
-
-
-        //all feeding logs for a cat in a month (by date)
-        $monthlyFeedingLogs = $this->monthlyFeedingLogs($id,$date);
-
-        //calculate all how much cat ate during each meal
-        foreach ($monthlyFeedingLogs as $log){
-            $logDate = explode(" ",$log->open_time);
-            $logDay = intval((explode("-",$logDate[0]))[2]);
-            $ateDuringTheMonth[$logDay]= $ateDuringTheMonth[$logDay]+($log->start_weight - $log->end_weight);
-
+        $daily_logs_labels = "[";
+        foreach($daily_logs_tmp_labels as $tmp_label){
+            $daily_logs_labels .= $tmp_label.",";
+        }
+        $daily_logs_labels .= "]";
+        $daily_logs = "[";
+        foreach($daily_logs_tmp as $tmp_data){
+            $daily_logs .= $tmp_data.",";
         }
 
-        $dailyFeedingLogs = $this->dailyFeedingLogs($id,$date);
-        $dailyMeals = array();
-        foreach ($dailyFeedingLogs as $dailyLog){
-            array_push($dailyMeals,$dailyLog->start_weight - $dailyLog->end_weight);
+        $daily_logs .= "]";
+
+        $ate_today = intval(ceil($ate_today));
+        $daily_consumption = [
+            "ate_allowance" => (($ate_today <= $cat->food_allowance) ? $ate_today : $cat->food_allowance),
+            "food_left" => (($ate_today <= $cat->food_allowance) ? ($cat->food_allowance - $ate_today) : 0),
+            "over_ate" => (
+                (($ate_today <= $cat->food_allowance) or ($cat->food_allowance == 0)) ?
+                0 : ($ate_today - $cat->food_allowance)
+            )
+        ];
+
+        $month_logs_labels = "[";
+        foreach($month_logs_tmp_labels as $tmp_label){
+            $month_logs_labels .= $tmp_label.",";
         }
-        array_collapse($dailyMeals);
-        $cat = Cat::find($id); // used for catname
-
-        //all logs which are displayed at the lower half of catPage
-        $feedingLogs = $this->allReportsByID($id);
-        $data = array();
-        foreach ($feedingLogs as $log){
-            $diff = $this->diffBetweenDates($log->open_time,$log->close_time);
-            $improvedLog = array("id"=>$log->id,"user_email"=>$log->user_email,"foodbox_id"=>$log->foodbox_id,
-                "card_id"=>$log->card_id, "feeding_id"=>$log->feeding_id, "open_time"=>$log->open_time,
-                "close_time"=>$log->close_time, "start_weight"=>$log->start_weight,"end_weight"=>$log->end_weight,
-                "diff"=>$diff);
-            array_push($data,$improvedLog);
+        $month_logs_labels .= "]";
+        $month_logs = "[";
+        foreach($month_logs_tmp as $tmp_label){
+            $month_logs .= $tmp_label.",";
         }
+        $month_logs .= "]";
 
+        $number_of_pages = intval(count($feeding_logs)/10)+1;
 
-        $numberOfPages = intval(count($data)/10)+1;
-        return view('pages.catPage', compact('cat'), compact('data'),
-            compact('ateDuringMonth'), compact('dailyMeals'), compact('numberOfPages')) ->with('numberOfPages',$numberOfPages);
+        return view(
+            "pages.catPage",
+            [
+                "today" => $date,
+                "daily_consumption" => $daily_consumption,
+                "daily_logs" => $daily_logs,
+                "daily_logs_labels" => $daily_logs_labels,
+                "month_logs" => $month_logs,
+                "month_logs_labels" => $month_logs_labels,
+                "feeding_logs" => $feeding_logs,
+                "cat" => $cat,
+                "number_of_pages" => $number_of_pages
+            ]
+        );
     }
 
     public function autocomplete(Request $request){
@@ -105,37 +155,52 @@ class CatController extends Controller
     }
 
     public function store(Request $request){
-        $status="success";
-        date_default_timezone_set('Asia/Jerusalem');
-        $currentUser = auth()->user();
-        if($request->cat_name ==null){
-            $status = "failed, no input for cat name";
-        }else{
-            $breed = DB::table('cat_breeds')->where('breed_name',$request->cat_breed)->get();
-            if(count($breed)==1){
-            $profile_picture=base64_encode($request->profile_picture);
-            $dob = (new DateTime($request->dob))->format('Y-m-d');
-            $now = new DateTime();
-            $now->format('Y-m-d H:i:s');
-            $id = DB::table('cats')->insertGetId(
-                ['user_email'=>$currentUser->email ,'cat_name'=>$request->cat_name ,'profile_picture'=>$profile_picture,
-                    'dob'=>$dob ,'gender'=>$request->gender ,'cat_breed'=>$request->cat_breed , 'current_weight'=>$request->current_weight,
-                    'target_weight'=>$request->target_weight , 'daily_calories'=>$request->daily_calories , 'created_at'=>$now ,
-                    'updated_at'=>$now]
-            );
-            }else{
-                $status = "failed, cat breed wasmt selected properly";
+        $current_user = auth()->user();
+
+        $my_cat = new \App\Cat(
+            [
+                "cat_name" => $request->cat_name,
+                "user_email" => $current_user->email
+            ]
+        );
+
+        $my_cat->cat_breed = $request->cat_breed;
+        $my_cat->current_weight = $request->current_weight;
+        $my_cat->daily_calories = $request->daily_calories;
+        $my_cat->dob = $request->dob;
+        $my_cat->gender = $request->gender;
+        $my_cat->target_weight = $request->target_weight;
+
+        try{
+            if(!empty($request->profile_picture)){
+                $my_cat->profile_picture = str_replace(
+                    ["@", "."],
+                    "_",
+                    $current_user->email."_".$my_cat->cat_name
+                ).".".$request->profile_picture->getClientOriginalExtension();
             }
+
+            $my_cat->save();
+            if (!empty($my_cat->profile_picture)){
+                Storage::disk("user_pictures")->putFileAs(
+                    str_replace(["@", "."], "_", $current_user->email),
+                    $request->profile_picture,
+                    $my_cat->profile_picture
+                );
+            }
+        }catch(QueryException $e){
+            return response("QueryException - Fixme.\n", 400);
         }
-        return redirect()->back();
+
+        return redirect()->action("CatController@catPage", ["id" => $my_cat->id]);
     }
 
     public function update(Request $request){
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
-        if($request->profile_picture != null){
-            $cat->profile_picture = $request->profile_picture;
+        if($request->has("profile_picture")){
+            $cat->profile_picture = base64_encode(file_get_contents($request->file("profile_picture")->path()));
         }
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
