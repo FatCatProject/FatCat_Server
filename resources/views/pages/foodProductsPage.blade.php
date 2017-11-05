@@ -66,7 +66,6 @@
                 <div class="widgets_top">
                     @php ($index = 0)
                     @for($row=0;$row<$numberOfRows;$row++)
-                        <div class="row">
                             @for(;$index<count($myFoods);$index++)
                                 @if(!empty($myFoods))
                                     <div class="col-md-3 widget widget1" style="padding: 10px 0px">
@@ -104,5 +103,5 @@
             </div>
         </div>
         <br><br><br>
-    </div>
+
 @endsection
