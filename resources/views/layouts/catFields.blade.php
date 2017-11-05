@@ -45,21 +45,6 @@
                 </div>
             </div>
 
-            <!--Full dropdown without ajax-->
-            {{--<div class="form-group">--}}
-            {{--<label for="breed_selection" class="col-sm-2 control-label"--}}
-            {{--id="breed_selection">Breed</label>--}}
-            {{--<div class="col-sm-8">--}}
-            {{--<select name="breedd" id="breedd" class="form-control1">--}}
-            {{--<option value="" name="" selected disabled>Please select a breed</option>--}}
-            {{--@foreach ($breeds as $breed)--}}
-            {{--<option value="{!! $breed !!}"--}}
-            {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
-            {{--@endforeach--}}
-            {{--</select>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-
             <div class="form-group">
                 <label for="focusedinput" class="col-sm-2 control-label">Wiki page:</label>
                 <div class="col-sm-8" style="margin-top: 6px">
