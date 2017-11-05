@@ -15,7 +15,7 @@
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
 
-            <li class="active"><a href="#"><i class="lnr lnr-cog"></i>
+            <li><a href="#"><i class="lnr lnr-cog"></i>
                     <span>Settings</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="/userPage">User</a></li>
@@ -23,10 +23,9 @@
                     <li><a href="/foodProductsPage">Food products</a></li>
                 </ul>
             </li>
-
-            <li class="active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>
-            <li class="box or active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>
-
+            <li><a href="forms.html"><i class="lnr lnr-inbox"></i><span>Food boxes</span></a></li>
+            {{--<li class="active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>--}}
+            {{--<li class="box or active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>--}}
             <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Manager</span></a>
                 <ul class="sub-menu-list">
