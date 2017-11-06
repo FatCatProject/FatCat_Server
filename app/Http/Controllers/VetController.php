@@ -32,7 +32,6 @@ class VetController extends Controller
         $month_expenses .= "]";
         $total_expenses = $this->spentDuringYear($expenses_per_month);
 
-
         $vet_prescription_pictures = [];
 
         foreach($vet_logs as $log){
@@ -100,44 +99,64 @@ class VetController extends Controller
         return redirect()->back();
     }
 
+    //update method does not remove old image file from storage
+    //fixme
     public function update(Request $request){
+        $current_user = auth()->user();
         date_default_timezone_set('Asia/Jerusalem');
-        $vetLog = CatVetLog::find($request->id);
+        $vet_log = CatVetLog::find($request->id);
 
-        if($vetLog == null)
+        if($vet_log == null)
             return response()->json("Vet log not found");
 
         if($request->visit_date == null){
             return response()->json("Visit date cannot be null");
         }else{
-            $vetLog->visit_date = $request->visit_date;
+            $vet_log->visit_date = $request->visit_date;
         }
 
-        $vetLog->visit_date = $request->visit_date;
-        $vetLog->subject = $request->subject;
-        $vetLog->description = $request->description;
-        $vetLog->clinic_name = $request->clinic_name;
-        $vetLog->prescription_picture = $request->prescription_picture;
-        $vetLog->price = $request->price;
+        $vet_log->visit_date = $request->visit_date;
+        $vet_log->subject = $request->subject;
+        $vet_log->description = $request->description;
+        $vet_log->clinic_name = $request->clinic_name;
+        $vet_log->price = $request->price;
 
-        $vetLog->update();
-        return redirect()->back();
+        $vet_log->prescription_picture = $request->prescription_picture;
+        try{
+            if(!empty($request->prescription_picture)){
+                $vet_log->prescription_picture = str_replace(
+                        ["@", "."],
+                        "_",
+                        $current_user->email."_".$vet_log->visit_date
+                    ).".".$request->prescription_picture->getClientOriginalExtension();
+            }
+
+            $vet_log->save();
+            if (!empty($vet_log->prescription_picture)){
+                Storage::disk("user_pictures")->putFileAs(
+                    str_replace(["@", "."], "_", $current_user->email),
+                    $request->prescription_picture,
+                    $vet_log->prescription_picture
+                );
+            }
+        }catch(QueryException $e){
+            return response()->json("update failed");
+        }
+        $vet_log->update();
+        return redirect()->json($request->id);
     }
 
+    //delete method does not remove image file from storage
+    //fixme
     public function delete($id){
         $cat_vet_log = CatVetLog::find($id);
         if($cat_vet_log==null){
             return response()->json("failed");
         }else{
-            Storage::
-            dd($cat_vet_log->prescription_picture);
-            //$cat_vet_log->delete();
-
+            Storage::delete('$cat_vet_log->prescription_picture');
             return response()->json($id);
         }
     }
-
-
 
     public function yearlyVetLogs($year, $name, $user_email)
     {
@@ -149,16 +168,16 @@ class VetController extends Controller
         return $result;
     }
 
-    public function expensesPerMonth($vetLogDuringYear)
+    public function expensesPerMonth($vet_log_duringYear)
     {
-        $expensesPerMonth = array("1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0, "6" => 0, "7" => 0, "8" => 0,
+        $expenses_per_month = array("1" => 0, "2" => 0, "3" => 0, "4" => 0, "5" => 0, "6" => 0, "7" => 0, "8" => 0,
             "9" => 0, "10" => 0, "11" => 0, "12" => 0);
-        foreach ($vetLogDuringYear as $vetLog) {
-            $logDate = explode(" ", $vetLog->visit_date);
-            $logMonth = intval((explode("-", $logDate[0]))[1]);
-            $expensesPerMonth[$logMonth] = $expensesPerMonth[$logMonth] + $vetLog->price;
+        foreach ($vet_log_duringYear as $vet_log) {
+            $logDate = explode(" ", $vet_log->visit_date);
+            $log_month = intval((explode("-", $logDate[0]))[1]);
+            $expenses_per_month[$log_month] = $expenses_per_month[$log_month] + $vet_log->price;
         }
-        return $expensesPerMonth;
+        return $expenses_per_month;
     }
 
     public function spentDuringYear($expenses)
@@ -169,7 +188,4 @@ class VetController extends Controller
         }
         return $sum;
     }
-
-
-
 }

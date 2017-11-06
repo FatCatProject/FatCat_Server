@@ -90,10 +90,9 @@
                                                 labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                                 datasets: [
                                                     {
-
                                                         fillColor: "#00BCD4",
                                                         strokeColor: "#00BCD4",
-                                                        data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4, 20, 30]
+                                                        data: {!! $yearly_expenses !!}
                                                     },
                                                 ]
                                             };

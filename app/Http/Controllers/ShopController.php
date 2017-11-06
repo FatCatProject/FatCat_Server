@@ -20,10 +20,25 @@ class ShopController extends Controller
         }
         $currentUser = auth()->user();
         $shoppingLogs = $this->yearlypurchases($year,$currentUser->email);
-        $expensesPerMonth = $this->expensesPerMonth($year,$currentUser->email);
-        $totalExpenses = $this->spentDuringYear($expensesPerMonth);
+        $expenses_per_month = $this->expensesPerMonth($year,$currentUser->email);
+        $total_expenses = $this->spentDuringYear($expenses_per_month);
 
-        return view('pages.shoppingPage',compact('expensesPerMonth'),compact('shoppingLogs'))->with('totalExpenses',$totalExpenses);
+        $yearly_expenses = "[";
+        foreach ($expenses_per_month as $expense){
+            $yearly_expenses .= $expense.",";
+        }
+        $yearly_expenses .= "]";
+
+
+        return view(
+            "pages.shoppingPage",
+            [
+                "expensesPerMonth" => $expenses_per_month,
+                "shoppingLogs" => $shoppingLogs,
+                "totalExpenses" => $total_expenses,
+                "yearly_expenses" => $yearly_expenses
+            ]
+        );
     }
 
     public function storeShopLog(Request $request)
