@@ -111,7 +111,7 @@
 
                                 fillColor: "#00BCD4",
                                 strokeColor: "#00BCD4",
-                                data: [25, 40, 50, 65, 55, 30, 20, 10, 6, 4, 20, 30]
+                                data: {!! $month_expenses !!}
                             },
                         ]
                     };
@@ -164,14 +164,24 @@ data-widget-static="">
 </tr>
 </thead>
 <tbody>
-@foreach($vetLogs as $log)
+@php ($index = 0)
+@for(;$index<count($vet_logs);$index++)
 <tr id="1">
-    <td class="editableColumns">{!! $log->visit_date !!}</td>
-    <td class="editableColumns">{!! $log->clinic_name !!}</td>
-    <td class="editableColumns">{!! $log->subject !!}</td>
-    <td class="editableColumns">{!! $log->description !!}</td>
-    <td class="editableColumns">{!! base64_decode($log->prescription_picture) !!}</td>
-    <td class="editableColumns">{!! $log->price !!}</td>
+    <td class="editableColumns">{!! $vet_logs[$index]->visit_date !!}</td>
+    <td class="editableColumns">{!! $vet_logs[$index]->clinic_name !!}</td>
+    <td class="editableColumns">{!! $vet_logs[$index]->subject !!}</td>
+    <td class="editableColumns">{!! $vet_logs[$index]->description !!}</td>
+    @if($vet_prescription_pictures[$vet_logs[$index]->id] == "No prescription picture")
+        <td class="editableColumns">No prescrition image</td>
+    @else
+    <td class="editableColumns"><img
+                src="{!! $vet_prescription_pictures[$vet_logs[$index]->id] !!}"
+                width="50px"
+                height="50px"
+                align="center"
+        ></td>
+    @endif
+    <td class="editableColumns">{!! $vet_logs[$index]->price !!}</td>
     <td>
         <ul class="nav nav-pills">
             <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
@@ -179,7 +189,7 @@ data-widget-static="">
         </ul>
     </td>
 </tr>
-@endforeach
+@endfor
 </tbody>
 </table>
 <div align="right" class="col-md-12 page_1">

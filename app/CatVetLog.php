@@ -16,7 +16,7 @@ class CatVetLog extends Model
      */
     protected $fillable = [
         'user_email',
-        'cat_id',
+        'cat_name',
         'visit_date',
     ];
 
