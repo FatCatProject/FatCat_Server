@@ -33,7 +33,7 @@ Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenti
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
 
 //tests
-Route::get('/temp/{year}' , 'VetController@yearlyVetLogs');
+Route::get('/temp/{id}' , 'VetController@delete');
 
 //Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');
