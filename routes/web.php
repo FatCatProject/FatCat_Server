@@ -11,8 +11,6 @@ Route::get('/autocompleteBreed', 'CatController@autocomplete');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 //added by michael
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
