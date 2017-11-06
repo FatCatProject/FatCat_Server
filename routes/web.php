@@ -1,7 +1,7 @@
 <?php
 
-Route::get('/' , 'PagesController@index');
 
+Route::redirect('/', '/homePage', 301);
 
 //Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
@@ -10,8 +10,6 @@ Route::get('/autocompleteBreed', 'CatController@autocomplete');
 
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 //added by michael
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
