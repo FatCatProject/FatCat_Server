@@ -1,7 +1,7 @@
 <?php
 
-Route::get('/' , 'PagesController@index');
 
+Route::redirect('/', '/homePage', 301);
 
 //Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
