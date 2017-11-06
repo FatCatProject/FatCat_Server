@@ -147,8 +147,5 @@
             });
         });
     </script>
-
-  popup
-
     <br><br><br>
 @endsection
