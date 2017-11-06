@@ -76,28 +76,42 @@
                                                 </li>
                                             </ul>
                                         </div>
+
                                         <div class="r3_counter_box">
                                             <i class="fa" style="width: 150px;"><img
                                                         src="/images/food2.png"
                                                         width="100px"></i>
+                                            {{----}}
                                             <div class="stats">
 
-                                                <div id="gramsNow" class="row" style="margin:0px 0px 0 0">
+                                                <div class="gramsNow row" style="margin:0px 0px 0 0">
                                                     <h5>{!! $myFoods[$index]->weight_left !!} <span>grams left</span>
                                                     </h5>
                                                 </div>
+                                                {{--GramsToADD--}}
+                                                <div hidden class="row gramsToAdd" style="margin: 20px 0px 0px;">
+                                                        <div class="col-sm-6">
+                                                            <input type="number" name="addFoodWeight" step="any" min="0" max="10000"
+                                                                   class="form-control1" id="currentWeight" placeholder="" required>
+                                                        </div>
+                                                        <div class="col-sm-2"  style="margin-top: 20px">
+                                                            <p class="help-block">Grams</p>
+                                                        </div>
+                                                        <div class="col-sm-4"  style="padding: 0px;">
+                                                                <ul class="nav nav-pills">
+                                                                    <li><a><i class="lnr lnr-checkmark-circle"></i></a></li>
+                                                                    <li class="cancelAdd"><a><i class="lnr lnr-cross-circle"></i></a></li>
+                                                                </ul>
+                                                        </div>
 
-                                                {{--<div id="gramsToAdd" class="row" style="margin:0px 0px 0 0">--}}
-                                                    {{--<h5><span>grams left</span>--}}
-                                                    {{--</h5>--}}
-                                                {{--</div>--}}
+                                                </div>
 
                                                 <div class="grow foodGrow">
                                                     <p>{!! $myFoods[$index]->food_name !!}</p>
                                                 </div>
-                                                <div id="popup" class="row" style="margin:-18px; float: right ">
+                                                <div class="addBtn row" style="margin:-18px; float: right ">
                                                     <ul class="nav nav-pills">
-                                                        <li id="onclick" class=""><a href="#"><i
+                                                        <li class="add"><a><i
                                                                         class="lnr lnr-plus-circle editValues"
                                                                         onclick=""></i>Add</a>
                                                         </li>
@@ -117,25 +131,24 @@
         </div>
         <br><br><br>
 
-    {{--popup--}}
-    {{--<p id="p">If you click on the "Hide" button, I will disappear.</p>--}}
-    {{--<button id="hide">Hide</button>--}}
-    {{--<button id="show">Show</button>--}}
 
+    <script>
+        $(document).ready(function(){
+            $(".add").click(function(){
+                $(this).parent().parent().parent().find('.gramsNow').hide();
+                $(this).parent().parent().hide();
+                $(this).parent().parent().parent().find('.gramsToAdd').show();
+            });
+            $(".cancelAdd").click(function(){
+                $(this).parent().parent().parent().hide();
+                $(this).parent().parent().parent().parent().find('.addBtn').show();
+                $(this).parent().parent().parent().parent().find('.gramsNow').show();
 
+            });
+        });
+    </script>
 
-    {{--<script>--}}
-        {{--$(document).ready(function(){--}}
-            {{--$("#hide").click(function(){--}}
-                {{--$("#p").hide();--}}
-            {{--});--}}
-            {{--$("#show").click(function(){--}}
-                {{--$("#p").show();--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
+  popup
 
-  {{--popup--}}
-
-    {{--<br><br><br>--}}
+    <br><br><br>
 @endsection
