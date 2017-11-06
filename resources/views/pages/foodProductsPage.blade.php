@@ -69,6 +69,13 @@
                             @for(;$index<count($myFoods);$index++)
                                 @if(!empty($myFoods))
                                     <div class="col-md-3 widget widget1" style="padding: 10px 0px">
+                                        <div style="background-color: white; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2);">
+                                            <ul class="nav nav-pills">
+                                                <li><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
+                                                <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                         <div class="r3_counter_box">
                                             <i class="fa" style="width: 150px;"><img
                                                         src="/images/food2.png"
@@ -96,8 +103,6 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
