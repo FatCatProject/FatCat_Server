@@ -69,8 +69,9 @@
                     <h4 class="blank1">Add product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="addProduct" id="addProduct">
+                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="addProduct" id="addProduct">
                                 {!! csrf_field() !!}
+                                <input type="hidden" value="{{csrf_token()}}" name="_token">
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
@@ -107,7 +108,7 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-3 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="picture" id="itemPicture" class="filestyle"
+                                        <input type="file" name="picture" id="picture" class="filestyle"
                                                data-buttonBefore="true" style="margin-top: 6px">
                                     </div>
                                 </div>

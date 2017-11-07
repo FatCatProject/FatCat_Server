@@ -6,7 +6,10 @@ use App\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\QueryException;
 
 class ShopController extends Controller
 {
@@ -90,11 +93,19 @@ class ShopController extends Controller
     //above this, methods of shoppingPage ||| below this point, methods of shopsPage
 
     public function shopsPage(){
-        $currentUser = auth()->user();
-        $shops = $this->usersShops($currentUser->email);
-        $products = $this->usersProducts($currentUser->email);
-        //dd($products);
-        return view('pages.shopsPage',compact('shops'),compact('products'));
+        $current_user = auth()->user();
+        $shops = $this->usersShops($current_user->email);
+        $products = $this->usersProducts($current_user->email);
+
+        $products_pictures = [];
+
+        return view(
+            "pages.shopsPage",
+            [
+                "shops" => $shops,
+                "products" => $products
+            ]
+        );
     }
 
     public function storeShop(Request $request)
@@ -114,19 +125,41 @@ class ShopController extends Controller
 
     public function storeProduct(Request $request)
     {
-        $status = "success";
-        $currentUser = auth()->user();
+        $current_user = auth()->user();
         $isfood=0;
         if($request->is_food =="on"){
             $isfood=1;
         }
-        if ($currentUser == null || $request->product_name == null || $request->price == null || $request->weight==null) {
-            $status = "failed, part of the input is lacking";
-        } else {
-            $id = DB::table('products')->insertGetId(
-                ['user_email' => $currentUser->email, 'product_name' => $request->product_name, 'weight' => $request->weight,
-                    'price' => $request->price, 'is_food'=>$isfood]
-            );
+        $product = new \App\Product(
+            [
+                "user_email" => $current_user->email,
+                "product_name" =>$request->product_name,
+                "weight" => $request->weight,
+                "price" => $request->price,
+                "is_food" => $isfood
+            ]
+        );
+
+        $product->picture = $request->picture;
+        try{
+            if(!empty($request->picture)){
+                $product->picture = str_replace(
+                        ["@", "."],
+                        "_",
+                        $product->product_name."_".$product->weight
+                    ).".".$request->picture->getClientOriginalExtension();
+            }
+
+            $product->save();
+            if (!empty($product->picture)){
+                Storage::disk("user_pictures")->putFileAs(
+                    str_replace(["@", "."], "_", $current_user->email."_products"),
+                    $request->picture,
+                    $product->picture
+                );
+            }
+        }catch(QueryException $e){
+            return response("QueryException - Fixme.\n", 400);
         }
         return redirect()->back();
     }
