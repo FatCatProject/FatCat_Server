@@ -1,11 +1,12 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="graphs">
+        <div class="graphs" id="Edit">
             <h3 class="blank1">Food Products Manager:</h3>
             {{--Cards Manager--}}
             <div class="row">
-                <div class="col-sm-6">
+                {{--Add Product Block--}}
+                <div id="addProductBlock" class="col-sm-6">
                     <h4 class="blank1">Add new food product that will be used in the food boxes:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -25,7 +26,7 @@
                                         <label for="foodWeight"
                                                class="col-sm-3 control-label label-input-sm">Weight: <span style="color: red;">*</span></label>
                                         <div class="col-sm-8">
-                                            <input type="number" name="weight_left" step="any" min="0" max="1000"
+                                            <input type="number" name="weight_left" step="any" min="0" max="100000"
                                                    class="form-control1 input-sm" id="currentWeight" placeholder="Enter weight in Grams" required>
                                         </div>
                                         <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
@@ -54,6 +55,48 @@
                         </div>
                     </div>
                 </div>
+{{--Edit Product Block--}}
+                <div hidden id="editProductBlock" class="col-sm-6">
+                    <h4 class="blank1">Edit product:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal" method="POST" action="editFood" id="editFoodForm">
+                                {!! csrf_field() !!}
+                                <div class="col-sm-12">
+                                    {{--Product name--}}
+                                    <div class="form-group">
+
+                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control1" name="food_name" id="food_name_to_edit"
+                                                   placeholder="" required>
+                                            <input type="hidden" name="id" id="food_id_to_edit" value="">
+                                        </div>
+                                    </div>
+                                    {{--Product picture--}}
+                                    <div class="form-group">
+                                        <label for="profilePicture" class="col-sm-3 control-label">Product
+                                            picture:</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="profile_picture" id="food_profilePicture_to_edit"
+                                                   class="filestyle"
+                                                   data-buttonBefore="true" style="margin-top: 6px">
+                                            {{--<p class="help-block">Example block-level help text here.</p>--}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-5" style="margin:20px 0 0 15px">
+                                        <button id="editFoodProductBtn" type="submit" class="btn-success btn" form="editFoodForm">Edit Product</button>
+                                        <button id="cancelEditFoodProductBtn" type="reset" class="btn-inverse btn">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{--End Edit Product Block--}}
+
                 <div class="col-sm-5" style="padding: 20px">
                     <img src="/images/catFood.png" width="100px">
                 </div>
@@ -66,11 +109,12 @@
                     @for($row=0;$row<$numberOfRows;$row++)
                             @for(;$index<count($myFoods);$index++)
                                 @if(!empty($myFoods))
-                                    <div class="col-md-3 widget widget1" style="padding: 10px 0px">
+                                    <div id="food_id_{!! $myFoods[$index]->id !!}" class="col-md-3 widget widget1" style="padding: 10px 0px">
                                         <div style="background-color: white; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2);">
                                             <ul class="nav nav-pills">
-                                                <li><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
-                                                <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                                <li class="editFoodBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
+
+                                                <li class="deleteFoodBtn"><a><i class="lnr lnr-trash"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="r3_counter_box">
@@ -79,7 +123,8 @@
                                                         width="100px"></i>
                                             {{----}}
                                             <div class="stats">
-                                                <input type="hidden" id="foodID" value={!! $myFoods[$index]->id !!}>
+                                                <input type="hidden" id="foodID" value="{!! $myFoods[$index]->id !!}">
+                                                <input type="hidden" id="foodName" value="{!! $myFoods[$index]->food_name !!}">
                                                 <div class="gramsNow row" style="margin:0px 0px 0 0">
                                                     <h5 id="weight_left_id{!! $myFoods[$index]->id !!}">{!! $myFoods[$index]->weight_left !!} <span>grams left</span>
                                                     </h5>
@@ -143,7 +188,7 @@
             });
         });
 
-//Update Food Amount
+//Update Food Amount in grams
         $(document).ready(function () {
             $('.updateBtn').on("click", function () {
                 var id = $(this).parent().parent().parent().parent().find('#foodID').val();
@@ -177,6 +222,51 @@
         });
 
 
+
+//  Edit name/picture for a specific food
+        $(document).ready(function(){
+            $(".editFoodBtn").click(function(){
+                var id = $(this).parent().parent().parent().find('#foodID').val();
+                var foodName = $(this).parent().parent().parent().find('#foodName').val();
+                console.log("id is" + id);
+                console.log("name is" +foodName);
+                $("#addProductBlock").hide();
+                $("#editProductBlock").show();
+                $("#food_name_to_edit").val(foodName);
+                $("#food_id_to_edit").val(id);
+//                $("#food_profilePicture_to_edit").val(); // TODO
+            });
+            $("#cancelEditFoodProductBtn").click(function(){
+                $("#addProductBlock").show();
+                $("#editProductBlock").hide();
+
+            });
+        });
+
+        //Delete Food Product
+        $(document).ready(function () {
+            $('.deleteFoodBtn').on("click", function () {
+                var id = $(this).parent().parent().parent().find('#foodID').val();
+                var foodName = $(this).parent().parent().parent().find('#foodName').val();
+                console.log("id is" + id);
+                console.log("name is" +foodName);
+                $.ajax({
+                    type: "GET",
+                    url: './deleteFood/'+id,
+                    caller: id,
+                    data: {
+                        id: id,
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $("#food_id_" + this.caller).hide();
+                    },
+                    fail: function (jqXHR, textStatus, errorThrown) {
+                        console.log("ERROR:" + jqXHR);
+                        console.log("ERROR:" + textStatus);
+                    }
+                })
+            });
+        });
     </script>
     <br><br><br>
 @endsection

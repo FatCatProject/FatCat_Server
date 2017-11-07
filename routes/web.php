@@ -30,8 +30,12 @@ Route::get('/foodProductsPage', 'FoodController@foodProductsPage')->middleware('
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
 //Natalie
-//Route::get('/updateWeight/{id}/{addFoodWeight?}',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
 Route::get('/updateWeight',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
+Route::get('/update',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::post('/editFood',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::get('/deleteFood/{id}','FoodController@delete')
+    ->name('deleteFood')
+    ->middleware('authenticated');
 
 //tests
 Route::get('/temp/{id}/' , 'VetController@delete');
