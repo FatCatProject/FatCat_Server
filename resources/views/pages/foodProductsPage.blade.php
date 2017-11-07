@@ -55,9 +55,7 @@
                     </div>
                 </div>
                 <div class="col-sm-5" style="padding: 20px">
-
                     <img src="/images/catFood.png" width="100px">
-
                 </div>
             </div>
             <hr>
@@ -72,34 +70,32 @@
                                         <div style="background-color: white; box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2);">
                                             <ul class="nav nav-pills">
                                                 <li><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
-                                                <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a>
-                                                </li>
+                                                <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
                                             </ul>
                                         </div>
-
                                         <div class="r3_counter_box">
                                             <i class="fa" style="width: 150px;"><img
                                                         src="/images/food2.png"
                                                         width="100px"></i>
                                             {{----}}
                                             <div class="stats">
-
+                                                <input type="hidden" id="foodID" value={!! $myFoods[$index]->id !!}>
                                                 <div class="gramsNow row" style="margin:0px 0px 0 0">
-                                                    <h5>{!! $myFoods[$index]->weight_left !!} <span>grams left</span>
+                                                    <h5 id="weight_left_id{!! $myFoods[$index]->id !!}">{!! $myFoods[$index]->weight_left !!} <span>grams left</span>
                                                     </h5>
                                                 </div>
                                                 {{--GramsToADD--}}
                                                 <div hidden class="row gramsToAdd" style="margin: 20px 0px 0px;">
-                                                        <div class="col-sm-6">
-                                                            <input type="number" name="addFoodWeight" step="any" min="0" max="10000"
+                                                        <div class="col-sm-6" style="padding: 0px;">
+                                                            <input type="number" id="addFoodWeight" step="any" min="0" max="10000"
                                                                    class="form-control1" id="currentWeight" placeholder="" required>
                                                         </div>
-                                                        <div class="col-sm-2"  style="margin-top: 20px">
+                                                        <div class="col-sm-2"  style="padding:0px; margin-top: 20px">
                                                             <p class="help-block">Grams</p>
                                                         </div>
                                                         <div class="col-sm-4"  style="padding: 0px;">
                                                                 <ul class="nav nav-pills">
-                                                                    <li><a><i class="lnr lnr-checkmark-circle"></i></a></li>
+                                                                    <li class="updateBtn"><a><i class="lnr lnr-checkmark-circle"></i></a></li>
                                                                     <li class="cancelAdd"><a><i class="lnr lnr-cross-circle"></i></a></li>
                                                                 </ul>
                                                         </div>
@@ -146,6 +142,41 @@
 
             });
         });
+
+//Update Food Amount
+        $(document).ready(function () {
+            $('.updateBtn').on("click", function () {
+                var id = $(this).parent().parent().parent().parent().find('#foodID').val();
+                var addFoodWeight = $(this).parent().parent().parent().find('#addFoodWeight').val();
+                console.log("this is the id:"+id);
+                console.log(addFoodWeight);
+                $.ajax({
+                    type: "GET",
+                    url: './updateWeight',
+                    caller: id,
+                    data: {
+                        id: id,
+                        addFoodWeight: addFoodWeight
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("hhhhh "+data.newWeight);
+                        var newWeight = data.newWeight;
+                        console.log("weight_left_id" + this.caller);
+                        $("#weight_left_id" + this.caller).html(newWeight+"<span>&nbsp;&nbsp;grams left</span>");
+                    },
+                    fail: function (jqXHR, textStatus, errorThrown) {
+                        console.log("ERROR:" + jqXHR);
+                        console.log("ERROR:" + textStatus);
+                    }
+                })
+                $(this).parent().parent().parent().hide();
+                $(this).parent().parent().parent().parent().find('.addBtn').show();
+                $(this).parent().parent().parent().parent().find('.gramsNow').show();
+            });
+
+        });
+
+
     </script>
     <br><br><br>
 @endsection

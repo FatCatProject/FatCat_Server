@@ -45,4 +45,22 @@ class FoodController extends Controller
             ->get();
         return $result;
     }
+//    Natalie try
+
+    public function updateWeight(Request $request){
+        $currentUser = Auth::User();
+        $my_food = $currentUser->foods()->where('id', $request->id)->first();
+        if(empty($my_food))
+            return response("Product not found", 204);
+
+        $newWeight=$my_food->weight_left+$request->addFoodWeight;
+        $my_food->weight_left = $newWeight;
+
+        try{
+            $my_food->save();
+        }catch(QueryException $e){
+            return response("Update failed", 500);
+        }
+        return response()->json(['newWeight' => $my_food->weight_left]);
+    }
 }

@@ -29,9 +29,12 @@ Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middle
 Route::get('/foodProductsPage', 'FoodController@foodProductsPage')->middleware('authenticated');
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
+//Natalie
+//Route::get('/updateWeight/{id}/{addFoodWeight?}',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
+Route::get('/updateWeight',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
 
 //tests
-Route::get('/temp/{id}' , 'VetController@delete');
+Route::get('/temp/{id}/' , 'VetController@delete');
 
 //Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');
