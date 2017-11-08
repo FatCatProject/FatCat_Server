@@ -233,16 +233,16 @@ $("#vet_visits_datepicker").on("changeDate", visits_doughnut);
         @php ($index = 0)
         @for($row=0;$row<$numberOfRows;$row++)
             <div class="row">
-                @for(;$index<count($cats);$index++)
+                @for(;$index<count($boxes);$index++)
                     <div class="col-md-4">
                         <div class="r3_counter_box">
                             <i class="fa" style="width: 150px; margin-left: -30px"><img
                                         src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png"
                                         width="100px"></i>
                             <div class="stats">
-                                <h5>50 <span>gr</span></h5>
+                                <h5>{!! $boxes[$index]['current_weight'] !!}<span>gr</span></h5>
                                 <div class="grow">
-                                    <p>{!! $cats[$index]['cat_name'] !!}</p>
+                                    <p>{!! $boxes[$index]['foodbox_name'] !!}</p>
                                 </div>
                             </div>
                         </div>

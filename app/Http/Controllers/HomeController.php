@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Sodium\compare;
 
 class HomeController extends Controller
 {
@@ -25,12 +26,13 @@ class HomeController extends Controller
     public function homePage()
     {
         $cats = \App::call('App\Http\Controllers\CatController@myCats');
-        if (count($cats) / 3 > intval(count($cats) / 3))
-            $numberOfRows = intval(count($cats) / 3) + 1;
+        $boxes =\App::call('App\Http\Controllers\CatController@myBoxes');
+        if (count($boxes) / 3 > intval(count($boxes) / 3))
+            $numberOfRows = intval(count($boxes) / 3) + 1;
         else
-            $numberOfRows = intval(count($cats)) / 3;
+            $numberOfRows = intval(count($boxes)) / 3;
 
-        return view('pages.homePage', compact('numberOfRows'), compact('cats'));
+        return view('pages.homePage', compact('numberOfRows','cats','boxes'));
     }
 
     public function monthlyRatio(Request $request)
