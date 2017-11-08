@@ -44,3 +44,7 @@ Route::get('/homePage/ratio','HomeController@monthlyRatio')
 Route::get('/homePage/expenses','HomeController@yearlyExpenses')
     ->name('home_page_expenses')
     ->middleware('authenticated');
+Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
+    ->name('home_page_vet_visits')
+    ->middleware('authenticated');
+

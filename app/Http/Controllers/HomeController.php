@@ -76,4 +76,18 @@ class HomeController extends Controller
         }
         return response()->json($response_data);
     }
+
+    public function yearlyVetVisits(Request $request){
+        $year = new \DateTime(
+            empty($request->year) ? null : $request->year."-01-01"
+        );
+        $current_user = Auth::User();
+        $query_data = \DB::table("cats_vet_logs")
+            ->where("cats_vet_logs.user_email", "=", $current_user->email)
+            ->whereYear("cats_vet_logs.visit_date", $year->format("Y"))
+            ->groupBy("cats_vet_logs.cat_name")
+            ->selectRaw("cats_vet_logs.cat_name, COUNT(*) AS visits");
+
+        return response()->json($query_data->get());
+    }
 }

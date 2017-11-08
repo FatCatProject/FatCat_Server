@@ -144,8 +144,8 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="monthlyFoodRatio" name="dateYear" alt="dateYear"
-                                       placeholder="YYYY"
+                                <input class="form-control" id="vet_visits_datepicker" name="dateYear" alt="dateYear"
+                                       placeholder="YYYY" value="{!! (new DateTime())->format('Y') !!}"
                                        type="text" style="width: 90px;"/>
                             </div>
                         </div>
@@ -153,30 +153,55 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                             <h4 style="margin-left: 80px; margin-top: -5px;">Yearly vet visits</h4>
                         </div>
                     </div>
-                    <div class="legend" style="margin:0 0 0 25px">
-                        <div id="os-Mac-lbl">Cat 1<span>$x times</span></div>
-                        <div id="os-Win-lbl">Cat 2<span>$x times</span></div>
-                        <div id="os-Other-lbl">Cat 3<span>$x times</span></div>
+                    <div id="doughnut_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
                         <canvas id="doughnut" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
                     </div>
 <script>
-var doughnutData = [
+function visits_doughnut(){
+    var year_date = $("#vet_visits_datepicker").val();
+    console.log(year_date);
+
+    $.get(
+        "{!! URL::route('home_page_vet_visits') !!}",
     {
-        value: 30,
-            color: "#F44336"
-                            },
-                            {
-                                value: 50,
-                                    color: "#8BC34A"
-                            },
-                            {
-                                value: 100,
-                                    color: "#00aced"
-                            },
-                        ];
-new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnutData);
+        year: year_date
+    },
+        function(data, status){
+            if(status === "success"){
+                var colors = [
+                    ["os-Mac-lbl", "#EF553A"],
+                    ["os-Win-lbl", "#8BC34A"],
+                    ["os-Other-lbl", "#00ACED"]
+                ];
+                var colors_index = 0;
+
+                $("#doughnut_legend").empty();
+                var doughnut_data = [];
+                for(i = 0; i < data.length; i++){
+                    $("#doughnut_legend").append(
+                        $("<div></div>").append(
+                            data[i].cat_name,
+                            $("<span></span>").text(Math.round(data[i].visits) + " visits")
+                        ).attr("id", colors[colors_index][0])
+                    );
+                    doughnut_data.push(
+                    {
+                        value: data[i].visits,
+                            color: colors[colors_index][1]
+                    }
+                );
+                    colors_index = ((colors_index + 1) < colors.length) ? (colors_index + 1) : 0;
+                }
+
+                new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnut_data);
+            }
+        }
+    );
+}
+$("#vet_visits_datepicker").on("changeDate", visits_doughnut);
+// $(document).ready(ratioPie);
 </script>
                 </div>
             </div>
