@@ -305,5 +305,14 @@ class CatController extends Controller
         }
         return $cats;
     }
+    //Natalie
+    public function editCat($id)
+    {
+        $cat = Cat::find($id);
+        return view(
+            "layouts.catFields",
+            ["cat" => $cat,]
+        );
+    }
 
 }

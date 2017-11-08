@@ -15,7 +15,7 @@ Auth::routes();
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
-Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->middleware('privacy');
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')->middleware('privacy');
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
@@ -36,6 +36,7 @@ Route::post('/editFood',['uses' => 'FoodController@update'])->middleware('authen
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
     ->middleware('authenticated');
+//Route::get('/catFields/{id}',['uses' =>'CatController@editCat'])->name('catFields')->middleware('privacy');
 
 //tests
 Route::get('/temp/{id}/' , 'VetController@delete');

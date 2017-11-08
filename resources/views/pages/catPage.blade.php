@@ -191,6 +191,7 @@
 
         <div class="clearfix">
         </div>
+
         <!-- Table-->
         <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
              data-widget-static="">
@@ -229,6 +230,7 @@
                     @endforeach
                 </table>
                 <!--END Table-->
+
                 <div align="right" class="col-md-12 page_1">
                     <nav>
                         <ul class="pagination">
@@ -261,7 +263,7 @@
                     </nav>
                 </div>
             </div>
-
+        {{--<div id="editCat" class="editCat"></div>--}}
         <!--Edit Cat information-->
         <div class="row">
             <div class="col-md-12">
@@ -309,6 +311,7 @@
         </div>
 
         <br/><br/><br/><br/>
+
 
 @endsection
 
