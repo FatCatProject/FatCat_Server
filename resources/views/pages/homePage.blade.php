@@ -12,12 +12,12 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input class="form-control" id="monthlyFoodRatio" name="dateMonth" alt="dateMonth"
-                                       placeholder="YYYY-MM"
+                                       placeholder="YYYY-MM" value="{!! (new DateTime())->format('Y-m') !!}"
                                        type="text" style="width: 90px;"/>
                             </div>
                         </div>
                         <div class="col-lg-10">
-                            <h4 style="margin-left: 80px; margin-top: -5px;">Monthly ratio of food</h4>
+                            <h4 style="margin-left: 80px; margin-top: -5px;">Monthly food ratio</h4>
                         </div>
                     </div>
                     <div id="ratio_legend" class="legend" style="margin:0 0 0 25px">
@@ -28,7 +28,6 @@
                 </div>
 <script>
 function ratioPie(){
-    console.log("ratioPie -- ");
     var month_date = $("#monthlyFoodRatio").val();
     console.log(month_date);
 
@@ -69,7 +68,7 @@ function ratioPie(){
         }
     );
 }
-$("#monthlyFoodRatio").on("change", ratioPie);
+$("#monthlyFoodRatio").on("changeDate", ratioPie);
 $(document).ready(ratioPie);
 </script>
             </div>
