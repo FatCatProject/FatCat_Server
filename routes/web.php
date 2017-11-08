@@ -41,4 +41,6 @@ Route::get('/editBoxPage', 'PagesController@editBoxPage');
 Route::get('/homePage/ratio','HomeController@monthlyRatio')
     ->name('home_page_ratio')
     ->middleware('authenticated');
-
+Route::get('/homePage/expenses','HomeController@yearlyExpenses')
+    ->name('home_page_expenses')
+    ->middleware('authenticated');

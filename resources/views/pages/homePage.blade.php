@@ -69,7 +69,7 @@ function ratioPie(){
     );
 }
 $("#monthlyFoodRatio").on("changeDate", ratioPie);
-$(document).ready(ratioPie);
+// $(document).ready(ratioPie);
 </script>
             </div>
             {{--chart 2--}}
@@ -82,8 +82,8 @@ $(document).ready(ratioPie);
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" id="catDob" name="dateYear" alt="dateYear"
-                                           placeholder="YYYY"
+                                    <input class="form-control" id="yearly_expenses_datepicker" name="dateYear" alt="dateYear"
+                                           placeholder="YYYY" value="{!! (new DateTime())->format('Y') !!}"
                                            type="text" style="width: 90px;"/>
                                 </div>
                             </div>
@@ -101,17 +101,37 @@ $(document).ready(ratioPie);
                         </div>
                     </div>
 <script>
-var barChartData = {
-labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-    datasets: [
-        {
-            fillColor: "#00ACED",
-                strokeColor: "#00ACED",
-                data: [25, 40, 0, 65, 55, 30, 0, 30, 20, 33, 25, 40]
-                                }
-]
-                        };
-new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
+function expenses_bar_chart(){
+    var year_date = $("#yearly_expenses_datepicker").val();
+    console.log(year_date);
+
+    $.get(
+        "{!! URL::route('home_page_expenses') !!}",
+    {
+        year: year_date
+    },
+        function(data, status){
+            console.log(JSON.stringify(data));
+            if(status === "success"){
+                new Chart(
+                    document.getElementById("bar1").getContext("2d")).Bar(
+            {
+                labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    datasets: [
+            {
+                fillColor: "#00ACED",
+                    strokeColor: "#00ACED",
+                    data: data
+            }
+                ]
+            }
+                );
+            }
+        }
+    );
+}
+$("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
+// $(document).ready(expenses_bar_chart);
 </script>
                 </div>
             </div>

@@ -37,7 +37,6 @@ class HomeController extends Controller
     {
         $date = new \DateTime($request->date);
         $current_user = Auth::user();
-        $response_data = [];
         $query_data = \DB::table("feeding_logs")
             ->join("cards", "cards.card_id", "=", "feeding_logs.card_id")
             ->join("cats", "cats.id", "=", "cards.cat_id")
@@ -51,4 +50,30 @@ class HomeController extends Controller
         return response()->json($query_data);
     }
 
+    public function yearlyExpenses(Request $request){
+        $year = new \DateTime(
+            empty($request->year) ? null : $request->year."-01-01"
+        );
+        $current_user = Auth::User();
+        $vet_logs_query_data = \DB::table("cats_vet_logs")
+            ->where("cats_vet_logs.user_email", "=", $current_user->email)
+            ->whereYear("cats_vet_logs.visit_date", $year->format("Y"))
+            ->groupBy("month")
+            ->selectRaw("MONTH(cats_vet_logs.visit_date) AS month, SUM(cats_vet_logs.price) AS total");
+        $shopping_logs_query_data = \DB::table("shopping_logs")
+            ->where("shopping_logs.user_email", "=", $current_user->email)
+            ->whereYear("shopping_logs.shopping_date", $year->format("Y"))
+            ->groupBy("month")
+            ->selectRaw("MONTH(shopping_logs.shopping_date) AS month, SUM(shopping_logs.price) AS total");
+        $query_data = $vet_logs_query_data->unionAll($shopping_logs_query_data)->get();
+
+        $response_data = [];
+        for($month = 0; $month < 12; $month++){
+            $response_data[$month] = 0;
+        }
+        foreach($query_data as $row){
+            $response_data[$row->month] += $row->total;
+        }
+        return response()->json($response_data);
+    }
 }
