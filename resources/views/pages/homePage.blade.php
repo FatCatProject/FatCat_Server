@@ -15,39 +15,63 @@
                                        placeholder="YYYY-MM"
                                        type="text" style="width: 90px;"/>
                             </div>
-                            @include('layouts.datePicker')
                         </div>
                         <div class="col-lg-10">
                             <h4 style="margin-left: 80px; margin-top: -5px;">Monthly ratio of food</h4>
                         </div>
                     </div>
-                    <div class="legend" style="margin:0 0 0 25px">
-                        <div id="os-Mac-lbl">Cat 1<span>$x grams</span></div>
-                        <div id="os-Win-lbl">Cat 2<span>$x grams</span></div>
-                        <div id="os-Other-lbl">Cat 3<span>$x grams</span></div>
+                    <div id="ratio_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
                         <canvas id="pie" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
                     </div>
-                    <script>
-                        var pieData = [
-                            {
-                                value: 30,
-                                color: "#ef553a"
-                            },
-                            {
-                                value: 50,
-                                color: "#8BC34A"
-                            },
-                            {
-                                value: 40,
-                                color: "#00ACED"
-                            }
-
-                        ];
-                        new Chart(document.getElementById("pie").getContext("2d")).Pie(pieData);
-                    </script>
                 </div>
+<script>
+function ratioPie(){
+    console.log("ratioPie -- ");
+    var month_date = $("#monthlyFoodRatio").val();
+    console.log(month_date);
+
+    $.get(
+        "{!! URL::route('home_page_ratio') !!}",
+    {
+        date: month_date
+    },
+        function(data, status){
+            if(status === "success"){
+                var colors = [
+                    ["os-Mac-lbl", "#EF553A"],
+                    ["os-Win-lbl", "#8BC34A"],
+                    ["os-Other-lbl", "#00ACED"]
+                ];
+                var colors_index = 0;
+
+                $("#ratio_legend").empty();
+                var pie_data = [];
+                for(i = 0; i < data.length; i++){
+                    $("#ratio_legend").append(
+                        $("<div></div>").append(
+                            data[i].cat_name,
+                            $("<span></span>").text(Math.round(data[i].eaten) + " grams")
+                        ).attr("id", colors[colors_index][0])
+                    );
+                    pie_data.push(
+                    {
+                        value: Math.round(data[i].eaten),
+                            color: colors[colors_index][1]
+                    }
+                );
+                    colors_index = ((colors_index + 1) < colors.length) ? (colors_index + 1) : 0;
+                }
+
+                new Chart(document.getElementById("pie").getContext("2d")).Pie(pie_data);
+            }
+        }
+    );
+}
+$("#monthlyFoodRatio").on("change", ratioPie);
+$(document).ready(ratioPie);
+</script>
             </div>
             {{--chart 2--}}
             <div class="col-sm-4">
@@ -63,7 +87,6 @@
                                            placeholder="YYYY"
                                            type="text" style="width: 90px;"/>
                                 </div>
-                                @include('layouts.datePicker')
                             </div>
                             <div class="col-lg-10" style="margin-left: -40px">
                                 <h4 style="margin-left: 80px; margin-top: -5px;">Yearly expenses</h4>
@@ -78,19 +101,19 @@
                             <canvas id="bar1" height="155" width="390"></canvas>
                         </div>
                     </div>
-                    <script>
-                        var barChartData = {
-                            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-                            datasets: [
-                                {
-                                    fillColor: "#00ACED",
-                                    strokeColor: "#00ACED",
-                                    data: [25, 40, 0, 65, 55, 30, 0, 30, 20, 33, 25, 40]
+<script>
+var barChartData = {
+labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+    datasets: [
+        {
+            fillColor: "#00ACED",
+                strokeColor: "#00ACED",
+                data: [25, 40, 0, 65, 55, 30, 0, 30, 20, 33, 25, 40]
                                 }
-                            ]
+]
                         };
-                        new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
-                    </script>
+new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
+</script>
                 </div>
             </div>
             {{--chart 3--}}
@@ -106,7 +129,6 @@
                                        placeholder="YYYY"
                                        type="text" style="width: 90px;"/>
                             </div>
-                            @include('layouts.datePicker')
                         </div>
                         <div class="col-lg-10">
                             <h4 style="margin-left: 80px; margin-top: -5px;">Yearly vet visits</h4>
@@ -120,23 +142,23 @@
                     <div align="center">
                         <canvas id="doughnut" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
                     </div>
-                    <script>
-                        var doughnutData = [
-                            {
-                                value: 30,
-                                color: "#F44336"
+<script>
+var doughnutData = [
+    {
+        value: 30,
+            color: "#F44336"
                             },
                             {
                                 value: 50,
-                                color: "#8BC34A"
+                                    color: "#8BC34A"
                             },
                             {
                                 value: 100,
-                                color: "#00aced"
+                                    color: "#00aced"
                             },
                         ];
-                        new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnutData);
-                    </script>
+new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnutData);
+</script>
                 </div>
             </div>
         </div>
@@ -186,4 +208,5 @@
             <br>
         @endfor
     </div>
+    @include('layouts.datePicker')
 @endsection

@@ -37,3 +37,8 @@ Route::get('/temp/{id}' , 'VetController@delete');
 Route::get('/userPage', 'PagesController@userPage');
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
+
+Route::get('/homePage/ratio','HomeController@monthlyRatio')
+    ->name('home_page_ratio')
+    ->middleware('authenticated');
+
