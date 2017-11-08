@@ -39,7 +39,7 @@ Route::get('/deleteFood/{id}','FoodController@delete')
 //Route::get('/catFields/{id}',['uses' =>'CatController@editCat'])->name('catFields')->middleware('privacy');
 
 //tests
-Route::get('/temp/{id}/' , 'VetController@delete');
+Route::get('/deleteVetLog/' , 'VetController@delete');
 
 //Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');

@@ -174,7 +174,8 @@
                         <tbody>
                         @php ($index = 0)
                         @for(;$index<count($vet_logs);$index++)
-                            <tr id="1">
+                            <tr id="row_{!! $vet_logs[$index]->id !!}">
+                                <input id="logID" type="hidden" value="{!! $vet_logs[$index]->id !!}">
                                 <td class="editableColumns">{!! $vet_logs[$index]->visit_date !!}</td>
                                 <td class="editableColumns">{!! $vet_logs[$index]->clinic_name !!}</td>
                                 <td class="editableColumns">{!! $vet_logs[$index]->subject !!}</td>
@@ -191,11 +192,20 @@
                                 @endif
                                 <td class="editableColumns">{!! $vet_logs[$index]->price !!}</td>
                                 <td>
-                                    <ul class="nav nav-pills">
-                                        <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
-                                                                             onclick=""></i></a></li>
-                                        <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                    <ul id="btns" class="nav nav-pills">
+                                        <li class="editBtn" id="edit_id_{!! $vet_logs[$index]->id !!}">
+                                            <a><i class="lnr lnr-pencil editValues" onclick=""></i></a>
+                                        </li>
+                                        <li class="deleteBtn" id="del_id_{!! $vet_logs[$index]->id !!}" value="{!! $vet_logs[$index]->id !!}" >
+                                            <a><i class="lnr lnr-trash"></i></a>
+                                        </li>
                                     </ul>
+
+                                    <ul id="editBtns" class="nav nav-pills" hidden>
+                                        <li class="updateBtn"><a><i class="lnr lnr-checkmark-circle"></i></a></li>
+                                        <li class="cancelBtn"><a><i class="lnr lnr-cross-circle"></i></a></li>
+                                    </ul>
+
                                 </td>
                             </tr>
                         @endfor
@@ -224,12 +234,45 @@
     </div>
 
     <script>
-        $('.editValues').click(function () {
-            $(this).parents('tr').find('td.editableColumns').each(function () {
-                var html = $(this).text();
-                var input = $('<input class="editableColumnsStyle" type="text" />');
-                input.val(html);
-                $(this).html(input);
+        //Edit table input
+        $(".editBtn").click(function(){
+            $(this).parent().parent().find('#btns').hide();
+            $(this).parent().parent().find('#editBtns').show();
+            $(this).closest('tr').children().each(function(){
+                $(this).wrapInner('<input type="text" value = ' + $(this).text() + '></input>');
+
+
+            });
+
+        });
+
+        //Cancel Edit
+        $('.cancelBtn').click(function () {
+            $(this).parent().parent().find('#btns').show();
+            $(this).parent().parent().find('#editBtns').hide();
+
+        });
+        //Delete table row
+        $(document).ready(function () {
+            $('.deleteBtn').on("click", function () {
+                var id = $(this).parent().parent().parent().find('#logID').val();
+                console.log("log id is" + id);
+                $.ajax({
+                    type: "GET",
+                    url: '/deleteVetLog',
+                    caller: id,
+                    data: {
+                        id: id,
+                    },
+                    success: function (data, status, jqXHR) {
+                        console.log("llll:"+data);
+                        $("#row_" + this.caller).remove();
+                    },
+                    fail: function (jqXHR, status, errorThrown) {
+                        console.log("ERROR:" + jqXHR);
+                        console.log("ERROR:" + status);
+                    }
+                })
             });
         });
 
