@@ -14,6 +14,7 @@
                                   action="/addvetlog" id="addvetlog">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="id" value="{!! $cat['id'] !!}">
+                                <input type="hidden" name="id" value="{!! $cat['id'] !!}">
                                 <input type="hidden" value="{{csrf_token()}}" name="_token">
                                 <div class="form-group">
                                     <label for="catDob" class="col-sm-2 control-label">Date: <span
@@ -90,7 +91,7 @@
                                   action="/update" id="update">
                                 {!! csrf_field() !!}
                                 {{ method_field('PUT') }}
-                                <input type="hidden" id="to_logID" value="">
+                                <input type="hidden" name="to_logID" id="to_logID" value="">
                                 <input id="cat_id_to_edit" type="hidden" name="cat_id_to_edit" value="{!! $cat['id'] !!}">
                                 <input type="hidden" value="{{csrf_token()}}" name="_token">
                                 <div class="form-group">
@@ -101,7 +102,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="to_date" name="date" alt="date"
+                                            <input class="form-control" id="to_date" name="to_date" alt="date"
                                                    placeholder="YYYY-MM-DD"
                                                    type="text" required style="width: 120px;"/>
                                         </div>
@@ -110,21 +111,21 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Clinic:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="clinic_name" class="form-control1" id="to_clinic"
+                                        <input type="text" name="to_clinic" class="form-control1" id="to_clinic"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="subject" class="form-control1" id="to_subject"
+                                        <input type="text" name="to_subject" class="form-control1" id="to_subject"
                                                placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
-                                    <div class="col-sm-8"><textarea name="description" id="to_desc"
+                                    <div class="col-sm-8"><textarea name="to_desc" id="to_desc"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
@@ -133,7 +134,7 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="prescription_picture" id="to_pic"
+                                        <input type="file" name="to_pic" id="to_pic"
                                                class="filestyle"
                                                style="margin-top: 6px">
                                     </div>
@@ -142,7 +143,7 @@
                                 <div class="form-group">
                                     <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
                                     <div class="col-sm-8">
-                                        <input type="number" name="price" step="any" min="0" max="10000"
+                                        <input type="number" name="to_price" step="any" min="0" max="10000"
                                                class="form-control1 input-sm"
                                                id="to_price" placeholder="">
                                     </div>
@@ -338,7 +339,7 @@
                 $("#to_subject").val(crr_subject);
                 $("#to_desc").val(crr_desc);
                 $("#to_price").val(crr_price);
-//              $("#to_pic").val(crr_pic); //TODO
+                $("#to_pic").val(crr_pic); //TODO
             });
             $("#cancelEditVetLog").click(function(){
                 $("#editVetLogBlock").hide();
@@ -347,7 +348,7 @@
         });
 
         $(document).ready(function () {
-            $('#updateBtnnn').on("click", function () {
+            $('#updateBtnnnnnnnn').on("click", function () {
                 var id = $('#to_logID').val();
                 var to_date = $('#to_date').val();
                 var to_clinic = $('#to_clinic').val();

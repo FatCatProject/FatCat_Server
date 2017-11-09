@@ -144,7 +144,9 @@ class VetController extends Controller
 //            return response()->json("update failed");
 //        }
         $vet_log->update();
-        return redirect()->json(["id" => $request->to_logID]);
+//        return redirect()->json(["id" => $request->to_logID]);
+        return redirect()->back();
+
     }
 
     //delete method does not remove image file from storage
