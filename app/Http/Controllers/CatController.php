@@ -376,5 +376,40 @@ class CatController extends Controller
         return response()->json($daily_logs->pluck("sum"));
     }
 
+    public function monthyLogs(Request $request){
+        $current_user = Auth::User();
+        $month_date = new DateTime($request->month_date."-01");
+        $request_cat = $current_user->cats()->find($request->cat_id);
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+
+        $monthly_logs_query_data = \DB::table("cards")
+            ->join("feeding_logs", "cards.card_id", "=", "feeding_logs.card_id")
+            ->where("cards.user_email", "=", $current_user->email)
+            ->where("feeding_logs.user_email", "=", $current_user->email)
+            ->where("cards.cat_id", "=", $request_cat->id)
+            ->whereYear("feeding_logs.open_time", $month_date->format("Y"))
+            ->whereMonth("feeding_logs.open_time", $month_date->format("m"))
+            ->groupBy("day")
+            ->orderBy("day")
+            ->selectRaw("DAY(feeding_logs.open_time) as day, SUM(feeding_logs.start_weight - feeding_logs.end_weight) AS total")
+            ->get();
+
+        $days_in_month = intval(
+            date("t", mktime(0, 0, 0, intval($month_date->format("m")), 1, intval($month_date->format("Y"))))
+        );
+        $monthly_logs_response = [];
+        for($day = 0; $day < $days_in_month; $day++){
+            $monthly_logs_response[$day] = 0;
+        }
+        foreach($monthly_logs_query_data as $row){
+            $monthly_logs_response[$row->day - 1] = $row->total;
+        }
+
+        return response()->json($monthly_logs_response);
+    }
+
 }
 

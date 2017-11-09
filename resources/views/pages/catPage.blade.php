@@ -192,9 +192,9 @@ $("#daily_logs_datepicker").on("changeDate", daily_logs);
                                 <input
                                     alt="dateMonth"
                                     class="form-control"
-                                    id="monthly_datepicker"
+                                    id="monthly_logs_datepicker"
                                     name="dateMonth"
-                                    placeholder="YYYY-MM-DD"
+                                    placeholder="YYYY-MM"
                                     style="width: 110px;"
                                     type="text"
                                     value="{!! $today->format('Y-m') !!}"
@@ -216,19 +216,44 @@ $("#daily_logs_datepicker").on("changeDate", daily_logs);
                         </div>
                     </div>
 
-                    <script>
-                        var barChartData = {
-                            labels: {!! $month_logs_labels !!},
-                            datasets: [
-                                {
-                                    fillColor: "#00ACED",
-                                    strokeColor: "#00ACED",
-                                    data: {!! $month_logs !!}
-                                }
-                            ]
-                        };
-                        new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
-                    </script>
+<script>
+function monthly_logs(){
+    var month_date = $("#monthly_logs_datepicker").val();
+    var cat_id = {!! $cat->id !!};
+    console.log("date: " + month_date + " - cat_id: " + cat_id);
+
+    $.get(
+        "{!! URL::route('cat_page_monthly_logs') !!}",
+    {
+        cat_id: cat_id,
+            month_date: month_date
+    },
+        function(data, status){
+            console.log("status: " + status);
+            console.log("data: " + JSON.stringify(data));
+            if(status === "success"){
+                var month_logs_labels = [];
+                for(var i = 1; i <= data.length; i++){
+                    month_logs_labels.push(i);
+                }
+                console.log("month_logs_labels: " + month_logs_labels);
+            }
+
+            var bar_chart_data = {
+                labels: month_logs_labels,
+                datasets: [{
+                    fillColor: "#00ACED",
+                    strokeColor: "#00ACED",
+                    data: data
+                }]
+            };
+            console.log(JSON.stringify(bar_chart_data));
+            new Chart(document.getElementById("bar1").getContext("2d")).Bar(bar_chart_data);
+        }
+    );
+}
+$("#monthly_logs_datepicker").on("changeDate", monthly_logs);
+</script>
                 </div>
             </div>
         </div>
