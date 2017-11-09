@@ -11,6 +11,9 @@ Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')-
 Route::get('/daily_consumption', 'CatController@dailyConsumption')
     ->name('cat_page_consumption')
     ->middleware('authenticated');
+Route::get('/daily_logs', 'CatController@dailyLogs')
+    ->name('cat_page_daily_logs')
+    ->middleware('authenticated');
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 // Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');

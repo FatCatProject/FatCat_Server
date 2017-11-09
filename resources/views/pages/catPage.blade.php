@@ -71,7 +71,7 @@ function daily_consumption(){
     },
         function(data, status){
             console.log("status: " + status);
-            console.log("data: " + JSON.stringify(data))
+            console.log("data: " + JSON.stringify(data));
                 if(status === "success"){
                     var pie_data = [
                 {
@@ -111,7 +111,7 @@ $("#daily_consumption_datepicker").on("changeDate", daily_consumption);
                                 <input
                                     alt="date"
                                     class="form-control"
-                                    id="daily_datepicker"
+                                    id="daily_logs_datepicker"
                                     name="date"
                                     onkeypress=""
                                     placeholder="YYYY-MM-DD"
@@ -135,21 +135,46 @@ $("#daily_consumption_datepicker").on("changeDate", daily_consumption);
                             <canvas id="line1" height="137" width="400" style="width: 450px; height: 100px;"></canvas>
                         </div>
 
-                        <script>
-                            var lineChartData = {
-                                labels: {!! $daily_logs_labels !!},
-                                datasets: [
-                                    {
-                                        fillColor: "#fff",
-                                        strokeColor: "#9358AC",
-                                        pointColor: "#fbfbfb",
-                                        pointStrokeColor: "#9358AC",
-                                        data: {!! $daily_logs !!}
-                                    }
-                                ]
-                            };
-                            new Chart(document.getElementById("line1").getContext("2d")).Line(lineChartData);
-                        </script>
+<script>
+function daily_logs(){
+    var day_date = $("#daily_logs_datepicker").val();
+    var cat_id = {!! $cat->id !!};
+    console.log("date: " + day_date + " - cat_id: " + cat_id);
+
+    $.get(
+        "{!! URL::route('cat_page_daily_logs') !!}",
+    {
+        cat_id: cat_id,
+            day_date: day_date
+    },
+        function(data, status){
+        console.log("status: " + status);
+        console.log("data: " + JSON.stringify(data));
+        if(status === "success"){
+            data.unshift(0);
+            var daily_logs_labels = [];
+            for(var i = 0; i < data.length; i++){
+                daily_logs_labels.push('' + i);
+            }
+            console.log("daily_logs_labels: " + daily_logs_labels);
+            new Chart(document.getElementById("line1").getContext("2d")).Line(
+                {
+                    labels: daily_logs_labels,
+                    datasets: [{
+                        fillColor: "#FFF",
+                        strokeColor: "#9358AC",
+                        pointColor: "#FBFBFB",
+                        pointStrokeColor: "#9358AC",
+                        data: data
+                    }]
+                }
+            );
+        }
+    }
+);
+}
+$("#daily_logs_datepicker").on("changeDate", daily_logs);
+</script>
                     </div>
                 </div>
             </div>

@@ -353,4 +353,28 @@ class CatController extends Controller
 
         return response()->json($daily_consumption);
     }
+
+    public function dailyLogs(Request $request){
+        $current_user = Auth::User();
+        $day_date = new DateTime($request->day_date);
+        $request_cat = $current_user->cats()->find($request->cat_id);
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+
+        $daily_logs = \DB::table("cards")
+            ->join("feeding_logs", "cards.card_id", "=", "feeding_logs.card_id")
+            ->where("cards.user_email", "=", $current_user->email)
+            ->where("feeding_logs.user_email", "=", $current_user->email)
+            ->where("cards.cat_id", "=", $request_cat->id)
+            ->whereDate("feeding_logs.open_time", $day_date->format("Y-m-d"))
+            ->groupBy("feeding_logs.feeding_id")
+            ->orderBy("feeding_logs.open_time")
+            ->selectRaw("SUM(feeding_logs.start_weight - feeding_logs.end_weight) AS sum");
+
+        return response()->json($daily_logs->pluck("sum"));
+    }
+
 }
+
