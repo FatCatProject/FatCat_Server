@@ -3,6 +3,7 @@
 
     <div id="page-wrapper">
 
+        @include('layouts.datePicker')
         <div class="row">
             <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
         </div>
@@ -21,7 +22,7 @@
                                 <input
                                     alt="date"
                                     class="form-control"
-                                    id="catDob"
+                                    id="daily_consumption_datepicker"
                                     name="date"
                                     placeholder="YYYY-MM-DD"
                                     style="width: 110px;"
@@ -29,7 +30,6 @@
                                     value="{!! $today->format('Y-m-d') !!}"
                                 />
                             </div>
-                            @include('layouts.datePicker')
                         </div>
                         <div class="col-lg-10">
                             <h4 style="margin-left: 80px; margin-top: -5px;">Daily consumption</h4>
@@ -57,23 +57,44 @@
                         </canvas>
                     </center>
 
-                    <script>
-                        var pieData = [
-                            {
-                                value: {!! $daily_consumption['ate_allowance'] !!},
-                                color: "#00ACED"
-                            },
-                            {
-                                value: {!! $daily_consumption['food_left'] !!},
-                                color: "#8BC34A"
-                            },
-                            {
-                                value: {!! $daily_consumption['over_ate'] !!},
-                                color: "#EF553A"
-                            }
-                        ];
-                        new Chart(document.getElementById("pie").getContext("2d")).Pie(pieData);
-                    </script>
+<script>
+function daily_consumption(){
+    var day_date = $("#daily_consumption_datepicker").val();
+    var cat_id = {!! $cat->id !!};
+    console.log("date: " + day_date + " - cat_id: " + cat_id);
+
+    $.get(
+        "{!! URL::route('cat_page_consumption') !!}",
+    {
+        cat_id: cat_id,
+            day_date: day_date
+    },
+        function(data, status){
+            console.log("status: " + status);
+            console.log("data: " + JSON.stringify(data))
+                if(status === "success"){
+                    var pie_data = [
+                {
+                    value: data.ate_allowance,
+                        color: "#00ACED"
+                },
+                {
+                    value: data.food_left,
+                        color: "#8BC34A"
+                },
+                {
+                    value: data.over_ate,
+                        color: "#EF553A"
+                }
+                    ];
+                    console.log("pie_data: " + JSON.stringify(pie_data))
+                        new Chart(document.getElementById("pie").getContext("2d")).Pie(pie_data);
+                }
+        }
+    );
+}
+$("#daily_consumption_datepicker").on("changeDate", daily_consumption);
+</script>
                 </div>
             </div>
 
@@ -90,7 +111,7 @@
                                 <input
                                     alt="date"
                                     class="form-control"
-                                    id="catDob"
+                                    id="daily_datepicker"
                                     name="date"
                                     onkeypress=""
                                     placeholder="YYYY-MM-DD"
@@ -99,7 +120,6 @@
                                     value="{!! $today->format('Y-m-d') !!}"
                                 />
                             </div>
-                            @include('layouts.datePicker')
                         </div>
 
                         <div class="col-lg-10" style="margin-left: -40px">
@@ -147,7 +167,7 @@
                                 <input
                                     alt="dateMonth"
                                     class="form-control"
-                                    id="catDob"
+                                    id="monthly_datepicker"
                                     name="dateMonth"
                                     placeholder="YYYY-MM-DD"
                                     style="width: 110px;"
@@ -155,7 +175,6 @@
                                     value="{!! $today->format('Y-m') !!}"
                                 />
                             </div>
-                            @include('layouts.datePicker')
                         </div>
 
                         <div class="col-lg-10" style="margin-left: -40px">

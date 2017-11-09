@@ -322,4 +322,35 @@ class CatController extends Controller
         );
     }
 
+    public function dailyConsumption(Request $request){
+        $current_user = Auth::User();
+        $day_date = new DateTime($request->day_date);
+        $request_cat = $current_user->cats()->find($request->cat_id);
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+        $ate_today = \DB::table("cards")
+            ->join("feeding_logs", "cards.card_id", "=", "feeding_logs.card_id")
+            ->where("cards.user_email", "=", $current_user->email)
+            ->where("feeding_logs.user_email", "=", $current_user->email)
+            ->where("cards.cat_id", "=", $request_cat->id)
+            ->whereDate("feeding_logs.open_time", $day_date->format("Y-m-d"))
+            ->selectRaw("SUM(feeding_logs.start_weight - feeding_logs.end_weight) AS sum")->first()->sum ?? 0;
+
+        $daily_consumption = [
+            "ate_allowance" => (
+                ($ate_today <= $request_cat->food_allowance) ? $ate_today : $request_cat->food_allowance
+            ),
+            "food_left" => (
+                ($ate_today <= $request_cat->food_allowance) ? ($request_cat->food_allowance - $ate_today) : 0
+            ),
+            "over_ate" => (
+                (($ate_today <= $request_cat->food_allowance) or ($request_cat->food_allowance == 0)) ?
+                0 : ($ate_today - $request_cat->food_allowance)
+            )
+        ];
+
+        return response()->json($daily_consumption);
+    }
 }
