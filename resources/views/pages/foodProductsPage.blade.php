@@ -10,7 +10,7 @@
                     <h4 class="blank1">Add new food product that will be used in the food boxes:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="addFood" id="addFoodForm">
+                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="addFood" id="addFoodForm">
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     {{--Product name--}}
@@ -38,7 +38,7 @@
                                         <label for="profilePicture" class="col-sm-3 control-label">Product
                                             picture:</label>
                                         <div class="col-sm-9">
-                                            <input type="file" name="profile_picture" id="profilePicture"
+                                            <input type="file" name="picture" id="picture"
                                                    class="filestyle"
                                                    data-buttonBefore="true" style="margin-top: 6px">
                                             {{--<p class="help-block">Example block-level help text here.</p>--}}
@@ -60,8 +60,9 @@
                     <h4 class="blank1">Edit product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="editFood" id="editFoodForm">
+                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="editFood" id="editFoodForm">
                                 {!! csrf_field() !!}
+                                <input type="hidden" name="oldname" id="oldname" value="">
                                 <div class="col-sm-12">
                                     {{--Product name--}}
                                     <div class="form-group">
@@ -119,7 +120,7 @@
                                         </div>
                                         <div class="r3_counter_box">
                                             <i class="fa" style="width: 150px;"><img
-                                                        src="/images/food2.png"
+                                                        src="{!! $food_pictures[$myFoods[$index]->id] !!}"
                                                         width="100px"></i>
                                             {{----}}
                                             <div class="stats">
@@ -228,12 +229,16 @@
             $(".editFoodBtn").click(function(){
                 var id = $(this).parent().parent().parent().find('#foodID').val();
                 var foodName = $(this).parent().parent().parent().find('#foodName').val();
+                var oldname = $(this).parent().parent().parent().find('#foodName').val();
+
+
                 console.log("id is" + id);
                 console.log("name is" +foodName);
                 $("#addProductBlock").hide();
                 $("#editProductBlock").show();
                 $("#food_name_to_edit").val(foodName);
                 $("#food_id_to_edit").val(id);
+                $("#oldname").val(oldname);
 //                $("#food_profilePicture_to_edit").val(); // TODO
             });
             $("#cancelEditFoodProductBtn").click(function(){
