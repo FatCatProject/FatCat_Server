@@ -20,10 +20,8 @@ class CardController extends Controller
         return view('pages.cardsPage', compact('myCards'), compact('myFoodBoxes'));
     }
 
-    //foreign key error - will fix later
     public function storeCard(Request $request)
     {
-        //dd($request);
         $currentUser = auth()->user();
         $status = "succes";
         if ($currentUser == null || $request->card_id == null || $request->card_name == null || $request->foodbox_id == null) {
@@ -61,7 +59,6 @@ class CardController extends Controller
                     'created_at' => $now, 'updated_at' => $now]
             );
         }
-        //return view('pages.cardsPage', compact('myCards'), compact('myFoodBoxes'));
         return redirect()->back();
     }
 
