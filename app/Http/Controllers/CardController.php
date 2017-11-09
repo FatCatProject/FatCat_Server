@@ -23,9 +23,9 @@ class CardController extends Controller
     //foreign key error - will fix later
     public function storeCard(Request $request)
     {
+        //dd($request);
         $currentUser = auth()->user();
         $status = "succes";
-        dd($currentUser->email);
         if ($currentUser == null || $request->card_id == null || $request->card_name == null || $request->foodbox_id == null) {
             $status = "failed, input lacking";
         } else {
