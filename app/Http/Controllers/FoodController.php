@@ -142,8 +142,6 @@ class FoodController extends Controller
                         Storage::disk("user_pictures")->delete($picture_path . "/" . $my_food->picture);
                         $my_food->picture = null;
                     }
-                    //
-
                     try {
                         if (!empty($request->profile_picture)) {
                             $my_food->picture = str_replace(
@@ -152,8 +150,6 @@ class FoodController extends Controller
                                     $current_user->email . "_" . "food" . $my_food->food_name
                                 ) . "." . $request->profile_picture->getClientOriginalExtension();
                         }
-
-
                         $my_food->save();
                         if (!empty($my_food->picture)) {
                             Storage::disk("user_pictures")->putFileAs(
@@ -165,12 +161,10 @@ class FoodController extends Controller
                     } catch (QueryException $e) {
                         return response("QueryException - Fixme.\n", 400);
                     }
-                    //
                 }
                 $my_food->update();
             }
         }
-
         return redirect()->back();
     }
 

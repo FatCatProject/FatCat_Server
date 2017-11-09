@@ -354,7 +354,7 @@
                 var to_clinic = $('#to_clinic').val();
                 var to_subject = $('#to_subject').val();
                 var to_desc = $('#to_desc').val();
-//                var to_pic = $('#to_pic').val();
+                var to_pic = $('#to_pic').val();
                 var to_price = $('#to_price').val();
                 console.log("this is the id ajax:"+id);
                 console.log("new to_date:"+to_date);
@@ -372,7 +372,7 @@
                         clinic_name: to_clinic,
                         subject: to_subject,
                         description: to_desc,
-//                        prescription_picture: to_pic,
+                        prescription_picture: to_pic,
                         price: to_price
                     },
                     success: function (data, textStatus, jqXHR) {
