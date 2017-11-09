@@ -15,7 +15,7 @@ Auth::routes();
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
-Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->middleware('privacy');
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')->middleware('privacy');
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
@@ -29,9 +29,17 @@ Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middle
 Route::get('/foodProductsPage', 'FoodController@foodProductsPage')->middleware('authenticated');
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
+//Natalie
+Route::get('/updateWeight',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
+Route::get('/update',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::post('/editFood',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::get('/deleteFood/{id}','FoodController@delete')
+    ->name('deleteFood')
+    ->middleware('authenticated');
+//Route::get('/catFields/{id}',['uses' =>'CatController@editCat'])->name('catFields')->middleware('privacy');
 
 //tests
-Route::get('/temp/{id}' , 'VetController@delete');
+Route::get('/deleteVetLog/' , 'VetController@delete');
 
 //Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');

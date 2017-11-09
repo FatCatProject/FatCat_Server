@@ -148,13 +148,14 @@ class VetController extends Controller
 
     //delete method does not remove image file from storage
     //fixme
-    public function delete($id){
-        $cat_vet_log = CatVetLog::find($id);
-        if($cat_vet_log==null){
+    public function delete(Request $request){
+        $cat_vet_log = CatVetLog::find($request->id);
+        if(empty($cat_vet_log)){
             return response()->json("failed");
         }else{
+            $cat_vet_log->delete();
             Storage::delete('$cat_vet_log->prescription_picture');
-            return response()->json($id);
+            return response()->json($request->id);
         }
     }
 

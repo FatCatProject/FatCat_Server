@@ -45,4 +45,50 @@ class FoodController extends Controller
             ->get();
         return $result;
     }
+
+//    Natalie
+    public function updateWeight(Request $request){
+        $currentUser = Auth::User();
+        $my_food = $currentUser->foods()->where('id', $request->id)->first();
+        if(empty($my_food))
+            return response("Product not found", 204);
+
+        $newWeight=$my_food->weight_left+$request->addFoodWeight;
+        $my_food->weight_left = $newWeight;
+
+        try{
+            $my_food->save();
+        }catch(QueryException $e){
+            return response("Update failed", 500);
+        }
+        return response()->json(['newWeight' => $my_food->weight_left]);
+    }
+
+    public function update(Request $request){
+        $currentUser = Auth::User();
+        $my_food = $currentUser->foods()->where('id', $request->id)->first();
+        $my_food_name= $request->food_name;
+
+        if(empty($my_food))
+            return response("Product not found", 204);
+        else {
+            $my_food->food_name=$my_food_name;
+            //Change image if got new image
+        }
+        $my_food->update();
+        return redirect()->back();
+    }
+    public function delete($id){
+        $currentUser = Auth::User();
+        $my_food = $currentUser->foods()->where('id', $id)->first();
+        if(empty($my_food)){
+            return response()->json("failed to delete food");
+        }else{
+            $my_food->delete();
+            //TODO dele pic from storage!
+//          Storage::disc("user_pictures")->delete('$my_food->picture');
+//            return redirect()->back();
+            return response("", 204);
+        }
+    }
 }

@@ -305,10 +305,21 @@ class CatController extends Controller
         }
         return $cats;
     }
+
     public function myBoxes(){
         $user = User::find(Auth::id());
         $boxes = DB::table('foodboxes')->where('user_email',$user->email)->get();
         $boxes = json_decode($boxes,true);
         return $boxes;
     }
+
+    public function editCat($id)
+    {
+        $cat = Cat::find($id);
+        return view(
+            "layouts.catFields",
+            ["cat" => $cat,]
+        );
+    }
+
 }

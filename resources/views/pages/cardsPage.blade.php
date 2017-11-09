@@ -62,7 +62,7 @@
                                                 </option>
                                                 @if(!empty($myFoodBoxes))
                                                     @foreach($myFoodBoxes as $FoodBox)
-                                                        <option value="{!! $FoodBox->id !!}"
+                                                        <option value="{!! $FoodBox->foodbox_id !!}"
                                                                 name="foodbox_id">{!! $FoodBox->foodbox_name !!}</option>
                                                     @endforeach
                                                 @endif
