@@ -218,7 +218,16 @@
                                     @else
                                         <td class="editableColumns">Not Food</td>
                                     @endif
-                                    <td class="editableColumns">{!! $products[$i]->picture !!}</td>
+                                    @if($pictures[$products[$i]->id] == "No picture")
+                                        <td class="editableColumns">No image</td>
+                                    @else
+                                        <td class="editableColumns"><img
+                                                    src="{!! $pictures[$products[$i]->id] !!}"
+                                                    width="50px"
+                                                    height="50px"
+                                                    align="center"
+                                            ></td>
+                                    @endif
                                     <td class="editableColumns">{!! $products[$i]->price !!}</td>
                                     <td>
                                         <ul class="nav nav-pills">
