@@ -56,3 +56,17 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
     ->name('home_page_vet_visits')
     ->middleware('authenticated');
 
+
+
+
+
+
+
+
+
+
+
+
+
+//tmp new
+Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');

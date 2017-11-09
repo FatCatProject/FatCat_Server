@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\CatVetLog;
 use Illuminate\Http\Request;
 use App\Cat;
@@ -104,46 +105,48 @@ class VetController extends Controller
     public function update(Request $request){
         $current_user = auth()->user();
         date_default_timezone_set('Asia/Jerusalem');
-        $vet_log = CatVetLog::find($request->id);
+        $vet_log = CatVetLog::find($request->to_logID);
 
         if($vet_log == null)
             return response()->json("Vet log not found");
 
-        if($request->visit_date == null){
+        if($request->to_date == null){
             return response()->json("Visit date cannot be null");
         }else{
-            $vet_log->visit_date = $request->visit_date;
+            $vet_log->visit_date = $request->to_date;
         }
 
-        $vet_log->visit_date = $request->visit_date;
-        $vet_log->subject = $request->subject;
-        $vet_log->description = $request->description;
-        $vet_log->clinic_name = $request->clinic_name;
-        $vet_log->price = $request->price;
+        $vet_log->visit_date = $request->to_date;
+        $vet_log->subject = $request->to_subject;
+        $vet_log->description = $request->to_desc;
+        $vet_log->clinic_name = $request->to_clinic;
+        $vet_log->price = $request->to_price;
 
-        $vet_log->prescription_picture = $request->prescription_picture;
-        try{
-            if(!empty($request->prescription_picture)){
-                $vet_log->prescription_picture = str_replace(
-                        ["@", "."],
-                        "_",
-                        $current_user->email."_".$vet_log->visit_date
-                    ).".".$request->prescription_picture->getClientOriginalExtension();
-            }
-
-            $vet_log->save();
-            if (!empty($vet_log->prescription_picture)){
-                Storage::disk("user_pictures")->putFileAs(
-                    str_replace(["@", "."], "_", $current_user->email),
-                    $request->prescription_picture,
-                    $vet_log->prescription_picture
-                );
-            }
-        }catch(QueryException $e){
-            return response()->json("update failed");
-        }
+//        $vet_log->prescription_picture = $request->prescription_picture;
+//        try{
+//            if(!empty($request->prescription_picture)){
+//                $vet_log->prescription_picture = str_replace(
+//                        ["@", "."],
+//                        "_",
+//                        $current_user->email."_".$vet_log->visit_date
+//                    ).".".$request->prescription_picture->getClientOriginalExtension();
+//            }
+//
+//            $vet_log->save();
+//            if (!empty($vet_log->prescription_picture)){
+//                Storage::disk("user_pictures")->putFileAs(
+//                    str_replace(["@", "."], "_", $current_user->email),
+//                    $request->prescription_picture,
+//                    $vet_log->prescription_picture
+//                );
+//            }
+//        }catch(QueryException $e){
+//            return response()->json("update failed");
+//        }
         $vet_log->update();
-        return redirect()->json($request->id);
+//        return redirect()->json(["id" => $request->to_logID]);
+        return redirect()->back();
+
     }
 
     //delete method does not remove image file from storage
@@ -188,5 +191,28 @@ class VetController extends Controller
             $sum = $sum + $expenses[$i];
         }
         return $sum;
+    }
+    //    Natalie
+    public function updateLog(Request $request){
+        $currentUser = Auth::User();
+        $my_log = $currentUser->catVetLogs()->where('id', $request->id)->first();
+        if(empty($my_log))
+            return response("vetlog not found", 204);
+
+        $my_log->visit_date = $request->visit_date;
+        $my_log->subject = $request->subject;
+        $my_log->description = $request->description;
+        $my_log->clinic_name = $request->clinic_name;
+//        $my_log->prescription_image = $request->prescription_image;
+        $my_log->price = $request->price;
+
+        try{
+            $my_log->save();
+        }catch(QueryException $e){
+            return response("Update failed", 500);
+        }
+//        return response()->json(['visit_date' => $my_log->visit_date,'subject'=>$my_log->subject,'description' => $my_log->description,
+//        'clinic_name'=> $my_log->clinic_name, 'price'=> $my_log->price]);
+        return response()->json(['subject' => $my_log->subject]);
     }
 }

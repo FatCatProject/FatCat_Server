@@ -2,15 +2,18 @@
 @section('content')
     @include('layouts.datePicker')
     <div id="page-wrapper">
-        <div class="graphs">
+        <div id="Edit" class="graphs">
             <h3 class="blank1">Vet entries for {!! $cat['cat_name'] !!}:</h3>
             <div class="row">
-                <div class="col-sm-7">
+                {{--addVetLogBlock--}}
+                <div id="addVetLogBlock" class="col-sm-7">
+                    <h4 class="blank1">Add new vet log:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" enctype="multipart/form-data" method="POST"
                                   action="/addvetlog" id="addvetlog">
                                 {!! csrf_field() !!}
+                                <input type="hidden" name="id" value="{!! $cat['id'] !!}">
                                 <input type="hidden" name="id" value="{!! $cat['id'] !!}">
                                 <input type="hidden" value="{{csrf_token()}}" name="_token">
                                 <div class="form-group">
@@ -79,6 +82,87 @@
                         </div>
                     </div>
                 </div>
+                {{--editVetLogBlock--}}
+                <div hidden id="editVetLogBlock" class="col-sm-7">
+                    <h4 class="blank1">Edit vet log:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal" enctype="multipart/form-data" method="POST"
+                                  action="/update" id="update">
+                                {!! csrf_field() !!}
+                                {{ method_field('PUT') }}
+                                <input type="hidden" name="to_logID" id="to_logID" value="">
+                                <input id="cat_id_to_edit" type="hidden" name="cat_id_to_edit" value="{!! $cat['id'] !!}">
+                                <input type="hidden" value="{{csrf_token()}}" name="_token">
+                                <div class="form-group">
+                                    <label for="date" class="col-sm-2 control-label">Date: <span
+                                            style="color: red;">*</span></label>
+                                    <div class="row" style="padding: 10px">
+                                        <div class="input-group" style="margin: 0px 0px 0px 15px">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control" id="to_date" name="to_date" alt="date"
+                                                   placeholder="YYYY-MM-DD"
+                                                   type="text" required style="width: 120px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-2 control-label">Clinic:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="to_clinic" class="form-control1" id="to_clinic"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-2 control-label">Subject:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="to_subject" class="form-control1" id="to_subject"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
+                                    <div class="col-sm-8"><textarea name="to_desc" id="to_desc"
+                                                                    cols="50"
+                                                                    rows="10" class="form-control1"
+                                                                    style="min-height: 70px"></textarea></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" name="to_pic" id="to_pic"
+                                               class="filestyle"
+                                               style="margin-top: 6px">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price:</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="to_price" step="any" min="0" max="10000"
+                                               class="form-control1 input-sm"
+                                               id="to_price" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <button id="updateBtn" type="submit" class="btn-success btn" form="update">Update</button>
+                                            <button id="cancelEditVetLog" type="reset" class="btn-inverse btn">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Stats-->
                 <div class="col-sm-4" style="min-width:500px;">
                     <div class="tab-content">
@@ -176,36 +260,28 @@
                         @for(;$index<count($vet_logs);$index++)
                             <tr id="row_{!! $vet_logs[$index]->id !!}">
                                 <input id="logID" type="hidden" value="{!! $vet_logs[$index]->id !!}">
-                                <td class="editableColumns">{!! $vet_logs[$index]->visit_date !!}</td>
-                                <td class="editableColumns">{!! $vet_logs[$index]->clinic_name !!}</td>
-                                <td class="editableColumns">{!! $vet_logs[$index]->subject !!}</td>
-                                <td class="editableColumns">{!! $vet_logs[$index]->description !!}</td>
+                                <td id="crr_date">{!! $vet_logs[$index]->visit_date !!}</td>
+                                <td id="crr_clinic">{!! $vet_logs[$index]->clinic_name !!}</td>
+                                <td id="crr_subject">{!! $vet_logs[$index]->subject !!}</td>
+                                <td id="crr_desc">{!! $vet_logs[$index]->description !!}</td>
                                 @if($vet_prescription_pictures[$vet_logs[$index]->id] == "No prescription picture")
-                                    <td class="editableColumns">No prescrition image</td>
+                                    <td id="crr_pic">No prescrition image</td>
                                 @else
-                                    <td class="editableColumns"><img
+                                    <td id="editableColumns"><img
                                                 src="{!! $vet_prescription_pictures[$vet_logs[$index]->id] !!}"
                                                 width="50px"
                                                 height="50px"
                                                 align="center"
                                         ></td>
                                 @endif
-                                <td class="editableColumns">{!! $vet_logs[$index]->price !!}</td>
+                                <td id="crr_price">{!! $vet_logs[$index]->price !!}</td>
                                 <td>
                                     <ul id="btns" class="nav nav-pills">
-                                        <li class="editBtn" id="edit_id_{!! $vet_logs[$index]->id !!}">
-                                            <a><i class="lnr lnr-pencil editValues" onclick=""></i></a>
-                                        </li>
+                                        <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
                                         <li class="deleteBtn" id="del_id_{!! $vet_logs[$index]->id !!}" value="{!! $vet_logs[$index]->id !!}" >
                                             <a><i class="lnr lnr-trash"></i></a>
                                         </li>
                                     </ul>
-
-                                    <ul id="editBtns" class="nav nav-pills" hidden>
-                                        <li class="updateBtn"><a><i class="lnr lnr-checkmark-circle"></i></a></li>
-                                        <li class="cancelBtn"><a><i class="lnr lnr-cross-circle"></i></a></li>
-                                    </ul>
-
                                 </td>
                             </tr>
                         @endfor
@@ -234,24 +310,89 @@
     </div>
 
     <script>
-        //Edit table input
-        $(".editBtn").click(function(){
-            $(this).parent().parent().find('#btns').hide();
-            $(this).parent().parent().find('#editBtns').show();
-            $(this).closest('tr').children().each(function(){
-                $(this).wrapInner('<input type="text" value = ' + $(this).text() + '></input>');
 
+        //  Edit vet log
+        $(document).ready(function(){
+            $(".editBtn").click(function(){
+                var id = $(this).parent().parent().parent().find('#logID').val();
+                console.log("id:" + id);
+                var cat_id_to_edit = $("#cat_id_to_edit").val();
+                console.log("cat_id_to_edit:" + cat_id_to_edit);
+                var crr_date = $(this).parent().parent().parent().find('#crr_date').text();
+                console.log("date is:" + crr_date);
+                var crr_clinic = $(this).parent().parent().parent().find('#crr_clinic').text();
+                console.log("crr_clinic:" + crr_clinic);
+                var crr_subject = $(this).parent().parent().parent().find('#crr_subject').text();
+                console.log("crr_subject:" + crr_subject);
+                var crr_desc = $(this).parent().parent().parent().find('#crr_desc').text();
+                console.log("crr_desc:" + crr_desc);
+                var crr_pic = $(this).parent().parent().parent().find('#crr_pic').text();
+                console.log("crr_pic:" + crr_pic);
+                var crr_price = $(this).parent().parent().parent().find('#crr_price').text();
+                console.log("crr_price:" + crr_price);
 
+                $("#addVetLogBlock").hide();
+                $("#editVetLogBlock").show();
+                $("#to_logID").val(id);
+                $("#to_date").val(crr_date);
+                $("#to_clinic").val(crr_clinic);
+                $("#to_subject").val(crr_subject);
+                $("#to_desc").val(crr_desc);
+                $("#to_price").val(crr_price);
+                $("#to_pic").val(crr_pic); //TODO
+            });
+            $("#cancelEditVetLog").click(function(){
+                $("#editVetLogBlock").hide();
+                $("#addVetLogBlock").show();
+            });
+        });
+
+        $(document).ready(function () {
+            $('#updateBtnnnnnnnn').on("click", function () {
+                var id = $('#to_logID').val();
+                var to_date = $('#to_date').val();
+                var to_clinic = $('#to_clinic').val();
+                var to_subject = $('#to_subject').val();
+                var to_desc = $('#to_desc').val();
+//                var to_pic = $('#to_pic').val();
+                var to_price = $('#to_price').val();
+                console.log("this is the id ajax:"+id);
+                console.log("new to_date:"+to_date);
+                console.log("new to_clinic:"+to_clinic);
+                console.log("new to_subject:"+to_subject);
+                console.log("new to_desc:"+to_desc);
+                console.log("new price:"+to_price);
+                $.ajax({
+                    type: "GET",
+                    url: './updateLog',
+                    caller: id,
+                    data: {
+                        id: id,
+                        visit_date: to_date,
+                        clinic_name: to_clinic,
+                        subject: to_subject,
+                        description: to_desc,
+//                        prescription_picture: to_pic,
+                        price: to_price
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("ok "+data.subject);
+                        console.log("got back for" + this.caller);
+//                        $("#weight_left_id" + this.caller).html(newWeight+"<span>&nbsp;&nbsp;grams left</span>");
+                    },
+                    fail: function (jqXHR, textStatus, errorThrown) {
+                        console.log("ERROR:" + jqXHR);
+                        console.log("ERROR:" + textStatus);
+                    }
+                })
+                $("#editVetLogBlock").hide();
+                $("#addVetLogBlock").show();
             });
 
         });
 
-        //Cancel Edit
-        $('.cancelBtn').click(function () {
-            $(this).parent().parent().find('#btns').show();
-            $(this).parent().parent().find('#editBtns').hide();
 
-        });
+
         //Delete table row
         $(document).ready(function () {
             $('.deleteBtn').on("click", function () {
