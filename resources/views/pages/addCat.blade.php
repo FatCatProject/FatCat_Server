@@ -39,7 +39,7 @@
                                         </tr>
                                         <tr>
                                             <td>Wiki page:</td>
-                                            <td><a href="{!! $allMyCats[$index]['breed_link'] !!}" target="_blank">Learn more about your cat</a></td>
+                                            <td><a style="color: #337ab7" href="{!! $allMyCats[$index]->catBreed->link !!}" target="_blank">Learn more about your cat</a></td>
                                         </tr>
                                         <tr>
                                             <td>Gender:</td>
@@ -65,8 +65,10 @@
                                     </table>
                                         <div class="row" style="float: right;">
                                                 <ul class="nav nav-pills">
-                                                    {{--Edit will take to catPage--}}
-                                                    <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues" onclick=""></i></a></li>
+                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="pencil">
+                                                        <a href="{{ URL::route('catPage',$allMyCats[$index]['id']). '#editCat' }}">
+                                                            <i class="lnr lnr-pencil editValues" onclick=""></i>
+                                                        </a></li>
                                                 </ul>
 
                                         </div>
@@ -97,5 +99,9 @@
 
         </div>
     </div>
+    <script>
 
+
+
+    </script>
 @endsection
