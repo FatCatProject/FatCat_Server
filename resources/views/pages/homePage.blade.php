@@ -64,6 +64,8 @@ function ratioPie(){
                 }
 
                 new Chart(document.getElementById("pie").getContext("2d")).Pie(pie_data);
+
+                $("#pie").css("height","200px").css("width","200px");
             }
         }
     );
@@ -127,10 +129,12 @@ function expenses_bar_chart(){
             }
                 );
             }
+            $("#bar1").css("height","155px").css("width","390px").css("font-size","10px");
         }
     );
 }
 $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
+
 // $(document).ready(expenses_bar_chart);
 </script>
                 </div>
@@ -196,6 +200,7 @@ function visits_doughnut(){
                 }
 
                 new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnut_data);
+                $("#doughnut").css("height","200px").css("width","200px");
             }
         }
     );
