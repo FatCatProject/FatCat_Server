@@ -59,6 +59,7 @@
 
 <script>
 function daily_consumption(){
+    console.log("--- daily_consumption ---");
     var day_date = $("#daily_consumption_datepicker").val();
     var cat_id = {!! $cat->id !!};
     console.log("date: " + day_date + " - cat_id: " + cat_id);
@@ -137,6 +138,7 @@ $("#daily_consumption_datepicker").on("changeDate", daily_consumption);
 
 <script>
 function daily_logs(){
+    console.log("--- daily_logs ---");
     var day_date = $("#daily_logs_datepicker").val();
     var cat_id = {!! $cat->id !!};
     console.log("date: " + day_date + " - cat_id: " + cat_id);
@@ -218,6 +220,7 @@ $("#daily_logs_datepicker").on("changeDate", daily_logs);
 
 <script>
 function monthly_logs(){
+    console.log("--- monthly_logs ---");
     var month_date = $("#monthly_logs_datepicker").val();
     var cat_id = {!! $cat->id !!};
     console.log("date: " + month_date + " - cat_id: " + cat_id);
@@ -270,8 +273,16 @@ $("#monthly_logs_datepicker").on("changeDate", monthly_logs);
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth" placeholder="YYYY-MM"
-                               type="text" style="width: 90px; "/>
+                        <input
+                            alt="dateMonth"
+                            class="form-control"
+                            id="logs_table_datepicker"
+                            name="dateMonth"
+                            placeholder="YYYY-MM"
+                            style="width: 90px;"
+                            type="text"
+                            value="{!! $today->format('Y-m') !!}"
+                        />
                     </div>
                 </div>
                 <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
@@ -280,58 +291,121 @@ $("#monthly_logs_datepicker").on("changeDate", monthly_logs);
             </div>
                 {{--</div>--}}
                 {{--</div>--}}
-                <table class="table table-striped">
+                <table id="logs_table" class="table table-striped">
                     <thead>
-                    <tr class="warning">
-                        <th>Opened time</th>
-                        <th>Closed time</th>
-                        <th>Total time</th>
-                        <th>Amount of food</th>
-                    </tr>
-                    </thead>
-                    @foreach($feeding_logs as $row)
-                        <tr>
-                            <td>{!! $row->open_time !!}</td>
-                            <td>{!! $row->close_time !!}</td>
-                            <td>{!! (date_create($row->close_time)->diff(date_create($row->open_time)))->format("%i minutes, %s seconds") !!}</td>
-                            <td>{!! $row->start_weight - $row->end_weight !!}</td>
+                        <tr class="warning">
+                            <th>Opened time</th>
+                            <th>Closed time</th>
+                            <th>Total time</th>
+                            <th>Amount of food</th>
                         </tr>
-                    @endforeach
+                    </thead>
                 </table>
-                <!--END Table-->
 
                 <div align="right" class="col-md-12 page_1">
                     <nav>
-                        <ul class="pagination">
-                            <li class="disabled">
-                                <a href="#" aria-label="Previous">
-                                    <i class="fa fa-angle-left">
-                                    </i>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="#">
-                                    1
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            @for($i=1; $i < $number_of_pages; $i++)
-                                <li>
-                                    <a href="#">
-                                        {!! $i !!}
-                                    </a>
-                                </li>
-                            @endfor
-                            <li class="{!! ($number_of_pages < 2) ? 'disabled' : '' !!}">
-                                <a href="#" aria-label="Next">
-                                    <i class="fa fa-angle-right">
-                                    </i>
-                                </a>
-                            </li>
+                        <ul id="table_pages" class="pagination">
                         </ul>
                     </nav>
                 </div>
-            </div>
+<script>
+function table_pages(number_of_pages, active_page){
+    console.log("--- table_pages ---");
+    console.log("number_of_pages: " + number_of_pages + " - active_page: " + active_page);
+    number_of_pages = (number_of_pages > 0) ? number_of_pages : 1;
+    active_page = (active_page < 1) ? 1 : ((active_page >= number_of_pages) ? number_of_pages : active_page);
+    var table_pages_ul = $("#table_pages");
+    table_pages_ul.empty();
+
+    table_pages_ul.append(
+        $("<li></li>").append(
+            $("<a></a>").append(
+                $("<i></i>").addClass("fa fa-angle-left")
+            )
+        ).attr("id", "page_previous")
+    );
+
+    for(var i = 1; i <= number_of_pages; i++){
+        var tmp_li = $("<li></li>").append(
+            $("<a></a>").append(i)
+        ).addClass("page_li_btn");
+        if(i == active_page){
+            tmp_li.addClass("active");
+        }
+        table_pages_ul.append(tmp_li);
+    }
+
+    table_pages_ul.append(
+        $("<li></li>").append(
+            $("<a></a>").append(
+                $("<i></i>").addClass("fa fa-angle-right")
+            )
+        ).attr("id", "page_next")
+    );
+    if(active_page < 2){
+        $("#page_previous").addClass("disabled");
+    }
+    if(active_page >= number_of_pages){
+        $("#page_next").addClass("disabled");
+    }
+}
+
+function table_rows(data){
+    console.log("--- table_rows ---");
+    console.log("data: " + JSON.stringify(data));
+    var logs_table = $("#logs_table");
+    $("#logs_table tr").not("thead tr").remove();
+
+    for(row_idx in data){
+        var row = data[row_idx];
+        var diff_dates = new Date((new Date(row.close_time)) - (new Date(row.open_time)));
+        var diff_minutes = diff_dates.getMinutes();
+        var diff_seconds = diff_dates.getSeconds();
+        logs_table.append(
+            $("<tr></tr>").append(
+                $("<td></td>").text(row.open_time),
+                $("<td></td>").text(row.close_time),
+                $("<td></td>").text(diff_minutes + " minutes, " + diff_seconds + " seconds"),
+                $("<td></td>").text((row.start_weight - row.end_weight).toFixed(1)),
+            )
+        );
+    }
+}
+
+function table_logs_datepicker_event(){
+    console.log("--- table_logs_datepicker ---");
+    var month_date = $("#logs_table_datepicker").val();
+    var cat_id = {!! $cat->id !!};
+    var page = 1;
+    var entries_per_page = 10;
+    console.log(
+        "month_date: " + month_date +
+        " - cat_id: " + cat_id +
+        " - page: " + page +
+        " - entries_per_page: " + entries_per_page
+    );
+
+    $.get(
+        "{!! URL::route('cat_page_table_logs') !!}",
+    {
+        month_date: month_date,
+            cat_id: cat_id,
+            page: page,
+            entries_per_page: entries_per_page
+    },
+    function(data, status){
+        if(status === "success"){
+            table_rows(data.feeding_logs);
+            table_pages(data.number_of_pages, data.page_number);
+        }
+    }
+);
+}
+
+$("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
+</script>
+        <!--END Table-->
+        </div>
         {{--<div id="editCat" class="editCat"></div>--}}
         <!--Edit Cat information-->
         <div class="row">

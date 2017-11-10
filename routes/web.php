@@ -21,6 +21,9 @@ Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 // Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
+Route::get('/catpage_table_logs', 'CatController@tableLogs')
+    ->name('cat_page_table_logs')
+    ->middleware('authenticated');
 
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
 Route::get('/deleteVetLog/' , 'VetController@delete');
