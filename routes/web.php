@@ -25,6 +25,7 @@ Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need fo
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
 Route::get('/deleteVetLog/' , 'VetController@delete');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
+Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');
 
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
 Route::get('/shopsPage', 'ShopController@shopsPage')->middleware('authenticated');
@@ -61,3 +62,4 @@ Route::get('/editBoxPage', 'PagesController@editBoxPage');
 // Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');
 
+?>
