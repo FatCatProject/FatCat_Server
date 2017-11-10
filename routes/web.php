@@ -6,8 +6,9 @@ Auth::routes();
 
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
-// Route::get('/catFields/{id}',['uses' =>'CatController@editCat'])->name('catFields')->middleware('privacy');
-Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')->middleware('privacy');
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
+    ->middleware('authenticated')
+    ->middleware('privacy');
 Route::get('/daily_consumption', 'CatController@dailyConsumption')
     ->name('cat_page_consumption')
     ->middleware('authenticated');
@@ -18,11 +19,15 @@ Route::get('/monthly_logs', 'CatController@monthyLogs')
     ->name('cat_page_monthly_logs')
     ->middleware('authenticated');
 Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
-// Route::get('/getCatBreedInfo/{breed_name}' , ['uses'=>'CatController@breedInfo']);
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
+Route::get('/catpage_table_logs', 'CatController@tableLogs')
+    ->name('cat_page_table_logs')
+    ->middleware('authenticated');
 
-Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
+Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
+    ->middleware('authenticated')
+    ->middleware('privacy');
 Route::get('/deleteVetLog/' , 'VetController@delete');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');
@@ -59,7 +64,6 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
 
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
-// Route::get('/homePage', 'PagesController@home');
 Route::get('/userPage', 'PagesController@userPage');
 
 ?>

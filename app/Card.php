@@ -47,6 +47,6 @@ class Card extends Model
 
     public function cat()
     {
-        return $this->belongsTo('App\Cat', 'cat_id', 'cat_id');
+        return $this->belongsTo('App\Cat', 'cat_id', 'id');
     }
 }

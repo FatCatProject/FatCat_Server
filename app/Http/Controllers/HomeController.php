@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use function Sodium\compare;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -25,14 +25,34 @@ class HomeController extends Controller
      */
     public function homePage()
     {
-        $cats = \App::call('App\Http\Controllers\CatController@myCats');
-        $boxes =\App::call('App\Http\Controllers\CatController@myBoxes');
-        if (count($boxes) / 3 > intval(count($boxes) / 3))
-            $numberOfRows = intval(count($boxes) / 3) + 1;
-        else
-            $numberOfRows = intval(count($boxes)) / 3;
-
-        return view('pages.homePage', compact('numberOfRows','cats','boxes'));
+        $current_user = Auth::User();
+        $foodbox_data = [];
+        foreach($current_user->foodboxes as $foodbox){
+            $foodbox_cat = $foodbox->cards()->first()->cat;
+            $foodbox_cat_profile_picture = "/images/default_cat.png";
+            if(!empty($foodbox_cat->profile_picture)){
+                $profile_picture_path = str_replace(["@", "."], "_", $current_user->email)."/".$foodbox_cat->profile_picture;
+                if(Storage::disk("user_pictures")->exists($profile_picture_path)){
+                    $foodbox_cat_profile_picture = "data:image/png;base64,".base64_encode(
+                        Storage::disk("user_pictures")->get($profile_picture_path)
+                    );
+                }
+            }
+            array_push(
+                $foodbox_data,
+                [
+                    "foodbox_name" => $foodbox->foodbox_name,
+                    "current_weight" => $foodbox->current_weight,
+                    "profile_picture" => $foodbox_cat_profile_picture
+                ]
+            );
+        }
+        return view(
+            "pages.homePage",
+            [
+                "foodbox_data" => json_encode($foodbox_data)
+            ]
+        );
     }
 
     public function monthlyRatio(Request $request)

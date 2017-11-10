@@ -212,50 +212,43 @@ $("#vet_visits_datepicker").on("changeDate", visits_doughnut);
             </div>
         </div>
         <br>
-        <div class="row">
-            {{--chart 1--}}
-            <div class="col-sm-4">
-                <div class="grid_1">
-                    <div class="row">
-                    </div>
-                </div>
-            </div>
-            {{--chart 2--}}
-            <div class="col-sm-4">
-                <div class="grid_1">
-                    <div class="row">
-                    </div>
-                </div>
-            </div>
-            {{--chart 3--}}
-            <div class="col-sm-4">
-                <div class="grid_1">
-                    <div class="row">
-                    </div>
-                </div>
-            </div>
-        </div>
-        @php ($index = 0)
-        @for($row=0;$row<$numberOfRows;$row++)
-            <div class="row">
-                @for(;$index<count($boxes);$index++)
-                    <div class="col-md-4">
-                        <div class="r3_counter_box">
-                            <i class="fa" style="width: 150px; margin-left: -30px"><img
-                                        src="https://cdn2.iconfinder.com/data/icons/cat-power/128/cat_drunk.png"
-                                        width="100px"></i>
-                            <div class="stats">
-                                <h5>{!! $boxes[$index]['current_weight'] !!}<span>gr</span></h5>
-                                <div class="grow">
-                                    <p>{!! $boxes[$index]['foodbox_name'] !!}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endfor
-            </div>
-            <br>
-        @endfor
+<script>
+$(document).ready(
+    function(){
+        var foodbox_data = {!! $foodbox_data !!};
+        for(var foodbox_idx = 0; foodbox_idx < foodbox_data.length;){ 
+            var tmp_row = $("<div></div>").addClass("row");
+            for(var j = 0; j < 3 && foodbox_idx < foodbox_data.length; j++, foodbox_idx++){
+                tmp_row.append(
+                    $("<div></div>").append(
+                        $("<div></div>").append(
+                            $("<i></i>").append(
+                                $("<img/>").attr("src", foodbox_data[foodbox_idx].profile_picture).css("width", "100px")
+                            ).addClass("fa").css({
+                                "width": "150px",
+                                "margin-left": "-30px"
+                            }),
+                            $("<div></div>").append(
+                                $("<h5></h5>").append(
+                                    foodbox_data[foodbox_idx].current_weight,
+                                    $("<span></span>").text("gr")
+                                ),
+                                $("<div></div>").append(
+                                    $("<p></p>").text(foodbox_data[foodbox_idx].foodbox_name)
+                                ).addClass("grow")
+                            ).addClass("stats")
+                        ).addClass("r3_counter_box")
+                    ).addClass("col-md-4")
+                );
+            }
+            $("#page-wrapper").append(
+                tmp_row,
+                $("<br/>")
+            );
+        }
+    }
+);
+</script>
     </div>
     @include('layouts.datePicker')
 @endsection

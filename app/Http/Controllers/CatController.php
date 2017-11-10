@@ -411,5 +411,53 @@ class CatController extends Controller
         return response()->json($monthly_logs_response);
     }
 
+    public function tableLogs(Request $request){
+        $current_user = Auth::User();
+        $month_date = new DateTime($request->month_date."-01");
+        $request_cat = $current_user->cats()->find($request->cat_id);
+        $request_page = (!empty($request->page) and ($request->page > 0)) ? $request->page : 1;
+        $request_entries_per_page = ((!empty($request->entries_per_page)) and ($request->entries_per_page > 0)) ?
+            $request->entries_per_page : 10;
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+
+        $response_number_of_pages = ceil((\DB::table("cards")
+            ->join("feeding_logs", "cards.card_id", "=", "feeding_logs.card_id")
+            ->where("cards.user_email", "=", $current_user->email)
+            ->where("feeding_logs.user_email", "=", $current_user->email)
+            ->where("cards.cat_id", "=", $request_cat->id)
+            ->whereYear("feeding_logs.open_time", $month_date->format("Y"))
+            ->whereMonth("feeding_logs.open_time", $month_date->format("m"))
+            ->count()) / $request_entries_per_page);
+
+        $request_page = $request_page < $response_number_of_pages ? $request_page : $response_number_of_pages;
+
+        $response_feeding_logs = \DB::table("cards")
+            ->join("feeding_logs", "cards.card_id", "=", "feeding_logs.card_id")
+            ->where("cards.user_email", "=", $current_user->email)
+            ->where("feeding_logs.user_email", "=", $current_user->email)
+            ->where("cards.cat_id", "=", $request_cat->id)
+            ->whereYear("feeding_logs.open_time", $month_date->format("Y"))
+            ->whereMonth("feeding_logs.open_time", $month_date->format("m"))
+            ->orderBy("feeding_logs.open_time")
+            ->select(
+                "feeding_logs.start_weight", "feeding_logs.end_weight", "feeding_logs.open_time",
+                "feeding_logs.close_time"
+            )
+            ->skip(($request_page - 1) * $request_entries_per_page)
+            ->take($request_entries_per_page)
+            ->get();
+
+        return response()->json(
+            [
+                "number_of_pages" => strval($response_number_of_pages),
+                "page_number" => strval($request_page),
+                "feeding_logs" =>  $response_feeding_logs
+            ]
+        );
+    }
+
 }
 
