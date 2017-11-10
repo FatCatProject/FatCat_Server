@@ -322,13 +322,13 @@ function table_pages(number_of_pages, active_page){
             $("<a></a>").append(
                 $("<i></i>").addClass("fa fa-angle-left")
             )
-        ).attr("id", "page_previous")
+        ).attr("id", "page_previous").on("click", page_li_btn_event)
     );
 
     for(var i = 1; i <= number_of_pages; i++){
         var tmp_li = $("<li></li>").append(
             $("<a></a>").append(i)
-        ).addClass("page_li_btn");
+        ).addClass("page_li_btn").on("click", page_li_btn_event);
         if(i == active_page){
             tmp_li.addClass("active");
         }
@@ -340,7 +340,7 @@ function table_pages(number_of_pages, active_page){
             $("<a></a>").append(
                 $("<i></i>").addClass("fa fa-angle-right")
             )
-        ).attr("id", "page_next")
+        ).attr("id", "page_next").on("click", page_li_btn_event)
     );
     if(active_page < 2){
         $("#page_previous").addClass("disabled");
@@ -373,7 +373,7 @@ function table_rows(data){
 }
 
 function table_logs_datepicker_event(){
-    console.log("--- table_logs_datepicker ---");
+    console.log("--- table_logs_datepicker_event ---");
     var month_date = $("#logs_table_datepicker").val();
     var cat_id = {!! $cat->id !!};
     var page = 1;
@@ -400,6 +400,44 @@ function table_logs_datepicker_event(){
         }
     }
 );
+}
+
+function page_li_btn_event(){
+    console.log("--- page_li_btn_event ---");
+    var month_date = $("#logs_table_datepicker").val();
+    var cat_id = {!! $cat->id !!};
+    var entries_per_page = 10;
+    var page = ($(this).hasClass("page_li_btn")) ? $(this).find("a").first().html() : (
+        ($(this).attr("id") == "page_previous") ?
+        ($(this).parent().find(".active").first().find("a").first().html() - 1) :
+        ($(this).parent().find(".active").first().find("a").first().html() - -1)  // Haha...
+    );
+    console.log(
+        "month_date: " + month_date +
+        " - cat_id: " + cat_id +
+        " - page: " + page +
+        " - entries_per_page: " + entries_per_page
+    );
+
+    if($(this).hasClass("disabled")){
+        return;
+    }
+
+    $.get(
+        "{!! URL::route('cat_page_table_logs') !!}",
+    {
+        month_date: month_date,
+            cat_id: cat_id,
+            page: page,
+            entries_per_page: entries_per_page
+    },
+        function(data, status){
+            if(status === "success"){
+                table_rows(data.feeding_logs);
+                table_pages(data.number_of_pages, data.page_number);
+            }
+        }
+    );
 }
 
 $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
