@@ -7,7 +7,9 @@ Auth::routes();
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
 // Route::get('/catFields/{id}',['uses' =>'CatController@editCat'])->name('catFields')->middleware('privacy');
-Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')->middleware('privacy');
+Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
+    ->middleware('authenticated')
+    ->middleware('privacy');
 Route::get('/daily_consumption', 'CatController@dailyConsumption')
     ->name('cat_page_consumption')
     ->middleware('authenticated');
@@ -25,7 +27,9 @@ Route::get('/catpage_table_logs', 'CatController@tableLogs')
     ->name('cat_page_table_logs')
     ->middleware('authenticated');
 
-Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')->middleware('privacy');
+Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
+    ->middleware('authenticated')
+    ->middleware('privacy');
 Route::get('/deleteVetLog/' , 'VetController@delete');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');
