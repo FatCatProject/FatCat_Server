@@ -28,7 +28,7 @@ class HomeController extends Controller
         $current_user = Auth::User();
         $foodbox_data = [];
         foreach($current_user->foodboxes as $foodbox){
-            $foodbox_cat = $foodbox->cards()->first()->cat;
+            @$foodbox_cat = $foodbox->cards()->where("active", "=", 1)->first()->cat;
             $foodbox_cat_profile_picture = "/images/default_cat.png";
             if(!empty($foodbox_cat->profile_picture)){
                 $profile_picture_path = str_replace(["@", "."], "_", $current_user->email)."/".$foodbox_cat->profile_picture;
