@@ -13,13 +13,17 @@
                 {{ method_field('PUT') }}
             @endif
 
+            <div id="errors_div" class="form-group">
+                <ul id="errors_ul" style="color: red;"></ul>
+            </div>
+
             {{ csrf_field() }}
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="focusedinput">Name: <span style="color: red;">*</span></label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
-                        id="focusedinput"
+                        id="cat_name_input"
                         name="cat_name"
                         placeholder=""
                         required
@@ -191,13 +195,53 @@
             <div class="">
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
-                        <button class="btn-success btn" form="catFields" type="submit">Submit</button>
+                        <button
+                            class="btn-success btn"
+                            id="submit_button"
+                            form="catFields"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
                         <button class="btn-inverse btn" type="reset">Reset</button>
                     </div>
                 </div>
             </div>
 
         </form>
+<script>
+    $("#cat_name_input").on("change", function(event){
+        console.log("--- cat_name_input change ---");
+
+        var cat_id = "{!! $cat->id ?? 0!!}";
+        var cat_name = $("#cat_name_input").val();
+        console.log("cat_id: " + cat_id + " - cat_name: " + cat_name);
+
+        $("#submit_button").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('add_cat_check_cat_exists') !!}",
+            data = {
+                cat_id: cat_id,
+                cat_name: cat_name
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#submit_button").addClass("disabled");
+                        $("#errors_ul").append(
+                            $("<li></li>").text("A cat by that name already exists. please choose another name.")
+                        );
+                    }else{
+                        $("#submit_button").removeClass("disabled");
+                        $("#errors_ul").empty();
+                    }
+                }
+            }
+        );
+    });
+</script>
     </div>
 </div>
 
