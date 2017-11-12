@@ -100,8 +100,6 @@ class VetController extends Controller
         return redirect()->back();
     }
 
-    //update method does not remove old image file from storage
-    //fixme
     public function update(Request $request)
     {
         $current_user = auth()->user();
@@ -122,7 +120,6 @@ class VetController extends Controller
         $vet_log->clinic_name = $request->to_clinic;
         $vet_log->price = $request->to_price;
 
-        //
         if ($request->to_pic != null) {
             if ($vet_log->prescription_picture != null) {
                 $picture_path = str_replace(["@", "."], "_", $current_user->email);
