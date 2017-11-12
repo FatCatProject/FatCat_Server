@@ -62,8 +62,11 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
     ->name('home_page_vet_visits')
     ->middleware('authenticated');
 
+Route::get('/userPage', 'UserController@userPage')->middleware('authenticated');
+Route::post('/editUser','UserController@update')->middleware('authenticated');
+
+
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
-Route::get('/userPage', 'PagesController@userPage');
 
 ?>

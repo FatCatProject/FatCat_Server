@@ -18,13 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        //added by Natalie -
-//        if(!Auth::check()){
-//            return;
-//        }
-//        //
         Schema::defaultStringLength(191);
-        View::share('userName','SomeUser');
         View::composer('*',function ($view){
             if(Auth::user()!=null){
                 $cats = DB::table('cats')->where('user_email',Auth::user()->email)->get();
