@@ -9,6 +9,8 @@ Route::get('/autocompleteBreed', 'CatController@autocomplete');
 Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
     ->middleware('authenticated')
     ->middleware('privacy');
+Route::get('/check_cat',['uses' =>'CatController@checkCatExists'])->name('add_cat_check_cat_exists')
+    ->middleware('authenticated');
 Route::get('/daily_consumption', 'CatController@dailyConsumption')
     ->name('cat_page_consumption')
     ->middleware('authenticated');
