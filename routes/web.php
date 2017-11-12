@@ -6,6 +6,7 @@ Auth::routes();
 
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
+Route::get('/boxManagePage', 'CatController@boxManagePage');
 Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
     ->middleware('authenticated')
     ->middleware('privacy');
@@ -62,7 +63,6 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
     ->name('home_page_vet_visits')
     ->middleware('authenticated');
 
-Route::get('/boxManagePage', 'PagesController@boxManagePage');
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
 Route::get('/userPage', 'PagesController@userPage');
 
