@@ -215,12 +215,10 @@ class CatController extends Controller
     }
 
     public function update(Request $request){
+        $current_user =Auth::User();
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
-        if($request->has("profile_picture")){
-            $cat->profile_picture = base64_encode(file_get_contents($request->file("profile_picture")->path()));
-        }
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
         if(CatBreed::find($request->cat_breed)!=null){
@@ -231,6 +229,21 @@ class CatController extends Controller
         $cat->target_weight = $request->target_weight;
         $cat->daily_calories = $request->daily_calories;
 
+        if(!empty($request->profile_picture)){
+            $cat->profile_picture = str_replace(
+                ["@", "."],
+                "_",
+                $current_user->email."_".$cat->cat_name
+            ).".".$request->profile_picture->getClientOriginalExtension();
+        }
+
+        if (!empty($cat->profile_picture)){
+            Storage::disk("user_pictures")->putFileAs(
+                str_replace(["@", "."], "_", $current_user->email),
+                $request->profile_picture,
+                $cat->profile_picture
+            );
+        }
         $cat->update();
         return redirect()->back();
     }
