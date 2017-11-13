@@ -476,6 +476,8 @@ class CatController extends Controller
     {
         $user = User::find(Auth::id());
         $boxes = $user->foodboxes;
+        $foods =  $user->foods;
+        $my_cats =  $user->cats;
         if (count($boxes) / 3 > intval(count($boxes) / 3))
             $numberOfRows = intval(count($boxes) / 3) + 1;
         else
@@ -495,6 +497,7 @@ class CatController extends Controller
             array_push(
                 $foodbox_data,
                 [
+                    "id"=>$foodbox->id,
                     "foodbox_id"=>$foodbox->foodbox_id,
                     "foodbox_name" => $foodbox->foodbox_name,
                     "food_name"=>$foodbox->food->food_name,
@@ -506,7 +509,33 @@ class CatController extends Controller
             );
         }
 
-        return view('pages.boxManagePage', compact('numberOfRows','foodbox_data'));
+        return view('pages.boxManagePage', compact('numberOfRows','foodbox_data','foods','my_cats'));
+    }
+
+    //    Natalie
+    public function updateBox(Request $request)
+    {
+        $currentUser = Auth::User();
+        $my_box = $currentUser->foodboxes()->where('id', $request->id)->first();
+
+        if (empty($my_box))
+            return response("foodbox not found", 204);
+
+        $my_box->foodbox_name= $request->new_box_name;
+        $my_box->food_id= $request->new_food_id;
+
+
+        try {
+            $my_box->save();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json(
+            [
+                'new_box_name' => $my_box->foodbox_name,
+                'new_food_name'=>$my_box->food->food_name,
+            ]
+        );
     }
 
 }
