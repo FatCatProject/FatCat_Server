@@ -66,7 +66,7 @@
                     <h4 class="blank1">Edit shopping entry:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="editShopping" id="editShoppingForm">
+                            <form class="form-horizontal" method="GET" action="" id="">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <input type="hidden" name="to_logID" id="to_logID" value="">
@@ -106,7 +106,7 @@
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
                                             <button id="updateBtn" type="submit" class="btn-success btn"
-                                                    form="addShoppingForm">Update
+                                                    form="">Update
                                             </button>
                                             <button id="cancelBtn" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
@@ -259,7 +259,7 @@
 
 
         //Edit btn - opens hiden div and populates it
-        $(".editBtn").click(function(){
+        $(".editBtn").click(function () {
             $("#addBlock").hide();
             $("#editBlock").show();
 
@@ -310,9 +310,54 @@
             })
         }
 
+        //Update btn
+        $('#updateBtn').on("click", function () {
+            var id = $('#to_logID').val();
+            var to_date = $('#to_date').val();
+            var to_desc = $('#to_desc').val();
+            var to_price = $('#to_price').val();
+            console.log("this is the id of log in ajax:" + id);
+            console.log("new to_date:" + to_date);
+            console.log("new to_desc:" + to_desc);
+            console.log("new price:" + to_price);
+            $.ajax({
+                type: "GET",
+                url: '/updateShoppingLog',
+                caller: id,
+                data: {
+                    id: id,
+                    to_date: to_date,
+                    to_desc: to_desc,
+                    to_price: to_price,
 
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log("back newDate " + data.newDate);
+                    console.log("back newDesc " + data.newDesc);
+                    console.log("back newPrice " + data.newPrice);
+                    console.log("got back forID" + this.caller);
+//                    $("#row_" + this.caller).html(newWeight+"<span>&nbsp;&nbsp;grams left</span>");
+                    console.log(  $('#row_' + this.caller));
+                    $('#row_' + this.caller).find('#crr_date').text(data.newDate);
+                    $('#row_' + this.caller).find('#crr_desc').text(data.newDesc);
+                    $('#row_' + this.caller).find('#crr_price').text(data.newPrice);
+                    scrollToAnchor('row_' + this.caller);
 
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + textStatus);
+                }
+            })
+            $("#editBlock").hide();
+            $("#addBlock").show();
+        });
 
+//Anchor
+        function scrollToAnchor(aid){
+            var aTag = $('#'+ aid);
+            $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
+        }
 
     </script>
 @endsection
