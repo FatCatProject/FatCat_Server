@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Shop;
+use App\ShoppingLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
@@ -208,5 +209,40 @@ class ShopController extends Controller
             ->where(['user_email' => $user_email])
             ->get();
         return $result;
+    }
+    //Natalie deleteShoppingLog via ajax
+    public function deleteShoppingLog(Request $request)
+    {
+        $shopping_log =  Auth::User()->shoppingLogs()->where('id', '=',$request->id);
+
+        if (empty($shopping_log)) {
+            return response()->json("no shopping log found");
+        } else {
+            $shopping_log->delete();
+            return response()->json($request->id);
+        }
+    }
+//    Natalie
+    public function updateShoppingLog(Request $request)
+    {
+
+        $my_shop_log =  Auth::User()->shoppingLogs()->where('id', '=',$request->id)->first();
+//        return response()->json($my_shop_log);
+        if (empty($my_shop_log))
+            return response("shopping log not found", 204);
+        $my_shop_log->shopping_date = $request->to_date;
+        $my_shop_log->description = $request->to_desc;
+        $my_shop_log->price = $request->to_price;
+
+        try {
+            $my_shop_log->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newDate' => $my_shop_log->shopping_date,
+            'newDesc' => $my_shop_log->description,
+            'newPrice' => $my_shop_log->price
+        ]);
     }
 }

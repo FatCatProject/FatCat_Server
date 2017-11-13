@@ -41,6 +41,9 @@ Route::get('/shopsPage', 'ShopController@shopsPage')->middleware('authenticated'
 Route::post('/addProduct',['uses' => 'ShopController@storeProduct'])->middleware('authenticated');
 Route::post('/addShop',['uses' => 'ShopController@storeShop'])->middleware('authenticated');
 Route::post('/addShopping',['uses' => 'ShopController@storeShopLog'])->middleware('authenticated');
+Route::get('/deleteShoppingLog',['uses' => 'ShopController@deleteShoppingLog'])->middleware('authenticated');
+Route::get('/updateShoppingLog',['uses' => 'ShopController@updateShoppingLog'])->middleware('authenticated');
+
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
