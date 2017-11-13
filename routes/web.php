@@ -6,6 +6,7 @@ Auth::routes();
 
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
+Route::get('/boxManagePage', 'CatController@boxManagePage');
 Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
     ->middleware('authenticated')
     ->middleware('privacy');
@@ -26,6 +27,7 @@ Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need fo
 Route::get('/catpage_table_logs', 'CatController@tableLogs')
     ->name('cat_page_table_logs')
     ->middleware('authenticated');
+Route::get('/updateBox',['uses' => 'CatController@updateBox'])->middleware('authenticated');
 
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
     ->middleware('authenticated')
@@ -43,6 +45,7 @@ Route::post('/addShopping',['uses' => 'ShopController@storeShopLog'])->middlewar
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
 Route::post('/addCard',['uses' => 'CardController@storeCard'])->middleware('authenticated');
+
 
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
@@ -69,6 +72,7 @@ Route::post('/editUser','UserController@update')->middleware('authenticated');
 
 
 Route::get('/boxManagePage', 'PagesController@boxManagePage');
+
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
 
 ?>

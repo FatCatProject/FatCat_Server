@@ -112,4 +112,5 @@ class HomeController extends Controller
 
         return response()->json($query_data->get());
     }
+
 }
