@@ -6,6 +6,7 @@ Auth::routes();
 
 Route::get('/addCat' , ['uses'=>'CatController@addCat'])->middleware('authenticated');
 Route::get('/autocompleteBreed', 'CatController@autocomplete');
+Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::get('/boxManagePage', 'CatController@boxManagePage');
 Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
     ->middleware('authenticated')
@@ -21,7 +22,6 @@ Route::get('/daily_logs', 'CatController@dailyLogs')
 Route::get('/monthly_logs', 'CatController@monthyLogs')
     ->name('cat_page_monthly_logs')
     ->middleware('authenticated');
-Route::get('/getCatBreedInfo' , ['uses'=>'CatController@breedInfo']);
 Route::post('/addcat',['uses' => 'CatController@store'])->middleware('authenticated');
 Route::put('/catPage/editcat',['uses' => 'CatController@update']); // no need for a middleware
 Route::get('/catpage_table_logs', 'CatController@tableLogs')

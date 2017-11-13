@@ -452,10 +452,11 @@ $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingThree">
-                                <h4 class="panel-title asd">
+                                <h4 class="panel-title asd" style="width: 100%;">
                                     <a
                                         aria-controls="collapseThree"
                                         aria-expanded="false"
+                                        style="width: 100%;"
                                         class="pa_italic collapsed"
                                         data-parent="#accordion"
                                         data-toggle="collapse"
@@ -465,7 +466,7 @@ $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
                                         <span class="lnr lnr-chevron-down"></span>
                                         <i class="lnr lnr-chevron-up">
                                         </i>
-                                        <label>Edit {!! $cat['cat_name'] !!}'s information</label>
+                                        <label style="width: 80%;">Edit {!! $cat['cat_name'] !!}'s information</label>
                                     </a>
                                 </h4>
                             </div>

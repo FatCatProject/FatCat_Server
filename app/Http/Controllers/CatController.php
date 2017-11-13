@@ -52,7 +52,10 @@ class CatController extends Controller
         if ($request->has('breed_name')) {
             $breed_name = $request->input('breed_name');
 
-            $breed = DB::table('cat_breeds')->where('breed_name', $breed_name)->first();
+            $breed = DB::table('cat_breeds')
+                ->where('breed_name', $breed_name)
+                ->orWhere('breed_name', $breed_name."_cat")
+                ->first();
             if (is_null($breed)) {
                 $breed = DB::table('cat_breeds')->where('breed_name', 'Other')->first();
             }
@@ -169,7 +172,10 @@ class CatController extends Controller
     {
         $breedSearch = $request->input('searchTerm');
         $queries = DB::table('cat_breeds')
-            ->where('breed_name', 'LIKE', '%' . $breedSearch . '%')->pluck('breed_name');
+            ->where('breed_name', 'LIKE', '%'.$breedSearch.'%')
+            ->orWhere('breed_name', 'LIKE', '%'.str_replace(' ', '_', $breedSearch).'%')
+            ->pluck('breed_name');
+
 
         return response()->json($queries);
     }
@@ -185,12 +191,20 @@ class CatController extends Controller
             ]
         );
 
-        $my_cat->cat_breed = $request->cat_breed;
+        try{
+            $my_cat->cat_breed = \App\CatBreed::where("breed_name", "=", $request->cat_breed)
+                ->orWhere("breed_name", "=", $request->cat_breed."_cat")
+                ->firstOrFail()
+                ->breed_name;
+        }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            $my_cat->cat_breed = "other";
+        }
         $my_cat->current_weight = $request->current_weight;
         $my_cat->daily_calories = $request->daily_calories;
         $my_cat->dob = $request->dob;
         $my_cat->gender = $request->gender;
         $my_cat->target_weight = $request->target_weight;
+        $my_cat->food_allowance = $request->food_allowance;
 
         try {
             if (!empty($request->profile_picture)) {
@@ -223,13 +237,21 @@ class CatController extends Controller
         $cat->cat_name = $request->cat_name;
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
-        if (CatBreed::find($request->cat_breed) != null) {
-            $cat->cat_breed = $request->cat_breed;
+        if(!empty($request->cat_breed)){
+            try{
+                $cat->cat_breed = \App\CatBreed::where("breed_name", "=", $request->cat_breed)
+                    ->orWhere("breed_name", "=", $request->cat_breed."_cat")
+                    ->firstOrFail()
+                    ->breed_name;
+            }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+                $cat->cat_breed = "other";
+            }
         }
 
         $cat->current_weight = $request->current_weight;
         $cat->target_weight = $request->target_weight;
         $cat->daily_calories = $request->daily_calories;
+        $cat->food_allowance = $request->food_allowance;
 
         if(!empty($request->profile_picture)){
             $cat->profile_picture = str_replace(

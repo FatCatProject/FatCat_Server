@@ -34,15 +34,34 @@
             </div>
 
             <div class="form-group">
+                <style>
+                    .ui-autocomplete {
+                             background: #FFFFFF;
+                             padding: 5px 10px;
+                             font-size: 13px;
+                             color: gray;
+                         }
+                    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
+                    a.ui-button:active, .ui-button:active, .ui-state-active.ui-button:hover {
+                        border: none;
+                        color: #00ACED;
+                    }
+                </style>
                 <label for="focusedinput" class="col-sm-2 control-label">Breed: <span style="color: red;">*</span></label>
                 <div class="col-sm-8">
                     <input
                         class="form-control1"
-                        name="cat_breed"
+                        id="breed"
                         placeholder=""
                         required
                         type="text"
-                        value="{!! !empty($cat) ? $cat->cat_breed : '' !!}"
+                        value="{!! @str_replace('_', ' ', str_replace('_cat', '', $cat->cat_breed)) ?? 'Other' !!}"
+                    />
+                    <input
+                        id="breed_name"
+                        name="cat_breed"
+                        type="hidden"
+                        value="{!! $cat->cat_breed ?? 'Other' !!}"
                     />
                 </div>
             </div>
@@ -61,9 +80,99 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @include('layouts.wikiInfo')
-            </div>
+<script>
+$("#breed").autocomplete({
+source: function(request, response){
+    console.log("----------------------------------------------------------");
+    console.log("--- breed info ---");
+    console.log("request: " + JSON.stringify(request));
+    console.log("response: " + response);
+
+    $.ajax({
+        type: "GET",
+        url: '/autocompleteBreed',
+        data: {
+            searchTerm: request.term
+        },
+        success: function (data, textStatus) {
+            console.log("status: " + textStatus);
+            var responseJSON = data;
+            console.log("responseJSON: " + JSON.stringify(responseJSON));
+            response($.map(data, function(value) {
+                return {
+                    label: value.replace(/_cat$/, "").replace(/_/, " "),
+                    value: value
+                }
+            }));
+        },
+        error: function (xmlHttpRequest, statusText, errorThrown) {
+            console.log(
+                'Your form submission failed.\n\n'
+                + 'XML Http Request: ' + JSON.stringify(xmlHttpRequest)
+                + ',\nStatus Text: ' + statusText
+                + ',\nError Thrown: ' + errorThrown);
+        }
+    });
+},
+select: function(event, ui){
+    console.log("ui.item.label " + ui.item.label + " - ui.item.value: " + ui.item.value);
+    $("#breed").val(ui.item.label);
+    $("#breed_name").val(ui.item.value).change();
+    // $("#breed").change();
+    event.preventDefault();
+}
+});
+
+$("#breed_name").on("change", function () {
+    var breed = $("#breed_name").val();
+    console.log(breed);
+    $.ajax({
+    type: "GET",
+        url: "/getCatBreedInfo",
+        data: {
+        breed_name: breed
+    },
+        success: function (data, textStatus, jqXHR) {
+//                    console.log(data);
+            var breedReceived = data;
+            console.log("breedReceived: " + breedReceived);
+            $("#wikiLink").text(breedReceived.link);
+            $("#wikiLink").attr("href", breedReceived.link);
+            $("#wikiInfo").text(breedReceived.description);
+            console.log("CatBreedSent");
+        },
+        fail: function (jqXHR, textStatus, errorThrown) {
+            console.log("ERROR:" + jqXHR);
+            console.log("ERROR:" + textStatus);
+        }
+    })
+});
+
+$("#breed").on("change", function () {
+    var breed = $("#breed").val().replace(/\ /, "_");
+    $.ajax({
+    type: "GET",
+        url: "/getCatBreedInfo",
+        data: {
+        breed_name: breed
+    },
+        success: function (data, textStatus, jqXHR) {
+//                    console.log(data);
+            var breedReceived = data;
+            console.log("breedReceived: " + JSON.stringify(breedReceived));
+            $("#wikiLink").text(breedReceived.link);
+            $("#wikiLink").attr("href", breedReceived.link);
+            $("#wikiInfo").text(breedReceived.description);
+            console.log("CatBreedSent");
+            $("#breed_name").val(breedReceived.breed_name);
+        },
+        fail: function (jqXHR, textStatus, errorThrown) {
+            console.log("ERROR:" + jqXHR);
+            console.log("ERROR:" + textStatus);
+        }
+    })
+});
+</script>
 
             <div class="form-group">
                 <label for="radio" class="col-sm-2 control-label">Gender: <span style="color: red;">*</span></label>
