@@ -71,8 +71,4 @@ Route::get('/userPage', 'UserController@userPage')->middleware('authenticated');
 Route::post('/editUser','UserController@update')->middleware('authenticated');
 
 
-Route::get('/boxManagePage', 'PagesController@boxManagePage');
-
-Route::get('/editBoxPage', 'PagesController@editBoxPage');
-
 ?>
