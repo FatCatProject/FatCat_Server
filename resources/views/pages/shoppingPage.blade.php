@@ -2,17 +2,21 @@
 @section('content')
     @include('layouts.datePicker')
     <div id="page-wrapper">
-        <div class="graphs">
+        <div id="Edit" class="graphs">
             <h3 class="blank1">Shopping history:</h3>
             <!---728x90--->
             <div class="row">
-                <div class="col-sm-7">
+
+                {{--Add Shopping Log--}}
+                <div class="col-sm-7" id="addBlock">
+                    <h4 class="blank1">Add shopping entry:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" action="addShopping" id="addShoppingForm">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label for="catDob" class="col-sm-2 control-label">Date: <span style="color: red;">*</span></label>
+                                    <label for="catDob" class="col-sm-2 control-label">Date: <span
+                                            style="color: red;">*</span></label>
                                     <div class="row" style="padding: 10px">
                                         <div class="input-group" style="margin: 0px 0px 0px 15px">
                                             <div class="input-group-addon">
@@ -34,7 +38,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span style="color: red;">*</span></label>
+                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span
+                                            style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="number" name="price" step="any" min="0" max="999"
                                                class="form-control1 input-sm"
@@ -44,7 +49,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addShoppingForm">Add</button>
+                                            <button type="submit" class="btn-success btn" form="addShoppingForm">Add
+                                            </button>
                                             <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
@@ -54,6 +60,64 @@
                         </div>
                     </div>
                 </div>
+
+                {{--Edit shopping log--}}
+                <div hidden class="col-sm-7" id="editBlock">
+                    <h4 class="blank1">Edit shopping entry:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal" method="POST" action="editShopping" id="editShoppingForm">
+                                {!! csrf_field() !!}
+                                <div class="form-group">
+                                    <input type="hidden" name="to_logID" id="to_logID" value="">
+                                    <label for="shopDate" class="col-sm-2 control-label">Date: <span
+                                            style="color: red;">*</span></label>
+                                    <div class="row" style="padding: 10px">
+                                        <div class="input-group" style="margin: 0px 0px 0px 15px">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control" id="to_date" name="to_date"
+                                                   alt="date"
+                                                   placeholder="YYYY-MM-DD"
+                                                   type="text" required style="width: 120px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
+                                    <div class="col-sm-8"><textarea name="to_desc" id="to_desc"
+                                                                    cols="50"
+                                                                    rows="10" class="form-control1"
+                                                                    style="min-height: 70px"></textarea></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span
+                                            style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="to_price" step="any" min="0" max="10000"
+                                               class="form-control1 input-sm"
+                                               id="to_price" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <button id="updateBtn" type="submit" class="btn-success btn"
+                                                    form="addShoppingForm">Update
+                                            </button>
+                                            <button id="cancelBtn" type="reset" class="btn-inverse btn">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Stats-->
                 <div class="col-sm-4" style="min-width:500px;">
                     <div class="tab-content">
@@ -143,18 +207,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($index=0;$index<10 && count($shoppingLogs)>0;$index++)
-                            <tr id="{!! $index !!}">
+                        @for($index=0;$index < count($shoppingLogs);$index++)
+
+                            <tr id="row_{!! $shoppingLogs[$index]->id !!}">
+
                                 @if(empty($shoppingLogs[$index]))
                                 @endif
                                 @if(!empty($shoppingLogs[$index]))
-                                    <td> {!! $shoppingLogs[$index]->shopping_date !!} </td>
-                                    <td> {!! $shoppingLogs[$index]->description !!} </td>
-                                    <td> {!! $shoppingLogs[$index]->price !!} </td>
+                                    <input id="logID" type="hidden" value="{!! $shoppingLogs[$index]->id !!}">
+                                    <td id="crr_date"> {!! $shoppingLogs[$index]->shopping_date !!} </td>
+                                    <td id="crr_desc"> {!! $shoppingLogs[$index]->description !!} </td>
+                                    <td id="crr_price"> {!! $shoppingLogs[$index]->price !!} </td>
                                     <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil"></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                        <ul id="btns" class="nav nav-pills">
+                                            <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues"
+                                                                                   onclick=""></i></a></li>
+                                            <li class="deleteBtn" id="del_id_{!! $shoppingLogs[$index]->id !!}"
+                                                value="{!! $shoppingLogs[$index]->id !!}">
+                                                <a><i class="lnr lnr-trash"></i></a>
+                                            </li>
                                         </ul>
                                     </td>
                                 @endif
@@ -185,14 +256,62 @@
     </div>
 
     <script>
-        $('.editValues').click(function () {
-            $(this).parents('tr').find('td.editableColumns').each(function () {
-                var html = $(this).text();
-                var input = $('<input class="editableColumnsStyle" type="text" />');
-                input.val(html);
-                $(this).html(input);
-            });
+
+
+        //Edit btn - opens hiden div and populates it
+        $(".editBtn").click(function(){
+            $("#addBlock").hide();
+            $("#editBlock").show();
+
+            var id = $(this).parent().parent().parent().find('#logID').val();
+            console.log("id:" + id);
+            var crr_date = $(this).parent().parent().parent().find('#crr_date').text();
+            console.log("date is:" + crr_date);
+            var crr_desc = $(this).parent().parent().parent().find('#crr_desc').text();
+            console.log("crr_desc:" + crr_desc);
+            var crr_price = parseInt($(this).parent().parent().parent().find('#crr_price').text());
+            console.log("crr_price:" + crr_price);
+
+            $("#to_logID").val(id);
+            $("#to_date").val(crr_date);
+            $("#to_desc").val(crr_desc);
+            $("#to_price").val(crr_price);
+
         });
+
+        //Cancel Edit btn
+        $("#cancelBtn").click(function () {
+            $("#editBlock").hide();
+            $("#addBlock").show();
+        });
+
+
+        //Delete table row
+        $('.deleteBtn').on("click", delete_table_row_func);
+
+        function delete_table_row_func() {
+            var id = $(this).parent().parent().parent().find('#logID').val();
+            console.log("shoplog id is" + id);
+            $.ajax({
+                type: "GET",
+                url: '/deleteShoppingLog',
+                caller: id,
+                data: {
+                    id: id,
+                },
+                success: function (data, status, jqXHR) {
+                    console.log("llll:" + data);
+                    $("#row_" + this.caller).remove();
+                },
+                fail: function (jqXHR, status, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + status);
+                }
+            })
+        }
+
+
+
 
 
     </script>

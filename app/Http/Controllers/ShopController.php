@@ -209,4 +209,18 @@ class ShopController extends Controller
             ->get();
         return $result;
     }
+    //Natalie deleteShoppingLog via ajax
+    public function deleteShoppingLog(Request $request)
+    {
+//        $current_user = Auth::User()->shoppingLogs()->where('id', '=',$request->id);
+        $shopping_log =  Auth::User()->shoppingLogs()->where('id', '=',$request->id);
+
+        if (empty($shopping_log)) {
+            return response()->json("no shopping log found");
+        } else {
+            $shopping_log->delete();
+            return response()->json($request->id);
+        }
+    }
+
 }
