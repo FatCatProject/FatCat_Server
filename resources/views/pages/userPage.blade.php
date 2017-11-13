@@ -9,8 +9,9 @@
                 <div class="col-sm-12">
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal">
-
+                            <form class="form-horizontal" enctype="multipart/form-data" method="POST"
+                                  action="/editUser" id="editUser">
+                                {!! csrf_field() !!}
                                 <div class="col-sm-6">
                                     <h4 class="blank1">User Information:</h4>
                                     <div class="form-group">
@@ -18,40 +19,58 @@
                                                disabled="">Email:</label>
                                         <div class="col-sm-8">
                                             <input disabled="" type="email" class="form-control1" id="disabledinput"
-                                                   placeholder="" style="background-color: #F8F8F8">
+                                                   placeholder="" style="background-color: #F8F8F8" name="user_email"
+                                                   value="{!! $current_user->email !!}">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">First name:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                            <input type="text" class="form-control1" id="first_name" placeholder=""
+                                                   name="first_name" value="{!! $current_user->first_name !!}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Last name:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control1" id="shopUrl" placeholder="">
+                                            <input type="text" class="form-control1" name="last_name"
+                                                   value="{!! $current_user->last_name !!}" id="last_name"
+                                                   placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Country:</label>
                                         <div class="col-sm-8">
-                                            <input type="url" class="form-control1" id="shopUrl" placeholder="">
+                                            <select name="country" id="country" class="form-control1" required>
+                                                <option value="" name="" selected>Please choose a country
+                                                </option>
+                                                @foreach($countries as $country)
+                                                    @if($country == $current_user->country)
+                                                        <option selected="selected" value="{!! $country !!}"
+                                                                name="foodbox_id">{!! $country !!}</option>
+                                                    @else
+                                                        <option value="{!! $country !!}"
+                                                                name="foodbox_id">{!! $country !!}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control1" id="shopTel"
-                                                   pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
+                                            <input type="text" class="form-control1" id="phone_number"
+                                                   name="phone_number"
+                                                   pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder=""
+                                                   value="{!! $current_user->phone !!}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="profilePicture" class="col-sm-3 control-label">Profile
                                             picture:</label>
                                         <div class="col-sm-8">
-                                            <input type="file" name="itemPicture" id="itemPicture" class="filestyle"
+                                            <input type="file" name="picture" id="picture" class="filestyle"
                                                    data-buttonBefore="true" style="margin-top: 6px">
                                         </div>
                                     </div>
@@ -65,21 +84,50 @@
                                         <label for="checkbox" class="col-sm-7 control-label">Reminder to buy food when
                                             only 10% is left :</label>
                                         <div class="col-sm-5">
-                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                            @if($current_user->buy_food_reminder == 1)
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="buy_food"
+                                                                                           checked="checked">Yes</label>
+                                                </div>
+                                            @else
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="buy_food">Yes</label>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="checkbox" class="col-sm-7 control-label">Reseive Daily feeding
                                             reports:</label>
                                         <div class="col-sm-5">
-                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                            @if($current_user->daily_reminder == 1)
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="daily_reminder"
+                                                                                           checked="checked">Yes</label>
+                                                </div>
+                                            @else
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="daily_reminder">Yes</label>
+                                                </div>
+                                            @endif
+
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="checkbox" class="col-sm-7 control-label">Receive notification twice
+                                        <label for="checkbox" class="col-sm-7 control-label">Receive notification
+                                            twice
                                             a day if cat is not eating for 12 hours:</label>
                                         <div class="col-sm-5">
-                                            <div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>
+                                            @if($current_user->not_eating_reminder == 1)
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="not_eating"
+                                                                                           checked="checked">Yes</label>
+                                                </div>
+                                            @else
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="not_eating">Yes</label>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
 

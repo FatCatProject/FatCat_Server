@@ -168,7 +168,7 @@
                             <div class="profile_img">
                                 <span style="background:url(/images/1.jpg) no-repeat center"> </span>
                                 <div class="user-name">
-                                    <p>Hello &nbsp<span>{{ $userName }}</span></p>
+                                    <p>Hello &nbsp<span>{{ \Illuminate\Support\Facades\Auth::user()->first_name }}</span></p>
                                 </div>
                                 <i class="lnr lnr-chevron-down"></i>
                                 <i class="lnr lnr-chevron-up"></i>

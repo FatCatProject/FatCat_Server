@@ -6,6 +6,7 @@ use App\Cat;
 use App\CatBreed;
 use App\User;
 use DateTime;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -215,14 +216,11 @@ class CatController extends Controller
         return redirect()->action("CatController@addCat");
     }
 
-    public function update(Request $request)
-    {
+    public function update(Request $request){
+        $current_user = Auth::User();
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
-        if ($request->has("profile_picture")) {
-            $cat->profile_picture = base64_encode(file_get_contents($request->file("profile_picture")->path()));
-        }
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
         if (CatBreed::find($request->cat_breed) != null) {
@@ -233,6 +231,21 @@ class CatController extends Controller
         $cat->target_weight = $request->target_weight;
         $cat->daily_calories = $request->daily_calories;
 
+        if(!empty($request->profile_picture)){
+            $cat->profile_picture = str_replace(
+                ["@", "."],
+                "_",
+                $current_user->email."_".$cat->cat_name
+            ).".".$request->profile_picture->getClientOriginalExtension();
+        }
+
+        if (!empty($cat->profile_picture)){
+            Storage::disk("user_pictures")->putFileAs(
+                str_replace(["@", "."], "_", $current_user->email),
+                $request->profile_picture,
+                $cat->profile_picture
+            );
+        }
         $cat->update();
         return redirect()->back();
     }
@@ -536,6 +549,20 @@ class CatController extends Controller
                 'new_food_name'=>$my_box->food->food_name,
             ]
         );
+    }
+
+    public function checkCatExists(Request $request){
+        $current_user = Auth::User();
+        $exists = true;
+        try{
+            $current_user->cats()
+                ->where("cat_name", "=", $request->cat_name)
+                ->where("id", "!=", $request->cat_id)
+                ->firstOrFail();
+        }catch(ModelNotFoundException $e){
+            $exists = false;
+        }
+        return response()->json(["exists" => $exists]);
     }
 
 }

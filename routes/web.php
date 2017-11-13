@@ -10,6 +10,8 @@ Route::get('/boxManagePage', 'CatController@boxManagePage');
 Route::get('/catPage/{id}',['uses' =>'CatController@catPage'])->name('catPage')
     ->middleware('authenticated')
     ->middleware('privacy');
+Route::get('/check_cat',['uses' =>'CatController@checkCatExists'])->name('add_cat_check_cat_exists')
+    ->middleware('authenticated');
 Route::get('/daily_consumption', 'CatController@dailyConsumption')
     ->name('cat_page_consumption')
     ->middleware('authenticated');
@@ -65,7 +67,12 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
     ->name('home_page_vet_visits')
     ->middleware('authenticated');
 
+Route::get('/userPage', 'UserController@userPage')->middleware('authenticated');
+Route::post('/editUser','UserController@update')->middleware('authenticated');
+
+
+Route::get('/boxManagePage', 'PagesController@boxManagePage');
+
 Route::get('/editBoxPage', 'PagesController@editBoxPage');
-Route::get('/userPage', 'PagesController@userPage');
 
 ?>
