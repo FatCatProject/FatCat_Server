@@ -268,4 +268,28 @@ class ShopController extends Controller
             return response()->json($request->id);
         }
     }
+    public function updateShop(Request $request)
+    {
+
+        $my_shop =  Auth::User()->shops()->where('id', '=',$request->id)->first();
+        if (empty($my_shop))
+            return response("shop not found", 204);
+        $my_shop->shop_name = $request->to_crr_shop_name;
+        $my_shop->url = $request->to_crr_url;
+        $my_shop->address = $request->to_crr_address;
+        $my_shop->hours = $request->to_crr_open_hours;
+        $my_shop->phone = $request->to_crr_number;
+        try {
+            $my_shop->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newName' => $my_shop->shop_name,
+            'newUrl' => $my_shop->url,
+            'newAddress' => $my_shop->address,
+            'newHours' => $my_shop->hours,
+            'newPhone' => $my_shop->phone
+        ]);
+    }
 }

@@ -74,6 +74,7 @@
                             <form class="form-horizontal" method="POST" action="addShop" id="addShop">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
+                                    <input type="hidden" name="to_shopID" id="to_shopID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input id="to_crr_shop_name" type="text" name="shop_name" class="form-control1"
@@ -115,7 +116,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="">Update</button>
+                                            <button id="updateBtnShop" type="submit" class="btn-success btn" form="">Update</button>
                                             <button id="cancelBtnShop" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
@@ -199,6 +200,7 @@
                                 {!! csrf_field() !!}
                                 <input type="hidden" value="{{csrf_token()}}" name="_token">
                                 <div class="form-group">
+                                    <input type="hidden" name="to_productID" id="to_productID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text" name="product_name" class="form-control1" id="to_crr_name"
@@ -470,6 +472,7 @@
             var crr_number = $(this).parent().parent().parent().find('#crr_number').text();
             console.log("crr_number:" + crr_number);
 
+            $("#to_shopID").val(id);
             $("#to_crr_shop_name").val(crr_shop_name);
             $("#to_crr_url").val(crr_url);
             $("#to_crr_address").val(crr_address);
@@ -501,11 +504,10 @@
             var crr_is_food = $(this).parent().parent().parent().find('#crr_is_food').text();
             console.log("crr_is_food:" + crr_is_food);
 
-
+            $("#to_productID").val(id);
             $("#to_crr_name").val(crr_name);
             $("#to_crr_weight").val(crr_weight);
             $("#to_crr_price").val(crr_price);
-//            $("#to_crr_is_food").val(crr_is_food);
             if(crr_is_food == "Food"){
                 $("#isFoodCheckBox").attr("checked", "");
             }else{
@@ -522,6 +524,65 @@
             $("#addProductBlock").show();
         });
 
+        //Update SHOP btn
+        $('#updateBtnShop').on("click", function () {
+            var id = $("#to_shopID").val();
+            var to_crr_shop_name = $("#to_crr_shop_name").val();
+            var to_crr_url = $("#to_crr_url").val();
+            var to_crr_address = $("#to_crr_address").val();
+            var to_crr_open_hours = $("#to_crr_open_hours").val();
+            var to_crr_number = $("#to_crr_number").val();
+
+            console.log("this is the shop_id in ajax:" + id);
+            console.log("to_crr_shop_name:" + to_crr_shop_name);
+            console.log("to_crr_url:" + to_crr_url);
+            console.log("to_crr_address:" + to_crr_address);
+            console.log("to_crr_open_hours:" + to_crr_open_hours);
+            console.log("to_crr_number:" + to_crr_number);
+
+            $.ajax({
+                type: "GET",
+                url: '/updateShop',
+                caller: id,
+                data: {
+                    id: id,
+                    to_crr_shop_name: to_crr_shop_name,
+                    to_crr_url: to_crr_url,
+                    to_crr_address: to_crr_address,
+                    to_crr_open_hours: to_crr_open_hours,
+                    to_crr_number: to_crr_number
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log("back newName " + data.newName);
+                    console.log("back newUrl " + data.newUrl);
+                    console.log("back newAddress " + data.newAddress);
+                    console.log("back newHours " + data.newHours);
+                    console.log("back newPhone " + data.newPhone);
+
+                    console.log("got back forID" + this.caller);
+                    console.log(  $('#shop_row_' + this.caller));
+                    $('#shop_row_' + this.caller).find('#crr_shop_name').text(data.newName);
+                    $('#shop_row_' + this.caller).find('#crr_url').html('<a href='+data.newUrl+' target="_blank">'+data.newUrl+'<a/>');
+                    $('#shop_row_' + this.caller).find('#crr_address').text(data.newAddress);
+                    $('#shop_row_' + this.caller).find('#crr_open_hours').text(data.newHours);
+                    $('#shop_row_' + this.caller).find('#crr_number').text(data.newPhone);
+                    scrollToAnchor('shop_row_' + this.caller);
+
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + textStatus);
+                }
+            })
+            $("#editShopBlock").hide();
+            $("#addShopBlock").show();
+        });
+
+        //Anchor
+        function scrollToAnchor(aid){
+            var aTag = $('#'+ aid);
+            $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
+        }
 
     </script>
 @endsection
