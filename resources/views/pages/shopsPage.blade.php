@@ -341,31 +341,32 @@
                         @for($i=0;$i<10 && count($products)>0;$i++)
                             @if(empty($products[$i]))
                             @else
-                                <tr id="{!! $i !!}">
-                                    <td class="editableColumns">{!! $products[$i]->product_name !!}</td>
-                                    <td class="editableColumns">{!! $products[$i]->weight !!}</td>
+                                <tr id="product_row_{!! $products[$i]->id !!}">
+                                    <input id="productID" type="hidden" value="{!! $products[$i]->id !!}">
+                                    <td class="">{!! $products[$i]->product_name !!}</td>
+                                    <td class="">{!! $products[$i]->weight !!}</td>
                                     @if($products[$i]->is_food == 1)
-                                        <td class="editableColumns">Food</td>
+                                        <td class="">Food</td>
                                     @else
-                                        <td class="editableColumns">Not Food</td>
+                                        <td class="">Not Food</td>
                                     @endif
                                     @if($pictures[$products[$i]->id] == "No picture")
-                                        <td class="editableColumns">No image</td>
+                                        <td class="">No image</td>
                                     @else
-                                        <td class="editableColumns"><img
+                                        <td class=""><img
                                                     src="{!! $pictures[$products[$i]->id] !!}"
                                                     width="50px"
                                                     height="50px"
                                                     align="center"
                                             ></td>
                                     @endif
-                                    <td class="editableColumns">{!! $products[$i]->price !!}</td>
+                                    <td class="">{!! $products[$i]->price !!}</td>
                                     <td>
                                         <ul id="btns" class="nav nav-pills">
-                                            <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues"
+                                            <li class="editBtnProduc"><a href="#EditProduc"><i class="lnr lnr-pencil editValues"
                                                                                    onclick=""></i></a></li>
-                                            <li class="deleteBtn" id="del_id_}"
-                                                value="">
+                                            <li class="deleteBtnProduct" id="product_del_id_{!! $products[$i]->id !!}"
+                                                value="{!! $products[$i]->id !!}">
                                                 <a><i class="lnr lnr-trash"></i></a>
                                             </li>
                                         </ul>
@@ -401,7 +402,7 @@
 
 
     <script>
-        //Delete table row
+        //Delete SHOP table row
         $('.deleteBtnShop').on("click", shop_delete_table_row_func);
 
         function shop_delete_table_row_func() {
@@ -417,6 +418,30 @@
                 success: function (data, status, jqXHR) {
                     console.log("llll:" + data.id);
                     $("#shop_row_" + this.caller).remove();
+                },
+                fail: function (jqXHR, status, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + status);
+                }
+            })
+        }
+
+        //Delete Product table row
+        $('.deleteBtnProduct').on("click", product_delete_table_row_func);
+
+        function product_delete_table_row_func() {
+            var id = $(this).parent().parent().parent().find('#productID').val();
+            console.log("shopID id is" + id);
+            $.ajax({
+                type: "GET",
+                url: '/deleteProduct',
+                caller: id,
+                data: {
+                    id: id,
+                },
+                success: function (data, status, jqXHR) {
+                    console.log("llll:" + data.id);
+                    $("#product_row_" + this.caller).remove();
                 },
                 fail: function (jqXHR, status, errorThrown) {
                     console.log("ERROR:" + jqXHR);

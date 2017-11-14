@@ -256,4 +256,16 @@ class ShopController extends Controller
             return response()->json($request->id);
         }
     }
+
+    public function deleteProduct(Request $request)
+    {
+        $product =  Auth::User()->products()->where('id', '=',$request->id);
+
+        if (empty($product)) {
+            return response()->json("no product found");
+        } else {
+            $product->delete();
+            return response()->json($request->id);
+        }
+    }
 }
