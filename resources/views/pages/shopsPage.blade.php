@@ -2,12 +2,12 @@
 @section('content')
     @include('layouts.datePicker')
     <div id="page-wrapper">
-        <div class="graphs">
+        <div id="Edit" class="graphs">
             <h3 class="blank1">Favorite shops & products:</h3>
             {{--add shop--}}
             <div class="row">
                 {{--addShopBlock--}}
-                <div class="col-sm-6">
+                <div id="addShopBlock" class="col-sm-6">
                     <h4 class="blank1">Add shop:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -67,7 +67,7 @@
                 </div>
 
                 {{--editShopBlock--}}
-                <div hidden class="col-sm-6">
+                <div hidden id="editShopBlock" class="col-sm-6">
                     <h4 class="blank1">Edit shop:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="shop_name" class="form-control1" id="shopName"
+                                        <input id="to_crr_shop_name" type="text" name="shop_name" class="form-control1"
                                                placeholder="" required>
                                     </div>
                                 </div>
@@ -84,13 +84,13 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Url:</label>
                                     <div class="col-sm-8">
-                                        <input type="url" name="url" class="form-control1" id="shopUrl" placeholder="">
+                                        <input type="url" name="url" class="form-control1" id="to_crr_url" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Address:</label>
-                                    <div class="col-sm-8"><textarea name="address" id="shopAddress"
+                                    <div class="col-sm-8"><textarea name="address" id="to_crr_address"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 30px"></textarea></div>
@@ -98,7 +98,7 @@
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Opening hours:</label>
-                                    <div class="col-sm-8"><textarea name="hours" id="shopHours"
+                                    <div class="col-sm-8"><textarea name="hours" id="to_crr_open_hours"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 30px"></textarea></div>
@@ -107,7 +107,7 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="phone" class="form-control1" id="shopTel"
+                                        <input type="text" name="phone" class="form-control1" id="to_crr_number"
                                                pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
                                     </div>
                                 </div>
@@ -115,8 +115,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addShop">Add</button>
-                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="">Update</button>
+                                            <button id="cancelBtnShop" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
 
 
                 {{--addProductBlock--}}
-                <div class="col-sm-6">
+                <div id="addProductBlock" class="col-sm-6">
                     <h4 class="blank1">Add product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -191,7 +191,7 @@
                     </div>
                 </div>
                 {{--editProductBlock--}}
-                <div hidden class="col-sm-6">
+                <div hidden id="editProductBlock" class="col-sm-6">
                     <h4 class="blank1">Edit product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -201,14 +201,14 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="product_name" class="form-control1" id="itemName"
+                                        <input type="text" name="product_name" class="form-control1" id="to_crr_name"
                                                placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Weight: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control1" name="weight" id="itemWeight"
+                                        <input type="number" class="form-control1" name="weight" id="to_crr_weight"
                                                step="any" min="0"
                                                placeholder="Enter weight in Kg" required>
                                     </div>
@@ -219,7 +219,7 @@
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Price: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control1" name="price" id="itemPrice"
+                                        <input type="number" class="form-control1" name="price" id="to_crr_price"
                                                step="any" min="0"
                                                placeholder="" required>
                                     </div>
@@ -228,7 +228,9 @@
                                     <label for="checkbox" class="col-sm-3 control-label">Food product?</label>
                                     <div class="col-sm-8">
                                         <div class="checkbox-inline"><label><input type="checkbox"
-                                                                                   name="is_food">Yes</label></div>
+                                                                                   name="is_food"
+                                                                            id="isFoodCheckBox"
+                                                                            >Yes</label></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -242,8 +244,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addProduct">Add</button>
-                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                            <button type="submit" class="btn-success btn" form="">Update</button>
+                                            <button id="cancelBtnProduct" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
@@ -279,19 +281,19 @@
                                 <tr id="shop_row_{!! $shops[$index]->id !!}">
                                     {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
                                     <input id="shopID" type="hidden" value="{!! $shops[$index]->id !!}">
-                                    <td class="editableColumns">{!! $shops[$index]->shop_name !!}</td>
-                                    <td class="editableColumns"><a href="{!! $shops[$index]->url !!}"
+                                    <td id="crr_shop_name" class="">{!! $shops[$index]->shop_name !!}</td>
+                                    <td id="crr_url" class=""><a href="{!! $shops[$index]->url !!}"
                                                                    target="_blank">{!! $shops[$index]->url !!}</a>
                                     </td>
-                                    <td class="editableColumns">{!! $shops[$index]->address !!}</td>
-                                    <td class="editableColumns">{!! $shops[$index]->hours !!}</td>
-                                    <td class="editableColumns">{!! $shops[$index]->phone !!}</td>
+                                    <td id="crr_address" class="">{!! $shops[$index]->address !!}</td>
+                                    <td id="crr_open_hours" class="">{!! $shops[$index]->hours !!}</td>
+                                    <td id="crr_number" class="">{!! $shops[$index]->phone !!}</td>
                                     <td>
                                         <ul id="btnsShop" class="nav nav-pills">
-                                            <li class="editBtnShop"><a href="#EditShop"><i class="lnr lnr-pencil editValues"
+                                            <li class="editBtnShop"><a href="#Edit"><i class="lnr lnr-pencil"
                                                                                    onclick=""></i></a></li>
                                             <li class="deleteBtnShop" id="shop_del_id_{!! $shops[$index]->id !!}"
-                                                value="{!! $shops[$index]->shop_name !!}">
+                                                value="{!! $shops[$index]->id !!}">
                                                 <a><i class="lnr lnr-trash"></i></a>
                                             </li>
                                         </ul>
@@ -343,12 +345,12 @@
                             @else
                                 <tr id="product_row_{!! $products[$i]->id !!}">
                                     <input id="productID" type="hidden" value="{!! $products[$i]->id !!}">
-                                    <td class="">{!! $products[$i]->product_name !!}</td>
-                                    <td class="">{!! $products[$i]->weight !!}</td>
+                                    <td id="crr_name" class="">{!! $products[$i]->product_name !!}</td>
+                                    <td id="crr_weight" class="">{!! $products[$i]->weight !!}</td>
                                     @if($products[$i]->is_food == 1)
-                                        <td class="">Food</td>
+                                        <td id="crr_is_food" class="" value="1">Food</td>
                                     @else
-                                        <td class="">Not Food</td>
+                                        <td id="crr_is_food"  class="" value="0">Not Food</td>
                                     @endif
                                     @if($pictures[$products[$i]->id] == "No picture")
                                         <td class="">No image</td>
@@ -360,10 +362,10 @@
                                                     align="center"
                                             ></td>
                                     @endif
-                                    <td class="">{!! $products[$i]->price !!}</td>
+                                    <td id="crr_price" class="">{!! $products[$i]->price !!}</td>
                                     <td>
                                         <ul id="btns" class="nav nav-pills">
-                                            <li class="editBtnProduc"><a href="#EditProduc"><i class="lnr lnr-pencil editValues"
+                                            <li class="editBtnProduct"><a href="#Edit"><i class="lnr lnr-pencil editValues"
                                                                                    onclick=""></i></a></li>
                                             <li class="deleteBtnProduct" id="product_del_id_{!! $products[$i]->id !!}"
                                                 value="{!! $products[$i]->id !!}">
@@ -449,5 +451,77 @@
                 }
             })
         }
+
+        //Edit SHOP btn - opens hiden div and populates it
+        $(".editBtnShop").click(function () {
+            $("#addShopBlock").hide();
+            $("#editShopBlock").show();
+
+            var id = $(this).parent().parent().parent().find('#shopID').val();
+            console.log("id:" + id);
+            var crr_shop_name = $(this).parent().parent().parent().find('#crr_shop_name').text();
+            console.log("crr_shop_name:" + crr_shop_name);
+            var crr_url = $(this).parent().parent().parent().find('#crr_url').text();
+            console.log("crr_url:" + crr_url);
+            var crr_address = $(this).parent().parent().parent().find('#crr_address').text();
+            console.log("crr_address:" + crr_address);
+            var crr_open_hours = $(this).parent().parent().parent().find('#crr_open_hours').text();
+            console.log("crr_open_hours:" + crr_open_hours);
+            var crr_number = $(this).parent().parent().parent().find('#crr_number').text();
+            console.log("crr_number:" + crr_number);
+
+            $("#to_crr_shop_name").val(crr_shop_name);
+            $("#to_crr_url").val(crr_url);
+            $("#to_crr_address").val(crr_address);
+            $("#to_crr_open_hours").val(crr_open_hours);
+            $("#to_crr_number").val(crr_number);
+
+        });
+
+        //Cancel SHOP Edit btn
+        $("#cancelBtnShop").click(function () {
+            $("#editShopBlock").hide();
+            $("#addShopBlock").show();
+        });
+
+        //Edit Product btn - opens hiden div and populates it
+        $(".editBtnProduct").click(function () {
+            console.log("HERE")
+            $("#addProductBlock").hide();
+            $("#editProductBlock").show();
+
+            var id = $(this).parent().parent().parent().find('#productID').val();
+            console.log("id:" + id);
+            var crr_name = $(this).parent().parent().parent().find('#crr_name').text();
+            console.log("crr_name:" + crr_name);
+            var crr_weight = $(this).parent().parent().parent().find('#crr_weight').text();
+            console.log("crr_weight:" + crr_weight);
+            var crr_price = $(this).parent().parent().parent().find('#crr_price').text();
+            console.log("crr_price:" + crr_price);
+            var crr_is_food = $(this).parent().parent().parent().find('#crr_is_food').text();
+            console.log("crr_is_food:" + crr_is_food);
+
+
+            $("#to_crr_name").val(crr_name);
+            $("#to_crr_weight").val(crr_weight);
+            $("#to_crr_price").val(crr_price);
+//            $("#to_crr_is_food").val(crr_is_food);
+            if(crr_is_food == "Food"){
+                $("#isFoodCheckBox").attr("checked", "");
+            }else{
+                $("#isFoodCheckBox").removeAttr("checked");
+            }
+
+
+
+        });
+
+        //Cancel PRODUCT Edit btn
+        $("#cancelBtnProduct").click(function () {
+            $("#editProductBlock").hide();
+            $("#addProductBlock").show();
+        });
+
+
     </script>
 @endsection
