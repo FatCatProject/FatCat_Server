@@ -35,6 +35,9 @@ Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
 Route::get('/deleteVetLog/' , 'VetController@delete');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');
+Route::get('/cat_vet_page_expenses','VetController@yearlyExpenses')
+    ->name('cat_vet_page_expenses')
+    ->middleware('authenticated');
 
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
 Route::get('/shopsPage', 'ShopController@shopsPage')->middleware('authenticated');

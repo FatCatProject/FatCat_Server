@@ -197,4 +197,35 @@ class VetController extends Controller
         }
         return $sum;
     }
+
+    public function yearlyExpenses(Request $request){
+        $year = new \DateTime(
+            empty($request->year) ? null : $request->year."-01-01"
+        );
+        $current_user = Auth::User();
+        $request_cat = $current_user->cats()->find($request->cat_id);
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+
+        $vet_logs_query_data = \DB::table("cats_vet_logs")
+            ->where("cats_vet_logs.user_email", "=", $current_user->email)
+            ->where("cats_vet_logs.cat_name", "=", $request_cat->cat_name)
+            ->whereYear("cats_vet_logs.visit_date", $year->format("Y"))
+            ->groupBy("month")
+            ->selectRaw("MONTH(cats_vet_logs.visit_date) AS month, SUM(cats_vet_logs.price) AS total");
+        $query_data = $vet_logs_query_data->get();
+
+        $response_data = [];
+        for($month = 0; $month < 12; $month++){
+            $response_data[$month] = 0;
+        }
+        foreach($query_data as $row){
+            $response_data[$row->month] += $row->total;
+        }
+        return response()->json($response_data);
+    }
+
 }
+
