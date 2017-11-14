@@ -292,4 +292,28 @@ class ShopController extends Controller
             'newPhone' => $my_shop->phone
         ]);
     }
+    public function updateProduct(Request $request)
+    {
+
+        $my_product =  Auth::User()->products()->where('id', '=',$request->id)->first();
+        if (empty($my_product))
+            return response("product not found", 204);
+        $my_product->product_name = $request->to_crr_name;
+        $my_product->weight = $request->to_crr_weight;
+        $my_product->price = $request->to_crr_price;
+        $my_product->is_food = ($request->isFood == 1);
+//        $my_product->picture = $request->pic;
+        try {
+            $my_product->update();
+        } catch (QueryException $e) {
+            throw $e;
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newName' => $my_product->product_name,
+            'newWeight' => $my_product->weight,
+            'newPrice' => $my_product->price,
+            'newIsFood' => $my_product->is_food
+        ]);
+    }
 }

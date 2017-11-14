@@ -46,6 +46,7 @@ Route::get('/updateShoppingLog',['uses' => 'ShopController@updateShoppingLog'])-
 Route::get('/deleteShop',['uses' => 'ShopController@deleteShop'])->middleware('authenticated');
 Route::get('/deleteProduct',['uses' => 'ShopController@deleteProduct'])->middleware('authenticated');
 Route::get('/updateShop',['uses' => 'ShopController@updateShop'])->middleware('authenticated');
+Route::get('/updateProduct',['uses' => 'ShopController@updateProduct'])->middleware('authenticated');
 
 
 

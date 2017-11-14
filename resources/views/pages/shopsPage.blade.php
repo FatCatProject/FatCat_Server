@@ -131,6 +131,9 @@
 
                 {{--addProductBlock--}}
                 <div id="addProductBlock" class="col-sm-6">
+                    <div id="errors_div_add" class="form-group">
+                        <ul id="errors_ul_add" style="color: red;"></ul>
+                    </div>
                     <h4 class="blank1">Add product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -173,7 +176,7 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-3 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="picture" id="picture" class="filestyle"
+                                        <input type="file" name="picture" id="picture_input_add" class="filestyle"
                                                data-buttonBefore="true" style="margin-top: 6px">
                                     </div>
                                 </div>
@@ -181,7 +184,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addProduct">Add</button>
+                                            <button id="submit_button_add" type="submit" class="btn-success btn" form="addProduct">Add</button>
                                             <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
@@ -193,6 +196,9 @@
                 </div>
                 {{--editProductBlock--}}
                 <div hidden id="editProductBlock" class="col-sm-6">
+                    <div id="errors_div_edit" class="form-group">
+                        <ul id="errors_ul_edit" style="color: red;"></ul>
+                    </div>
                     <h4 class="blank1">Edit product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -238,7 +244,7 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-3 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="picture" id="picture" class="filestyle"
+                                        <input type="file" name="picture" id="picture_input_edit" class="filestyle"
                                                data-buttonBefore="true" style="margin-top: 6px">
                                     </div>
                                 </div>
@@ -246,7 +252,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="">Update</button>
+                                            <button id="updateBtnProduct" type="submit" class="btn-success btn" form="">Update</button>
                                             <button id="cancelBtnProduct" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
@@ -256,7 +262,88 @@
                         </div>
                     </div>
                 </div>
+<script>
 
+    $("#picture_input_add").bind("change", function(event){
+        console.log("--- picture_input_add change ---");
+        if(this.files[0].length < 1){
+            $("#errors_ul_add").children("#file_size_error_li_add").remove();
+            $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+            if(! $("#errors_ul_add").is(":parent")){
+                $("#submit_button_add").removeClass("disabled");
+            }
+            return;
+        }
+        var file_size_bytes = this.files[0].size;
+        var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+        var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+        console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
+
+        if(file_size_bytes > 10485760){
+            $("#submit_button_add").addClass("disabled");
+            $("#errors_ul_add").children("#file_size_error_li_add").remove();
+            $("#errors_ul_add").append(
+                $("<li></li>").attr("id", "file_size_error_li_add").text("File size too large - max 10MB.")
+            );
+        }else{
+            $("#errors_ul_add").children("#file_size_error_li_add").remove();
+        }
+        if($.inArray(file_extension, allowed_file_extensions) == -1){
+            $("#submit_button_add").addClass("disabled");
+            $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+            $("#errors_ul_add").append(
+                $("<li></li>").attr("id", "file_extension_error_li_add").text(
+                    "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+                )
+            );
+        }else{
+            $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+        }
+        if(! $("#errors_ul_add").is(":parent")){
+            $("#submit_button_add").removeClass("disabled");
+        }
+    });
+
+    $("#picture_input_edit").bind("change", function(event){
+        console.log("--- picture_input_edit change ---");
+        if(this.files[0].length < 1){
+            $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+            $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+            if(! $("#errors_ul_edit").is(":parent")){
+                $("#updateBtnProduct").removeClass("disabled");
+            }
+            return;
+        }
+        var file_size_bytes = this.files[0].size;
+        var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+        var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+        console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
+
+        if(file_size_bytes > 10485760){
+            $("#updateBtnProduct").addClass("disabled");
+            $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+            $("#errors_ul_edit").append(
+                $("<li></li>").attr("id", "file_size_error_li_edit").text("File size too large - max 10MB.")
+            );
+        }else{
+            $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+        }
+        if($.inArray(file_extension, allowed_file_extensions) == -1){
+            $("#updateBtnProduct").addClass("disabled");
+            $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+            $("#errors_ul_edit").append(
+                $("<li></li>").attr("id", "file_extension_error_li_edit").text(
+                    "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+                )
+            );
+        }else{
+            $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+        }
+        if(! $("#errors_ul_edit").is(":parent")){
+            $("#updateBtnProduct").removeClass("disabled");
+        }
+    });
+</script>
             </div>
             <!--Table of shops-->
             <div class="tab-content">
@@ -490,6 +577,9 @@
         //Edit Product btn - opens hiden div and populates it
         $(".editBtnProduct").click(function () {
             console.log("HERE")
+
+            $("#errors_ul_edit").empty();
+            $("#updateBtnProduct").removeClass("disabled");
             $("#addProductBlock").hide();
             $("#editProductBlock").show();
 
@@ -577,6 +667,74 @@
             $("#editShopBlock").hide();
             $("#addShopBlock").show();
         });
+
+
+
+        //Update PRODUCT btn
+        $('#updateBtnProduct').on("click", function () {
+            var id = $("#to_productID").val();
+            var to_crr_name = $("#to_crr_name").val();
+            var to_crr_weight = $("#to_crr_weight").val();
+            var to_crr_price = $("#to_crr_price").val();
+            var isFood = 0;
+            if ($("#isFoodCheckBox").prop('checked')){
+                isFood = 1;
+            }
+            var pic = $("#picture_input_edit").prop("files")[0];
+
+            console.log("abc:" + pic);
+            console.log("this is the shop_id in ajax: " + id);
+            console.log("to_crr_name: " + to_crr_name);
+            console.log("to_crr_weight: " + to_crr_weight);
+            console.log("to_crr_price: " + to_crr_price);
+            console.log("isFood: " + isFood);
+
+            $.ajax({
+                type: "GET",
+                url: '/updateProduct',
+                caller: id,
+                data: {
+                    id: id,
+                    to_crr_name: to_crr_name,
+                    to_crr_weight: to_crr_weight,
+                    to_crr_price: to_crr_price,
+                    isFood: isFood,
+                    pic: pic
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log("back newName " + data.newName);
+                    console.log("back newWeight " + data.newWeight);
+                    console.log("back newPrice " + data.newPrice);
+                    console.log("back newIsFood " + data.newIsFood);
+
+
+                    console.log("got back forID" + this.caller);
+                    console.log(  $('#product_row_' + this.caller));
+                    $('#product_row_' + this.caller).find('#crr_name').text(data.newName);
+                    $('#product_row_' + this.caller).find('#crr_weight').text(data.newWeight);
+                    $('#product_row_' + this.caller).find('#crr_price').text(data.newPrice);
+                    if(data.newIsFood == true){
+                        $('#product_row_' + this.caller).find('#crr_is_food').text(data.newIsFood);
+                    }else{
+                        $('#product_row_' + this.caller).find('#crr_is_food').text("");
+                    }
+
+//                    $('#shop_row_' + this.caller).find('#crr_number').text(data.newPhone);
+                    scrollToAnchor('product_row_' + this.caller);
+
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + textStatus);
+                }
+            })
+            $("#editProductBlock").hide();
+            $("#addProductBlock").show();
+        });
+
+
+
+
 
         //Anchor
         function scrollToAnchor(aid){
