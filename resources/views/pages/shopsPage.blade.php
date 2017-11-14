@@ -6,6 +6,7 @@
             <h3 class="blank1">Favorite shops & products:</h3>
             {{--add shop--}}
             <div class="row">
+                {{--addShopBlock--}}
                 <div class="col-sm-6">
                     <h4 class="blank1">Add shop:</h4>
                     <div class="tab-content" style="padding:0px">
@@ -64,7 +65,70 @@
                         </div>
                     </div>
                 </div>
-                {{--add product--}}
+
+                {{--editShopBlock--}}
+                <div hidden class="col-sm-6">
+                    <h4 class="blank1">Edit shop:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal" method="POST" action="addShop" id="addShop">
+                                {!! csrf_field() !!}
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="shop_name" class="form-control1" id="shopName"
+                                               placeholder="" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Url:</label>
+                                    <div class="col-sm-8">
+                                        <input type="url" name="url" class="form-control1" id="shopUrl" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtarea1" class="col-sm-3 control-label">Address:</label>
+                                    <div class="col-sm-8"><textarea name="address" id="shopAddress"
+                                                                    cols="50"
+                                                                    rows="10" class="form-control1"
+                                                                    style="min-height: 30px"></textarea></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="txtarea1" class="col-sm-3 control-label">Opening hours:</label>
+                                    <div class="col-sm-8"><textarea name="hours" id="shopHours"
+                                                                    cols="50"
+                                                                    rows="10" class="form-control1"
+                                                                    style="min-height: 30px"></textarea></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="phone" class="form-control1" id="shopTel"
+                                               pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <button type="submit" class="btn-success btn" form="addShop">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {{--addProductBlock--}}
                 <div class="col-sm-6">
                     <h4 class="blank1">Add product:</h4>
                     <div class="tab-content" style="padding:0px">
@@ -126,6 +190,69 @@
                         </div>
                     </div>
                 </div>
+                {{--editProductBlock--}}
+                <div hidden class="col-sm-6">
+                    <h4 class="blank1">Edit product:</h4>
+                    <div class="tab-content" style="padding:0px">
+                        <div class="tab-pane active" id="horizontal-form">
+                            <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="addProduct" id="addProduct">
+                                {!! csrf_field() !!}
+                                <input type="hidden" value="{{csrf_token()}}" name="_token">
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="product_name" class="form-control1" id="itemName"
+                                               placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Weight: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control1" name="weight" id="itemWeight"
+                                               step="any" min="0"
+                                               placeholder="Enter weight in Kg" required>
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">Kg</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="focusedinput" class="col-sm-3 control-label">Price: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control1" name="price" id="itemPrice"
+                                               step="any" min="0"
+                                               placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkbox" class="col-sm-3 control-label">Food product?</label>
+                                    <div class="col-sm-8">
+                                        <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                   name="is_food">Yes</label></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePicture" class="col-sm-3 control-label">Picture:</label>
+                                    <div class="col-sm-8">
+                                        <input type="file" name="picture" id="picture" class="filestyle"
+                                               data-buttonBefore="true" style="margin-top: 6px">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <button type="submit" class="btn-success btn" form="addProduct">Add</button>
+                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!--Table of shops-->
             <div class="tab-content">
@@ -149,8 +276,9 @@
                         @for($index=0;$index<10 && count($shops)>0;$index++)
                             @if(empty($shops[$index]))
                             @else
-                                <tr id="{!! $index !!}">
+                                <tr id="shop_row_{!! $shops[$index]->id !!}">
                                     {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
+                                    <input id="shopID" type="hidden" value="{!! $shops[$index]->id !!}">
                                     <td class="editableColumns">{!! $shops[$index]->shop_name !!}</td>
                                     <td class="editableColumns"><a href="{!! $shops[$index]->url !!}"
                                                                    target="_blank">{!! $shops[$index]->url !!}</a>
@@ -159,10 +287,13 @@
                                     <td class="editableColumns">{!! $shops[$index]->hours !!}</td>
                                     <td class="editableColumns">{!! $shops[$index]->phone !!}</td>
                                     <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
-                                                                                 onclick=""></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                        <ul id="btnsShop" class="nav nav-pills">
+                                            <li class="editBtnShop"><a href="#EditShop"><i class="lnr lnr-pencil editValues"
+                                                                                   onclick=""></i></a></li>
+                                            <li class="deleteBtnShop" id="shop_del_id_{!! $shops[$index]->id !!}"
+                                                value="{!! $shops[$index]->shop_name !!}">
+                                                <a><i class="lnr lnr-trash"></i></a>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -230,10 +361,13 @@
                                     @endif
                                     <td class="editableColumns">{!! $products[$i]->price !!}</td>
                                     <td>
-                                        <ul class="nav nav-pills">
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-pencil editValues"
-                                                                                 onclick=""></i></a></li>
-                                            <li class="menu-list"><a href="#"><i class="lnr lnr-trash"></i></a></li>
+                                        <ul id="btns" class="nav nav-pills">
+                                            <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues"
+                                                                                   onclick=""></i></a></li>
+                                            <li class="deleteBtn" id="del_id_}"
+                                                value="">
+                                                <a><i class="lnr lnr-trash"></i></a>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -267,13 +401,28 @@
 
 
     <script>
-        $('.editValues').click(function () {
-            $(this).parents('tr').find('td.editableColumns').each(function () {
-                var html = $(this).text();
-                var input = $('<input class="editableColumnsStyle" type="text" />');
-                input.val(html);
-                $(this).html(input);
-            });
-        });
+        //Delete table row
+        $('.deleteBtnShop').on("click", shop_delete_table_row_func);
+
+        function shop_delete_table_row_func() {
+            var id = $(this).parent().parent().parent().find('#shopID').val();
+            console.log("shopID id is" + id);
+            $.ajax({
+                type: "GET",
+                url: '/deleteShop',
+                caller: id,
+                data: {
+                    id: id,
+                },
+                success: function (data, status, jqXHR) {
+                    console.log("llll:" + data.id);
+                    $("#shop_row_" + this.caller).remove();
+                },
+                fail: function (jqXHR, status, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + status);
+                }
+            })
+        }
     </script>
 @endsection

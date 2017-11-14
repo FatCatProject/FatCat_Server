@@ -245,4 +245,15 @@ class ShopController extends Controller
             'newPrice' => $my_shop_log->price
         ]);
     }
+    public function deleteShop(Request $request)
+    {
+        $shop =  Auth::User()->shops()->where('id', '=',$request->id);
+
+        if (empty($shop)) {
+            return response()->json("no shop found");
+        } else {
+            $shop->delete();
+            return response()->json($request->id);
+        }
+    }
 }
