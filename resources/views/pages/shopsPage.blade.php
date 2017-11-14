@@ -714,7 +714,7 @@
                     $('#product_row_' + this.caller).find('#crr_weight').text(data.newWeight);
                     $('#product_row_' + this.caller).find('#crr_price').text(data.newPrice);
                     if(data.newIsFood == true){
-                        $('#product_row_' + this.caller).find('#crr_is_food').text(data.newIsFood);
+                        $('#product_row_' + this.caller).find('#crr_is_food').text("Food");
                     }else{
                         $('#product_row_' + this.caller).find('#crr_is_food').text("");
                     }
