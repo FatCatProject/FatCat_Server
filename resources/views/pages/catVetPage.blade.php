@@ -7,6 +7,11 @@
             <div class="row">
                 {{--addVetLogBlock--}}
                 <div id="addVetLogBlock" class="col-sm-7">
+
+                    <div id="errors_div_add" class="form-group">
+                        <ul id="errors_ul_add" style="color: red;"></ul>
+                    </div>
+
                     <h4 class="blank1">Add new vet log:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -55,9 +60,13 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="prescription_picture" id="prescription_picture"
-                                               class="filestyle"
-                                               style="margin-top: 6px">
+                                        <input
+                                            class="filestyle"
+                                            id="prescription_picture_input_add"
+                                            name="prescription_picture"
+                                            style="margin-top: 6px"
+                                            type="file"
+                                        />
                                     </div>
 
                                 </div>
@@ -72,7 +81,14 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addvetlog">Add</button>
+                                            <button
+                                                class="btn-success btn"
+                                                form="addvetlog"
+                                                id="submit_button_add"
+                                                type="submit"
+                                            >
+                                                Add
+                                            </button>
                                             <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
@@ -84,6 +100,11 @@
                 </div>
                 {{--editVetLogBlock--}}
                 <div hidden id="editVetLogBlock" class="col-sm-7">
+
+                    <div id="errors_div_edit" class="form-group">
+                        <ul id="errors_ul_edit" style="color: red;"></ul>
+                    </div>
+
                     <h4 class="blank1">Edit vet log:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -134,9 +155,12 @@
                                 <div class="form-group">
                                     <label for="profilePicture" class="col-sm-2 control-label">Picture:</label>
                                     <div class="col-sm-8">
-                                        <input type="file" name="to_pic" id="to_pic"
-                                               class="filestyle"
-                                               style="margin-top: 6px">
+                                        <input
+                                            type="file"
+                                            name="to_pic"
+                                            id="to_pic"
+                                            class="filestyle"
+                                            style="margin-top: 6px">
                                     </div>
 
                                 </div>
@@ -152,7 +176,14 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
-                                            <button id="updateBtn" type="submit" class="btn-success btn" form="update">Update</button>
+                                            <button
+                                                class="btn-success btn"
+                                                form="update"
+                                                id="updateBtn"
+                                                type="submit"
+                                            >
+                                                Update
+                                            </button>
                                             <button id="cancelEditVetLog" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
@@ -162,7 +193,86 @@
                         </div>
                     </div>
                 </div>
+<script>
+$("#prescription_picture_input_add").bind("change", function(event){
+    console.log("--- prescription_picture_input_add change ---");
+    if(this.files[0].length < 1){
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+            if(! $("#errors_ul_add").is(":parent")){
+                $("#submit_button_add").removeClass("disabled");
+            }
+            return;
+    }
+    var file_size_bytes = this.files[0].size;
+    var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+    var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+    console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
 
+    if(file_size_bytes > 10485760){
+        $("#submit_button_add").addClass("disabled");
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+        $("#errors_ul_add").append(
+            $("<li></li>").attr("id", "file_size_error_li_add").text("File size too large - max 10MB.")
+        );
+    }else{
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+    }
+    if($.inArray(file_extension, allowed_file_extensions) == -1){
+        $("#submit_button_add").addClass("disabled");
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+        $("#errors_ul_add").append(
+            $("<li></li>").attr("id", "file_extension_error_li_add").text(
+                "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+            )
+        );
+    }else{
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+    }
+    if(! $("#errors_ul_add").is(":parent")){
+        $("#submit_button_add").removeClass("disabled");
+    }
+});
+$("#to_pic").bind("change", function(event){
+    console.log("--- to_pic change ---");
+    if(this.files[0].length < 1){
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+            if(! $("#errors_ul_edit").is(":parent")){
+                $("#updateBtn").removeClass("disabled");
+            }
+            return;
+    }
+    var file_size_bytes = this.files[0].size;
+    var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+    var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+    console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
+
+    if(file_size_bytes > 10485760){
+        $("#updateBtn").addClass("disabled");
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+        $("#errors_ul_edit").append(
+            $("<li></li>").attr("id", "file_size_error_li_edit").text("File size too large - max 10MB.")
+        );
+    }else{
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+    }
+    if($.inArray(file_extension, allowed_file_extensions) == -1){
+        $("#updateBtn").addClass("disabled");
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+        $("#errors_ul_edit").append(
+            $("<li></li>").attr("id", "file_extension_error_li_edit").text(
+                "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+            )
+        );
+    }else{
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+    }
+    if(! $("#errors_ul_edit").is(":parent")){
+        $("#updateBtn").removeClass("disabled");
+    }
+});
+</script>
                 <!-- Stats-->
                 <div class="col-sm-4" style="min-width:500px;">
                     <div class="tab-content">
@@ -331,6 +441,9 @@
                 var crr_price = $(this).parent().parent().parent().find('#crr_price').text();
                 console.log("crr_price:" + crr_price);
 
+
+                $("#errors_ul_edit").empty();
+                $("#updateBtn").removeClass("disabled");
                 $("#addVetLogBlock").hide();
                 $("#editVetLogBlock").show();
                 $("#to_logID").val(id);
