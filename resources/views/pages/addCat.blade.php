@@ -65,8 +65,9 @@
                                     </table>
                                         <div class="row" style="float: right;">
                                                 <ul class="nav nav-pills">
-                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="pencil">
-                                                        <a href="{{ URL::route('catPage',$allMyCats[$index]['id']). '#editCat' }}">
+                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="pencil editBtn" name="editBtn">
+                                                        {{--<a href="{{ URL::route('catPage',$allMyCats[$index]['id']). '#editCat' }}">--}}
+                                                        <a href="/catPage/{!! $allMyCats[$index]['id']!!}">
                                                             <i class="lnr lnr-pencil editValues" onclick=""></i>
                                                         </a></li>
                                                 </ul>
@@ -87,10 +88,11 @@
 
                 </div>
             </div>
-            <div class="row" style="margin: 25px">
+            <div id="EditCat" class="row" style="margin: 25px">
                 {{--spacing div please don't remove //Natalie--}}
             </div>
             <hr>
+            <div id=""></div>
             @include("layouts.catFields")
 
             <div class="row" style="margin: 25px">
@@ -102,6 +104,21 @@
     <script>
 
 
+        $(document).ready(function () {
+            if( window.location.toString().includes("cat_id=")){
+                $('#title').html('Edit Information:');
+                setTimeout(function() {
+                    scrollToAnchor('EditCat');
+                }, 500);
+            }
 
+
+        });
+
+        //Anchor
+        function scrollToAnchor(aid){
+            var aTag = $('#'+ aid);
+            $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
+        }
     </script>
 @endsection
