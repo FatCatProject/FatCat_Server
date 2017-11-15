@@ -370,7 +370,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($index=0;$index<10 && count($shops)>0;$index++)
+                        @for($index=0;$index<count($shops);$index++)
                             @if(empty($shops[$index]))
                             @else
                                 <tr id="shop_row_{!! $shops[$index]->id !!}">
@@ -422,7 +422,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i=0;$i<10 && count($products)>0;$i++)
+                        @for($i=0;$i<count($products);$i++)
                             @if(empty($products[$i]))
                             @else
                                 <tr id="product_row_{!! $products[$i]->id !!}">
