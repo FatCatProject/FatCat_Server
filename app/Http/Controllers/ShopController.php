@@ -306,7 +306,6 @@ class ShopController extends Controller
         try {
             $my_product->update();
         } catch (QueryException $e) {
-            throw $e;
             return response("Update failed", 500);
         }
         return response()->json([

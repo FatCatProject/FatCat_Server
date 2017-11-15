@@ -680,9 +680,14 @@
             if ($("#isFoodCheckBox").prop('checked')){
                 isFood = 1;
             }
-            var pic = $("#picture_input_edit").prop("files")[0];
 
-            console.log("abc:" + pic);
+//            var myFile = $("#picture_input_edit").prop("files")[0];
+//            fr = new FileReader();
+//            fr.readAsDataURL(myFile);
+//            console.log("myFile" + JSON.stringify(myFile));
+//            var pic = btoa($("#picture_input_edit").prop("files")[0]); //sends a name of the pic and not the pic itself!
+
+   
             console.log("this is the shop_id in ajax: " + id);
             console.log("to_crr_name: " + to_crr_name);
             console.log("to_crr_weight: " + to_crr_weight);
@@ -698,8 +703,8 @@
                     to_crr_name: to_crr_name,
                     to_crr_weight: to_crr_weight,
                     to_crr_price: to_crr_price,
-                    isFood: isFood,
-                    pic: pic
+                    isFood: isFood
+//                    pic: pic
                 },
                 success: function (data, textStatus, jqXHR) {
                     console.log("back newName " + data.newName);
