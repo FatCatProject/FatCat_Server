@@ -17,7 +17,7 @@ use carboon;
 
 class CatController extends Controller
 {
-    public function addCat()
+    public function addCat(Request $request)
     {
         $breeds = DB::table('cat_breeds')->pluck('breed_name');
         $current_user = Auth::User();
@@ -44,7 +44,8 @@ class CatController extends Controller
                 $cat_profile_pictures[$cat->cat_name] = $default_profile_picture;
             }
         }
-        return view('pages.addCat', compact('breeds'), compact('numberOfRows'))->with('allMyCats', $allMyCats)->with('cat_profile_pictures', $cat_profile_pictures);
+        $current_cat = Cat::find($request->cat_id);
+        return view('pages.addCat', compact('breeds'), compact('numberOfRows'))->with('allMyCats', $allMyCats)->with('cat_profile_pictures', $cat_profile_pictures)->with('cat', $current_cat);
     }
 
     public function breedInfo(Request $request)
@@ -261,7 +262,7 @@ class CatController extends Controller
             ).".".$request->profile_picture->getClientOriginalExtension();
         }
 
-        if (!empty($cat->profile_picture)){
+        if (!empty($request->profile_picture)){
             Storage::disk("user_pictures")->putFileAs(
                 str_replace(["@", "."], "_", $current_user->email),
                 $request->profile_picture,
@@ -269,7 +270,9 @@ class CatController extends Controller
             );
         }
         $cat->update();
+//        return redirect()->action("CatController@catPage", ["id" => $cat->id]);
         return redirect()->back();
+
     }
 
     public function allReportsByID($id)

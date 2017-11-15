@@ -446,7 +446,7 @@ $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
         </div>
         {{--<div id="editCat" class="editCat"></div>--}}
         <!--Edit Cat information-->
-        <div class="row">
+        <div id="EditCat" class="row">
             <div class="col-md-12">
                 <div class="banner-bottom-video-grid-left">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -494,6 +494,22 @@ $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
 
         <br/><br/><br/><br/>
 
+        <script>
+            $(document).ready(function() {
+                var referrer =  document.referrer;
+                if (referrer.indexOf("addCat") > -1) {
+                    $("#collapseThree").removeClass("collapse");
+                    setTimeout(function() {
+                        scrollToAnchor('EditCat');
+                    }, 1500);
+                }
 
+            });
+            //Anchor
+            function scrollToAnchor(aid){
+                var aTag = $('#'+ aid);
+                $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+            }
+        </script>
 @endsection
 
