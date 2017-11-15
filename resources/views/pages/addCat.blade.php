@@ -51,11 +51,11 @@
                                         </tr>
                                         <tr>
                                             <td>Current weight:</td>
-                                            <td>{!! $allMyCats[$index]['current_weight'] !!}</td>
+                                            <td>{!! $allMyCats[$index]['current_weight'] !!} Kg</td>
                                         </tr>
                                         <tr>
                                             <td>Target weight:</td>
-                                            <td>{!! $allMyCats[$index]['target_weight'] !!}</td>
+                                            <td>{!! $allMyCats[$index]['target_weight'] !!} Kg</td>
                                         </tr>
                                         <tr>
                                             <td>Daily calories:</td>

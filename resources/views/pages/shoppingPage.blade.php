@@ -45,6 +45,9 @@
                                                class="form-control1 input-sm"
                                                id="vetLogPrice" placeholder="" required>
                                     </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">USD</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -100,6 +103,9 @@
                                         <input type="number" name="to_price" step="any" min="0" max="10000"
                                                class="form-control1 input-sm"
                                                id="to_price" placeholder="">
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">USD</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -166,7 +172,7 @@
 
                                 </div>
                                 <div class="row" style="margin-left: 15px">
-                                    <h3 style="color: #999;">Total amout:{!! $totalExpenses !!}</h3>
+                                    <h3 style="color: #999;">Total amout:&nbsp;{!! $totalExpenses !!} USD</h3>
                                 </div>
 
                             </div>
@@ -217,7 +223,7 @@
                                     <input id="logID" type="hidden" value="{!! $shoppingLogs[$index]->id !!}">
                                     <td id="crr_date"> {!! $shoppingLogs[$index]->shopping_date !!} </td>
                                     <td id="crr_desc"> {!! $shoppingLogs[$index]->description !!} </td>
-                                    <td id="crr_price"> {!! $shoppingLogs[$index]->price !!} </td>
+                                    <td id="crr_price"> {!! $shoppingLogs[$index]->price !!} USD</td>
                                     <td>
                                         <ul id="btns" class="nav nav-pills">
                                             <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues"
@@ -340,7 +346,7 @@
                     console.log(  $('#row_' + this.caller));
                     $('#row_' + this.caller).find('#crr_date').text(data.newDate);
                     $('#row_' + this.caller).find('#crr_desc').text(data.newDesc);
-                    $('#row_' + this.caller).find('#crr_price').text(data.newPrice);
+                    $('#row_' + this.caller).find('#crr_price').text(data.newPrice).append(" USD");
                     scrollToAnchor('row_' + this.caller);
 
                 },

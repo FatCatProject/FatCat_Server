@@ -366,7 +366,7 @@ function table_rows(data){
                 $("<td></td>").text(row.open_time),
                 $("<td></td>").text(row.close_time),
                 $("<td></td>").text(diff_minutes + " minutes, " + diff_seconds + " seconds"),
-                $("<td></td>").text((row.start_weight - row.end_weight).toFixed(1)),
+                $("<td></td>").text((row.start_weight - row.end_weight).toFixed(1)).append("&nbsp; &nbsp; Gram"),
             )
         );
     }
