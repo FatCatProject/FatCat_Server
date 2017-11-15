@@ -522,7 +522,9 @@ class CatController extends Controller
             $numberOfRows = intval(count($boxes)) / 3;
         $foodbox_data = [];
         foreach($user->foodboxes as $foodbox) {
-            @$foodbox_cat = $foodbox->cards()->where("active", "=", 1)->first()->cat;
+
+            $foodbox_cat = $foodbox->cards()->where("active", "=", 1)->first()->cat ?? (object)["cat_name" => "No active card"];
+
             $foodbox_cat_profile_picture = "/images/default_cat.png";
             if (!empty($foodbox_cat->profile_picture)) {
                 $profile_picture_path = str_replace(["@", "."], "_", $user->email) . "/" . $foodbox_cat->profile_picture;

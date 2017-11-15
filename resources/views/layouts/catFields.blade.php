@@ -230,11 +230,14 @@ $("#breed").on("change", function () {
                         max="100"
                         min="0"
                         name="current_weight"
-                        placeholder=""
+                        placeholder="Enter weight in Kg"
                         step="any"
                         type="number"
                         value="{!! !empty($cat->current_weight) ? $cat->current_weight : '' !!}"
                     >
+                </div>
+                <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                    <p class="help-block">Kg</p>
                 </div>
             </div>
 
@@ -246,11 +249,14 @@ $("#breed").on("change", function () {
                         max="100"
                         min="0"
                         name="target_weight"
-                        placeholder=""
+                        placeholder="Enter weight in Kg"
                         step="any"
                         type="number"
                         value="{!! !empty($cat->target_weight) ? $cat->target_weight : '' !!}"
                     >
+                </div>
+                <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                    <p class="help-block">Kg</p>
                 </div>
             </div>
 
@@ -277,7 +283,7 @@ $("#breed").on("change", function () {
                             max="5000"
                             min="1"
                             name="food_allowance"
-                            placeholder=""
+                            placeholder="Enter weight in Grams"
                             step="any"
                             type="number"
                             value="{!! !empty($cat->food_allowance) ? $cat->food_allowance : '' !!}"

@@ -165,6 +165,9 @@
                                                step="any" min="0"
                                                placeholder="" required>
                                     </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">USD</p>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="checkbox" class="col-sm-3 control-label">Food product?</label>
@@ -230,6 +233,9 @@
                                         <input type="number" class="form-control1" name="price" id="to_crr_price"
                                                step="any" min="0"
                                                placeholder="" required>
+                                    </div>
+                                    <div class="col-sm-1" style="padding: 0px; margin: 20px 0 0 -10px">
+                                        <p class="help-block">USD</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -422,7 +428,7 @@
                                 <tr id="product_row_{!! $products[$i]->id !!}">
                                     <input id="productID" type="hidden" value="{!! $products[$i]->id !!}">
                                     <td id="crr_name" class="">{!! $products[$i]->product_name !!}</td>
-                                    <td id="crr_weight" class="">{!! $products[$i]->weight !!}</td>
+                                    <td id="crr_weight" class="">{!! $products[$i]->weight !!} Kg</td>
                                     @if($products[$i]->is_food == 1)
                                         <td id="crr_is_food" class="" value="1">Food</td>
                                     @else
@@ -438,7 +444,7 @@
                                                     align="center"
                                             ></td>
                                     @endif
-                                    <td id="crr_price" class="">{!! $products[$i]->price !!}</td>
+                                    <td id="crr_price" class="">{!! $products[$i]->price !!} USD</td>
                                     <td>
                                         <ul id="btns" class="nav nav-pills">
                                             <li class="editBtnProduct"><a href="#Edit"><i class="lnr lnr-pencil editValues"
@@ -560,9 +566,9 @@
             console.log("id:" + id);
             var crr_name = $(this).parent().parent().parent().find('#crr_name').text();
             console.log("crr_name:" + crr_name);
-            var crr_weight = $(this).parent().parent().parent().find('#crr_weight').text();
+            var crr_weight = $(this).parent().parent().parent().find('#crr_weight').text().split(" ")[0];
             console.log("crr_weight:" + crr_weight);
-            var crr_price = $(this).parent().parent().parent().find('#crr_price').text();
+            var crr_price = $(this).parent().parent().parent().find('#crr_price').text().split(" ")[0];
             console.log("crr_price:" + crr_price);
             var crr_is_food = $(this).parent().parent().parent().find('#crr_is_food').text();
             console.log("crr_is_food:" + crr_is_food);
@@ -689,8 +695,8 @@
                     console.log("got back forID" + this.caller);
                     console.log(  $('#product_row_' + this.caller));
                     $('#product_row_' + this.caller).find('#crr_name').text(data.newName);
-                    $('#product_row_' + this.caller).find('#crr_weight').text(data.newWeight);
-                    $('#product_row_' + this.caller).find('#crr_price').text(data.newPrice);
+                    $('#product_row_' + this.caller).find('#crr_weight').text(data.newWeight).append(" Kg");
+                    $('#product_row_' + this.caller).find('#crr_price').text(data.newPrice).append(" USD");
                     if(data.newIsFood == true){
                         $('#product_row_' + this.caller).find('#crr_is_food').text("Food");
                     }else{

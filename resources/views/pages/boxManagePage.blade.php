@@ -47,7 +47,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Current food amount:</td>
-                                                        <td>{!! $foodbox_data[$index]['current_weight']!!}</td>
+                                                        <td>{!! $foodbox_data[$index]['current_weight']!!} gram</td>
                                                     </tr>
                                                     </tr>
                                                     <tr>
