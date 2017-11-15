@@ -35,7 +35,7 @@
                                         </tr>
                                         <tr>
                                             <td>Breed:</td>
-                                            <td>{!! $allMyCats[$index]['cat_breed'] !!}</td>
+                                            <td>{!! @str_replace('_', ' ', str_replace('_cat', '', $allMyCats[$index]['cat_breed'])) !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Wiki page:</td>
