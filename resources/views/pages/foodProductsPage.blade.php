@@ -123,7 +123,7 @@
                                         >
                                             Edit Product
                                         </button>
-                                        <button id="cancelEditFoodProductBtn" type="reset" class="btn-inverse btn">Cancel</button>
+                                        <button id="cancelEditFoodProductBtn" class="btn-inverse btn">Cancel</button>
                                     </div>
                                 </div>
                             </form>
@@ -209,6 +209,10 @@ $("#picture_input_edit").bind("change", function(event){
     if(! $("#errors_ul_edit").is(":parent")){
         $("#submit_button_edit").removeClass("disabled");
     }
+});
+$("button[type='reset']").on("click", function(){
+    $("#errors_ul_add").empty();
+    $("#submit_button_add").removeClass("disabled");
 });
 </script>
                 <div class="col-sm-5" style="padding: 20px">
