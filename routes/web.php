@@ -43,6 +43,11 @@ Route::post('/addShop',['uses' => 'ShopController@storeShop'])->middleware('auth
 Route::post('/addShopping',['uses' => 'ShopController@storeShopLog'])->middleware('authenticated');
 Route::get('/deleteShoppingLog',['uses' => 'ShopController@deleteShoppingLog'])->middleware('authenticated');
 Route::get('/updateShoppingLog',['uses' => 'ShopController@updateShoppingLog'])->middleware('authenticated');
+Route::get('/deleteShop',['uses' => 'ShopController@deleteShop'])->middleware('authenticated');
+Route::get('/deleteProduct',['uses' => 'ShopController@deleteProduct'])->middleware('authenticated');
+Route::get('/updateShop',['uses' => 'ShopController@updateShop'])->middleware('authenticated');
+Route::get('/updateProduct',['uses' => 'ShopController@updateProduct'])->middleware('authenticated');
+
 
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');

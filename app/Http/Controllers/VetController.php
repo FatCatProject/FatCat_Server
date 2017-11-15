@@ -152,20 +152,20 @@ class VetController extends Controller
     }
 
     public function delete(Request $request)
-    {
-        $current_user = Auth::User();
-        $cat_vet_log = CatVetLog::find($request->id);
-        $picture_path = str_replace(["@", "."], "_", $current_user->email);
-        if (empty($cat_vet_log)) {
-            return response()->json("failed");
-        } else {
-            if ($cat_vet_log->prescription_picture != null) {
-                Storage::disk("user_pictures")->delete($picture_path . "/" . $cat_vet_log->prescription_picture);
-            }
-            $cat_vet_log->delete();
-            return response()->json($request->id);
+{
+    $current_user = Auth::User();
+    $cat_vet_log = CatVetLog::find($request->id);
+    $picture_path = str_replace(["@", "."], "_", $current_user->email);
+    if (empty($cat_vet_log)) {
+        return response()->json("failed");
+    } else {
+        if ($cat_vet_log->prescription_picture != null) {
+            Storage::disk("user_pictures")->delete($picture_path . "/" . $cat_vet_log->prescription_picture);
         }
+        $cat_vet_log->delete();
+        return response()->json($request->id);
     }
+}
 
     public function yearlyVetLogs($year, $name, $user_email)
     {

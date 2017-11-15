@@ -245,4 +245,74 @@ class ShopController extends Controller
             'newPrice' => $my_shop_log->price
         ]);
     }
+    public function deleteShop(Request $request)
+    {
+        $shop =  Auth::User()->shops()->where('id', '=',$request->id);
+
+        if (empty($shop)) {
+            return response()->json("no shop found");
+        } else {
+            $shop->delete();
+            return response()->json($request->id);
+        }
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        $product =  Auth::User()->products()->where('id', '=',$request->id);
+
+        if (empty($product)) {
+            return response()->json("no product found");
+        } else {
+            $product->delete();
+            return response()->json($request->id);
+        }
+    }
+    public function updateShop(Request $request)
+    {
+
+        $my_shop =  Auth::User()->shops()->where('id', '=',$request->id)->first();
+        if (empty($my_shop))
+            return response("shop not found", 204);
+        $my_shop->shop_name = $request->to_crr_shop_name;
+        $my_shop->url = $request->to_crr_url;
+        $my_shop->address = $request->to_crr_address;
+        $my_shop->hours = $request->to_crr_open_hours;
+        $my_shop->phone = $request->to_crr_number;
+        try {
+            $my_shop->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newName' => $my_shop->shop_name,
+            'newUrl' => $my_shop->url,
+            'newAddress' => $my_shop->address,
+            'newHours' => $my_shop->hours,
+            'newPhone' => $my_shop->phone
+        ]);
+    }
+    public function updateProduct(Request $request)
+    {
+
+        $my_product =  Auth::User()->products()->where('id', '=',$request->id)->first();
+        if (empty($my_product))
+            return response("product not found", 204);
+        $my_product->product_name = $request->to_crr_name;
+        $my_product->weight = $request->to_crr_weight;
+        $my_product->price = $request->to_crr_price;
+        $my_product->is_food = ($request->isFood == 1);
+//        $my_product->picture = $request->pic;
+        try {
+            $my_product->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newName' => $my_product->product_name,
+            'newWeight' => $my_product->weight,
+            'newPrice' => $my_product->price,
+            'newIsFood' => $my_product->is_food
+        ]);
+    }
 }
