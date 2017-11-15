@@ -188,7 +188,7 @@
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
                                             <button id="submit_button_add" type="submit" class="btn-success btn" form="addProduct">Add</button>
-                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                            <button id="product_reset_button" type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -349,6 +349,10 @@
             $("#updateBtnProduct").removeClass("disabled");
         }
     });
+$("#product_reset_button").on("click", function(){
+    $("#errors_ul_add").empty();
+    $("#submit_button_add").removeClass("disabled");
+});
 </script>
             </div>
             <!--Table of shops-->
@@ -370,7 +374,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($index=0;$index<10 && count($shops)>0;$index++)
+                        @for($index=0;$index<count($shops);$index++)
                             @if(empty($shops[$index]))
                             @else
                                 <tr id="shop_row_{!! $shops[$index]->id !!}">
@@ -422,7 +426,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i=0;$i<10 && count($products)>0;$i++)
+                        @for($i=0;$i<count($products);$i++)
                             @if(empty($products[$i]))
                             @else
                                 <tr id="product_row_{!! $products[$i]->id !!}">

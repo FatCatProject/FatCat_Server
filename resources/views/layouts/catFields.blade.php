@@ -399,6 +399,10 @@ $("#breed").on("change", function () {
             $("#submit_button").removeClass("disabled");
         }
     });
+$("button[type='reset']").on("click", function(){
+    $("#errors_ul").empty();
+    $("#submit_button").removeClass("disabled");
+});
 </script>
     </div>
 </div>
