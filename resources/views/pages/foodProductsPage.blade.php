@@ -7,6 +7,11 @@
             <div class="row">
                 {{--Add Product Block--}}
                 <div id="addProductBlock" class="col-sm-6">
+
+                    <div id="errors_div_add" class="form-group">
+                        <ul id="errors_ul_add" style="color: red;"></ul>
+                    </div>
+
                     <h4 class="blank1">Add new food product that will be used in the food boxes:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -35,19 +40,31 @@
                                     </div>
                                     {{--Product picture--}}
                                     <div class="form-group">
-                                        <label for="profilePicture" class="col-sm-3 control-label">Product
+                                        <label for="picture_add_input" class="col-sm-3 control-label">Product
                                             picture:</label>
                                         <div class="col-sm-9">
-                                            <input type="file" name="picture" id="picture"
-                                                   class="filestyle"
-                                                   data-buttonBefore="true" style="margin-top: 6px">
+                                            <input
+                                                class="filestyle"
+                                                data-buttonBefore="true"
+                                                id="picture_input_add"
+                                                name="picture"
+                                                style="margin-top: 6px"
+                                                type="file"
+                                            />
                                             {{--<p class="help-block">Example block-level help text here.</p>--}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button type="submit" class="btn-success btn" form="addFoodForm">Add Product</button>
+                                        <button
+                                            class="btn-success btn"
+                                            form="addFoodForm"
+                                            id="submit_button_add"
+                                            type="submit"
+                                        >
+                                            Add Product
+                                        </button>
                                         <button type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
                                 </div>
@@ -57,6 +74,11 @@
                 </div>
 {{--Edit Product Block--}}
                 <div hidden id="editProductBlock" class="col-sm-6">
+
+                    <div id="errors_div_edit" class="form-group">
+                        <ul id="errors_ul_edit" style="color: red;"></ul>
+                    </div>
+
                     <h4 class="blank1">Edit product:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
@@ -79,16 +101,28 @@
                                         <label for="profilePicture" class="col-sm-3 control-label">Product
                                             picture:</label>
                                         <div class="col-sm-9">
-                                            <input type="file" name="profile_picture" id="food_profilePicture_to_edit"
-                                                   class="filestyle"
-                                                   data-buttonBefore="true" style="margin-top: 6px">
+                                            <input
+                                                id="picture_input_edit"
+                                                name="profile_picture"
+                                                type="file"
+                                               class="filestyle"
+                                               data-buttonBefore="true"
+                                               style="margin-top: 6px"
+                                            />
                                             {{--<p class="help-block">Example block-level help text here.</p>--}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button id="editFoodProductBtn" type="submit" class="btn-success btn" form="editFoodForm">Edit Product</button>
+                                        <button
+                                            class="btn-success btn"
+                                            form="editFoodForm"
+                                            id="submit_button_edit"
+                                            type="submit"
+                                        >
+                                            Edit Product
+                                        </button>
                                         <button id="cancelEditFoodProductBtn" type="reset" class="btn-inverse btn">Cancel</button>
                                     </div>
                                 </div>
@@ -97,7 +131,86 @@
                     </div>
                 </div>
                 {{--End Edit Product Block--}}
+<script>
+$("#picture_input_add").bind("change", function(event){
+    console.log("--- _picture_input_add change ---");
+    if(this.files[0].length < 1){
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+            if(! $("#errors_ul_add").is(":parent")){
+                $("#submit_button_add").removeClass("disabled");
+            }
+            return;
+    }
+    var file_size_bytes = this.files[0].size;
+    var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+    var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+    console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
 
+    if(file_size_bytes > 10485760){
+        $("#submit_button_add").addClass("disabled");
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+        $("#errors_ul_add").append(
+            $("<li></li>").attr("id", "file_size_error_li_add").text("File size too large - max 10MB.")
+        );
+    }else{
+        $("#errors_ul_add").children("#file_size_error_li_add").remove();
+    }
+    if($.inArray(file_extension, allowed_file_extensions) == -1){
+        $("#submit_button_add").addClass("disabled");
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+        $("#errors_ul_add").append(
+            $("<li></li>").attr("id", "file_extension_error_li_add").text(
+                "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+            )
+        );
+    }else{
+        $("#errors_ul_add").children("#file_extension_error_li_add").remove();
+    }
+    if(! $("#errors_ul_add").is(":parent")){
+        $("#submit_button_add").removeClass("disabled");
+    }
+});
+$("#picture_input_edit").bind("change", function(event){
+    console.log("--- picture_input_edit change ---");
+    if(this.files[0].length < 1){
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+            if(! $("#errors_ul_edit").is(":parent")){
+                $("#submit_button_edit").removeClass("disabled");
+            }
+            return;
+    }
+    var file_size_bytes = this.files[0].size;
+    var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+    var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+    console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
+
+    if(file_size_bytes > 10485760){
+        $("#submit_button_edit").addClass("disabled");
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+        $("#errors_ul_edit").append(
+            $("<li></li>").attr("id", "file_size_error_li_edit").text("File size too large - max 10MB.")
+        );
+    }else{
+        $("#errors_ul_edit").children("#file_size_error_li_edit").remove();
+    }
+    if($.inArray(file_extension, allowed_file_extensions) == -1){
+        $("#submit_button_edit").addClass("disabled");
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+        $("#errors_ul_edit").append(
+            $("<li></li>").attr("id", "file_extension_error_li_edit").text(
+                "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+            )
+        );
+    }else{
+        $("#errors_ul_edit").children("#file_extension_error_li_edit").remove();
+    }
+    if(! $("#errors_ul_edit").is(":parent")){
+        $("#submit_button_edit").removeClass("disabled");
+    }
+});
+</script>
                 <div class="col-sm-5" style="padding: 20px">
                     <img src="/images/catFood.png" width="100px">
                 </div>
@@ -231,7 +344,8 @@
                 var foodName = $(this).parent().parent().parent().find('#foodName').val();
                 var oldname = $(this).parent().parent().parent().find('#foodName').val();
 
-
+                $("#errors_ul_edit").empty();
+                $("#submit_button_edit").removeClass("disabled");
                 console.log("id is" + id);
                 console.log("name is" +foodName);
                 $("#addProductBlock").hide();

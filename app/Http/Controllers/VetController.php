@@ -83,7 +83,7 @@ class VetController extends Controller
                         ["@", "."],
                         "_",
                         $current_user->email . "_". $vet_log->cat_name ."_" . $vet_log->visit_date
-                    ) . "." . $request->prescription_picture->getClientOriginalExtension();
+                    ) . "-" . rand(100, 10000) . "." . $request->prescription_picture->getClientOriginalExtension();
             }
 
             $vet_log->save();
@@ -132,7 +132,7 @@ class VetController extends Controller
                             ["@", "."],
                             "_",
                             $current_user->email . "_" . $vet_log->cat_name . "_" .$vet_log->visit_date
-                        ) . "." . $request->to_pic->getClientOriginalExtension();
+                        ) . "-" . rand(100, 10000) . "." . $request->to_pic->getClientOriginalExtension();
                 }
                 $vet_log->save();
                 if (!empty($vet_log->prescription_picture)) {
@@ -197,4 +197,99 @@ class VetController extends Controller
         }
         return $sum;
     }
+
+    public function yearlyExpenses(Request $request){
+        $year = new \DateTime(
+            empty($request->year) ? null : $request->year."-01-01"
+        );
+        $current_user = Auth::User();
+        $request_cat = $current_user->cats()->find($request->cat_id);
+
+        if(empty($request_cat)){
+            return response()->json("", 403);
+        }
+
+        $vet_logs_query_data = \DB::table("cats_vet_logs")
+            ->where("cats_vet_logs.user_email", "=", $current_user->email)
+            ->where("cats_vet_logs.cat_name", "=", $request_cat->cat_name)
+            ->whereYear("cats_vet_logs.visit_date", $year->format("Y"))
+            ->groupBy("month")
+            ->selectRaw("MONTH(cats_vet_logs.visit_date) AS month, SUM(cats_vet_logs.price) AS total");
+        $query_data = $vet_logs_query_data->get();
+
+        $response_data = [];
+        for($month = 0; $month < 12; $month++){
+            $response_data[$month] = 0;
+        }
+        foreach($query_data as $row){
+            $response_data[$row->month] += $row->total;
+        }
+        return response()->json($response_data);
+    }
+
+    public function tableLogs(Request $request)
+    {
+        $current_user = Auth::User();
+        $month_date = new DateTime($request->month_date . "-01");
+        $request_cat = $current_user->cats()->find($request->cat_id);
+        $request_page = (!empty($request->page) and ($request->page > 0)) ? $request->page : 1;
+        $request_entries_per_page = ((!empty($request->entries_per_page)) and ($request->entries_per_page > 0)) ?
+            $request->entries_per_page : 10;
+
+        if (empty($request_cat)) {
+            return response()->json("", 403);
+        }
+
+        $response_number_of_pages = ceil((\DB::table("cats_vet_logs")
+                ->where("cats_vet_logs.user_email", "=", $current_user->email)
+                ->where("cats_vet_logs.cat_name", "=", $request_cat->cat_name)
+                ->whereYear("cats_vet_logs.visit_date", $month_date->format("Y"))
+                ->whereMonth("cats_vet_logs.visit_date", $month_date->format("m"))
+                ->count()) / $request_entries_per_page);
+
+        $request_page = $request_page < $response_number_of_pages ? $request_page : $response_number_of_pages;
+
+        $response_cat_vet_logs = \DB::table("cats_vet_logs")
+            ->where("cats_vet_logs.user_email", "=", $current_user->email)
+            ->where("cats_vet_logs.cat_name", "=", $request_cat->cat_name)
+            ->whereYear("cats_vet_logs.visit_date", $month_date->format("Y"))
+            ->whereMonth("cats_vet_logs.visit_date", $month_date->format("m"))
+            ->orderBy("cats_vet_logs.visit_date")
+            ->select(
+                "cats_vet_logs.visit_date", "cats_vet_logs.clinic_name", "cats_vet_logs.subject", "cats_vet_logs.id",
+                "cats_vet_logs.description", "cats_vet_logs.prescription_picture", "cats_vet_logs.price"
+            )
+            ->skip(($request_page - 1) * $request_entries_per_page)
+            ->take($request_entries_per_page)
+            ->get();
+
+        $prescription_pictures = [];
+        foreach($response_cat_vet_logs as $cat_vet_log){
+            if (!empty($cat_vet_log->prescription_picture)) {
+                if (Storage::disk("user_pictures")->exists(
+                    str_replace(["@", "."], "_", $current_user->email) . "/" . $cat_vet_log->prescription_picture
+                )) {
+                    $prescription_pictures[$cat_vet_log->id] = "data:image/png;base64," . base64_encode(
+                            Storage::disk("user_pictures")->get(
+                                str_replace(["@", "."], "_", $current_user->email) . "/" . $cat_vet_log->prescription_picture
+                            )
+                        );
+                } else {
+                    $prescription_pictures[$cat_vet_log->id] = null;
+                }
+            } else {
+                $prescription_pictures[$cat_vet_log->id] = null;
+            }
+        }
+        return response()->json(
+            [
+                "number_of_pages" => strval($response_number_of_pages),
+                "page_number" => strval($request_page),
+                "cat_vet_logs" => $response_cat_vet_logs,
+                "prescription_pictures" => $prescription_pictures
+            ]
+        );
+    }
+
 }
+
