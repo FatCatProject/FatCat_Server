@@ -167,5 +167,27 @@ class CardController extends Controller
             'newActive' => $my_card->active
         ]);
     }
+    public function updateAdminCard(Request $request)
+    {
+
+        $my_card =  Auth::User()->adminCards()->where('card_id', '=',$request->id_old)->first();
+        if (empty($my_card))
+            return response("cat card not found", 204);
+        $my_card->card_id = $request->id_new;
+        $my_card->card_name = $request->to_card_name;
+        $my_card->active = $request->isActive;
+        $my_card->synced_to_brainbox = false;
+
+        try {
+            $my_card->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newCardID' => $my_card->card_id,
+            'newName' => $my_card->card_name,
+            'newActive' => $my_card->active
+        ]);
+    }
 }
 

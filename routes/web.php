@@ -56,6 +56,7 @@ Route::post('/addCard',['uses' => 'CardController@storeCard'])->middleware('auth
 Route::get('/deactivateAdminCard',['uses' => 'CardController@deactivateAdminCard'])->middleware('authenticated');
 Route::get('/deactivateCatCard',['uses' => 'CardController@deactivateCatCard'])->middleware('authenticated');
 Route::get('/updateCatCard',['uses' => 'CardController@updateCatCard'])->middleware('authenticated');
+Route::get('/updateAdminCard',['uses' => 'CardController@updateAdminCard'])->middleware('authenticated');
 
 
 Route::get('/deleteFood/{id}','FoodController@delete')

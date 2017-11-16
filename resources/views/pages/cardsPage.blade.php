@@ -235,6 +235,8 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
+                                        <input type="hidden" id="to_id_old_Admin" value="">
+                                        <input type="hidden" id="from_card_row_Admin" value="">
                                         <label for="focusedinput" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
@@ -270,7 +272,7 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button type="submit" class="btn-success btn" form="adminCardForm">Update Admin
+                                        <button id="updateAdminCardBtn" type="submit" class="btn-success btn" form="adminCardForm">Update Admin
                                             Card
                                         </button>
                                         <button id="cancelBtnAdmin" type="reset" class="btn-inverse btn">Cancel</button>
@@ -468,7 +470,8 @@
             console.log("isAdmins: " + isAdmin);
             var card_row = $(this).parent().parent().parent().find('#cardRow').val()
             console.log("card_row: " + card_row);
-
+            var crr_active = $(this).parent().parent().parent().find('#crr_active').text();
+            console.log("cat card active: " + crr_active);
             // IF ADMIN CARD
             if (isAdmin == "true") {
                 $("#addAdminBlock").hide();
@@ -479,8 +482,15 @@
                 var crr_card_name = $(this).parent().parent().parent().find('#crr_card_name').text();
                 console.log("adminCard name id is: " + crr_card_name);
 
+                $("#to_id_old_Admin").val(crr_id);
                 $("#to_id_Admin").val(crr_id);
                 $("#to_card_name_Admin").val(crr_card_name);
+                $("#from_card_row_Admin").val(card_row);
+                if(crr_active == "Yes"){
+                    $("#to_active_Admin").attr("checked", "");
+                }else{
+                    $("#to_active_Admin").removeAttr("checked");
+                }
 
             }
             // IF CAT CARD
@@ -497,8 +507,7 @@
                 console.log("belongs to: " + crr_belongs_to);
                 var crr_opens = $(this).parent().parent().parent().find('#crr_opens').text();
                 console.log("opens: " + crr_opens);
-                var crr_active = $(this).parent().parent().parent().find('#crr_active').text();
-                console.log("cat card active: " + crr_active);
+
 //
 
                 $("#from_card_row").val(card_row);
@@ -525,14 +534,12 @@
             var to_card_name = $("#to_card_name").val();
             var to_belongs_to = $("#to_belongs_to").val();
             var to_opens = $("#to_opens").val();
-//            var to_active = $("#to_active").val();
-
             var isActive = 0;
             if ($("#to_active").prop('checked')){
                 isActive = 1;
             }
-
             var row = $("#from_card_row").val();
+
             console.log("row: :" + row);
             console.log("cat id_old card: :" + id_old);
             console.log("cat new id:" + id_new);
@@ -583,6 +590,62 @@
             })
             $("#editCardBlock").hide();
             $("#addCardBlock").show();
+        });
+
+
+        //Update ADMIN card btn
+        $('#updateAdminCardBtn').on("click", function () {
+
+            var id_old = $("#to_id_old_Admin").val(); //old card id that wanted to be changes
+            var id_new = $("#to_id_Admin").val(); // ned card id if was changed
+            var to_card_name = $("#to_card_name_Admin").val();
+
+            var isActive = 0;
+            if ($("#to_active_Admin").prop('checked')){
+                isActive = 1;
+            }
+            var row = $("#from_card_row_Admin").val();
+
+            console.log("row: " + row);
+            console.log("Admin id_old card: :" + id_old);
+            console.log("Admin new id:" + id_new);
+            console.log("Admin to_card_name:" + to_card_name);
+            console.log("isActive:" + isActive);
+
+            $.ajax({
+                type: "GET",
+                url: '/updateAdminCard',
+                caller: row,
+                data: {
+                    id_old: id_old,
+                    id_new: id_new,
+                    to_card_name: to_card_name,
+                    isActive: isActive
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log("back newCardID " + data.newCardID);
+                    console.log("back newName " + data.newName);
+                    console.log("got back forID" + this.caller);
+                    console.log($('#card_row_' + this.caller));
+                    $('#card_row_' + this.caller).find('#crr_id').text(data.newCardID);
+                    $('#card_row_' + this.caller).find('#crr_card_name').text(data.newName);
+                    if(data.newActive==0){
+                        $('#card_row_' + this.caller).find('#crr_active').text("No");
+                    }
+                    else {
+                        $('#card_row_' + this.caller).find('#crr_active').text("Yes");
+                    }
+
+                    scrollToAnchor('card_row_' + this.caller);
+
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + textStatus);
+                }
+            })
+            $("#editAdminBlockdBlock").hide();
+            $("#addAdminBlockBlock").show();
         });
 
         //Anchor
