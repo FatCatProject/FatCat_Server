@@ -141,5 +141,31 @@ class CardController extends Controller
             return response()->json($request->card_id);
         }
     }
+    public function updateCatCard(Request $request)
+    {
+
+        $my_card =  Auth::User()->cards()->where('card_id', '=',$request->id_old)->first();
+        if (empty($my_card))
+            return response("cat card not found", 204);
+        $my_card->foodbox_id = $request->to_opens;
+        $my_card->card_id = $request->id_new;
+        $my_card->card_name = $request->to_card_name;
+        $my_card->active = $request->isActive;
+        $my_card->synced_to_brainbox = false;
+        $my_card->cat_id = $request->to_belongs_to;
+
+        try {
+            $my_card->update();
+        } catch (QueryException $e) {
+            return response("Update failed", 500);
+        }
+        return response()->json([
+            'newCardID' => $my_card->card_id,
+            'newName' => $my_card->card_name,
+            'newBelongsTo' => $my_card->cat_id,
+            'newOpens' => $my_card->foodbox_id,
+            'newActive' => $my_card->active
+        ]);
+    }
 }
 

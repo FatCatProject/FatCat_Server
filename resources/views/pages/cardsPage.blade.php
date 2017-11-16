@@ -47,10 +47,6 @@
                                                                 name="cat_id">{!! $cat->cat_name !!}</option>
                                                     @endforeach
                                                 @endif
-                                                {{--@foreach ($breeds as $breed)--}}
-                                                {{--<option value="{!! $breed !!}"--}}
-                                                {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
-                                                {{--@endforeach--}}
                                             </select>
                                         </div>
                                     </div>
@@ -70,19 +66,9 @@
                                                                 name="foodbox_id">{!! $FoodBox->foodbox_name !!}</option>
                                                     @endforeach
                                                 @endif
-                                                {{--@foreach ($breeds as $breed)--}}
-                                                {{--<option value="{!! $breed !!}"--}}
-                                                {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
-                                                {{--@endforeach--}}
                                             </select>
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">--}}
-                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
                                 </div>
                                 <div class="form-group">
 
@@ -111,6 +97,8 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
+                                            <input type="hidden" id="to_id_old" value="">
+                                            <input type="hidden" id="from_card_row" value="">
                                             <input type="text" class="form-control1" id="to_id" name="card_id"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="" required>
                                         </div>
@@ -140,10 +128,6 @@
                                                                 name="cat_id">{!! $cat->cat_name !!}</option>
                                                     @endforeach
                                                 @endif
-                                                {{--@foreach ($breeds as $breed)--}}
-                                                {{--<option value="{!! $breed !!}"--}}
-                                                {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
-                                                {{--@endforeach--}}
                                             </select>
                                         </div>
                                     </div>
@@ -166,17 +150,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">--}}
-                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-3 control-label">Active:</label>
+                                        <div class="col-sm-9">
+                                            <div class="checkbox-inline"><label>
+                                                    <input id="to_active" type="checkbox">Yes</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button type="submit" class="btn-success btn" form="addCardForm">Update Cat
+                                        <button id="updateCatCardBtn" type="submit" class="btn-success btn" form="">
+                                            Update Cat
                                             Card
                                         </button>
                                         <button id="cancelBtnCat" type="reset" class="btn-inverse btn">Cancel</button>
@@ -216,12 +203,6 @@
                                                    placeholder="" required>
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">--}}
-                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
                                     <h6 style="line-height: 2em; margin: 45px 0 9px 20px ">* Admin card will open all
                                         available food boxes. <br>
                                         Designed to be used by cat owner to refill the food boxes.<br>
@@ -266,16 +247,19 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="card_name" class="form-control1" id="to_card_name_Admin"
+                                            <input type="text" name="card_name" class="form-control1"
+                                                   id="to_card_name_Admin"
                                                    placeholder="" required>
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">--}}
-                                    {{--<label for="checkbox" class="col-sm-3 control-label">Active:</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                    {{--<div class="checkbox-inline"><label><input type="checkbox">Yes</label></div>--}}
-                                    {{--</div>--}}
-                                    {{--</div>--}}
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-3 control-label">Active:</label>
+                                        <div class="col-sm-9">
+                                            <div class="checkbox-inline"><label>
+                                                    <input id="to_active_Admin" type="checkbox">Yes</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <h6 style="line-height: 2em; margin: 45px 0 9px 20px ">* Admin card will open all
                                         available food boxes. <br>
                                         Designed to be used by cat owner to refill the food boxes.<br>
@@ -325,8 +309,10 @@
                                 @for($i=0;$i<10 && count($myCards)>0;$i++)
                                     @if(empty($myCards[$i]))
                                     @else
-                                        <tr id="card_row_{!! $myCards[$i]['card_id'] !!}">
-                                            <input id="myCardID" type="hidden" value="{!! $myCards[$i]['card_id'] !!}">
+                                        {{--<tr id="card_row_{!! $myCards[$i]['card_id'] !!}">--}}
+                                        <tr id="card_row_{!! $i !!}" value={!! $i !!}>
+                                            <input id="cardRow" type="hidden" value={!! $i !!}>
+                                        <input id="myCardID" type="hidden" value="{!! $myCards[$i]['card_id'] !!}">
                                             <input id="isAdmin"
                                                    type="hidden"
                                                    @if(empty($myCards[$i]['cat_name']))
@@ -341,13 +327,15 @@
                                             @if(empty($myCards[$i]['cat_id']))
                                                 <td id="crr_belongs_to" class="" value="">Admin</td>
                                             @else
-                                                <td hidden id="crr_belongs_to" class="">{!! $myCards[$i]['cat_id'] !!}</td>
+                                                <td hidden id="crr_belongs_to"
+                                                    class="">{!! $myCards[$i]['cat_id'] !!}</td>
                                                 <td id="" class="">{!! $myCards[$i]['cat_name'] !!}</td>
                                             @endif
                                             @if(empty($myCards[$i]['cat_id']))
                                                 <td id="crr_opens" class="">All</td>
                                             @else
-                                                <td hidden id="crr_opens" class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                                <td hidden id="crr_opens"
+                                                    class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
                                                 <td id="" class="">{!! $myCards[$i]['foodbox_name']  !!}</td>
                                             @endif
                                             @if($myCards[$i]['active'] == 1)
@@ -412,7 +400,7 @@
         function card_deactivate_table_row_func() {
             var id = $(this).parent().parent().parent().find('#myCardID').val();
             var isAdmin = $(this).parent().parent().parent().find('#isAdmin').val();
-
+            var card_row = $(this).parent().parent().parent().find('#cardRow').val()
             console.log("cardID id is: " + id);
             console.log("isAdmins: " + isAdmin);
 
@@ -422,7 +410,7 @@
                 $.ajax({
                     type: "GET",
                     url: '/deactivateAdminCard',
-                    caller: id,
+                    caller: card_row,
                     data: {
                         card_id: id,
                     },
@@ -442,7 +430,7 @@
                 $.ajax({
                     type: "GET",
                     url: '/deactivateCatCard',
-                    caller: id,
+                    caller: card_row,
                     data: {
                         card_id: id,
                     },
@@ -478,6 +466,8 @@
             var isAdmin = $(this).parent().parent().parent().find('#isAdmin').val();
             console.log("cardID id is: " + id);
             console.log("isAdmins: " + isAdmin);
+            var card_row = $(this).parent().parent().parent().find('#cardRow').val()
+            console.log("card_row: " + card_row);
 
             // IF ADMIN CARD
             if (isAdmin == "true") {
@@ -505,21 +495,101 @@
                 console.log("CATcard name id is: " + crr_card_name);
                 var crr_belongs_to = $(this).parent().parent().parent().find('#crr_belongs_to').text();
                 console.log("belongs to: " + crr_belongs_to);
-                var crr_opens  = $(this).parent().parent().parent().find('#crr_opens').text();
+                var crr_opens = $(this).parent().parent().parent().find('#crr_opens').text();
                 console.log("opens: " + crr_opens);
                 var crr_active = $(this).parent().parent().parent().find('#crr_active').text();
-                console.log("cat card acteive: " + crr_active);
+                console.log("cat card active: " + crr_active);
 //
+
+                $("#from_card_row").val(card_row);
+                if(crr_active == "Yes"){
+                    $("#to_active").attr("checked", "");
+                }else{
+                    $("#to_active").removeAttr("checked");
+                }
+                $("#to_id_old").val(crr_id);
                 $("#to_id").val(crr_id);
                 $("#to_card_name").val(crr_card_name);
                 $("#to_belongs_to").val(crr_belongs_to);
                 $("#to_opens").val(crr_opens);
-                $("#to_active").val(crr_active);
-            }
-            
 
             }
-        );
+
+
+        });
+
+        //Update Cat card btn
+        $('#updateCatCardBtn').on("click", function () {
+            var id_old = $("#to_id_old").val(); //old card id that wanted to be changes
+            var id_new = $("#to_id").val(); // ned card id if was changed
+            var to_card_name = $("#to_card_name").val();
+            var to_belongs_to = $("#to_belongs_to").val();
+            var to_opens = $("#to_opens").val();
+//            var to_active = $("#to_active").val();
+
+            var isActive = 0;
+            if ($("#to_active").prop('checked')){
+                isActive = 1;
+            }
+
+            var row = $("#from_card_row").val();
+            console.log("row: :" + row);
+            console.log("cat id_old card: :" + id_old);
+            console.log("cat new id:" + id_new);
+            console.log("to_card_name:" + to_card_name);
+            console.log("to_belongs_to_cat_id:" + to_belongs_to);
+            console.log("to_opens_box_id:" + to_opens);
+            console.log("isActive:" + isActive);
+
+            $.ajax({
+                type: "GET",
+                url: '/updateCatCard',
+                caller: row,
+                data: {
+                    id_old: id_old,
+                    id_new: id_new,
+                    to_card_name: to_card_name,
+                    to_belongs_to: to_belongs_to,
+                    to_opens: to_opens,
+                    isActive: isActive
+                },
+                success: function (data, textStatus, jqXHR) {
+                    console.log("back newCardID " + data.newCardID);
+                    console.log("back newName " + data.newName);
+                    console.log("back newBelongsTo " + data.newBelongsTo);
+                    console.log("back newOpens " + data.newOpens);
+//                    console.log("back newActive " + data.newActive);
+
+                    console.log("got back forID" + this.caller);
+                    console.log($('#card_row_' + this.caller));
+                    $('#card_row_' + this.caller).find('#crr_id').text(data.newCardID);
+                    $('#card_row_' + this.caller).find('#crr_card_name').text(data.newName);
+                    $('#card_row_' + this.caller).find('#crr_belongs_to').text(data.newBelongsTo);
+                    $('#card_row_' + this.caller).find('#crr_opens').text(data.newOpens);
+                    if(data.newActive==0){
+                        $('#card_row_' + this.caller).find('#crr_active').text("No");
+                    }
+                    else {
+                        $('#card_row_' + this.caller).find('#crr_active').text("Yes");
+                    }
+
+                    scrollToAnchor('card_row_' + this.caller);
+
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + textStatus);
+                }
+            })
+            $("#editCardBlock").hide();
+            $("#addCardBlock").show();
+        });
+
+        //Anchor
+        function scrollToAnchor(aid) {
+            var aTag = $('#' + aid);
+            $('html,body').animate({scrollTop: aTag.offset().top - 60}, 'slow');
+        }
 
         //
 
