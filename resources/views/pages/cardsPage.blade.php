@@ -272,7 +272,8 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button id="updateAdminCardBtn" type="submit" class="btn-success btn" form="adminCardForm">Update Admin
+                                        <button id="updateAdminCardBtn" type="submit" class="btn-success btn"
+                                                form="adminCardForm">Update Admin
                                             Card
                                         </button>
                                         <button id="cancelBtnAdmin" type="reset" class="btn-inverse btn">Cancel</button>
@@ -287,103 +288,212 @@
                 </div>
             </div>
             <hr>
-            <div class="row" style="padding-top: 20px">
-                <div class="col-sm-12">
-                    <!--Table of cards-->
-                    <div class="tab-content" style="margin-left: 25px">
-                        <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
-                             data-widget-static="" style="margin-top: 0px">
-                            <div class="row" style="padding: 14px 0px 6px 30px;">
-                                <h4>Registered cards:</h4>
+
+            {{--Tabs for tables--}}
+            <div class="grid_3 grid_5">
+                <div class="row" style="padding-bottom: 10px">
+                    <h4>Registered cards:</h4>
+                </div>
+                <div class="but_list">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home"
+                                   id="home-tab"
+                                   role="tab"
+                                   data-toggle="tab"
+                                   aria-controls="home"
+                                   aria-expanded="true">Active Cards
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#profile"
+                                   role="tab"
+                                   id="profile-tab"
+                                   data-toggle="tab"
+                                   aria-controls="profile">Inactive Cards
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                                {{--Data of TAB 1--}}
+                                <div class="row" style="padding-top: 20px">
+                                    <div class="col-sm-12">
+                                        <!--Table of cards-->
+                                        <div class="tab-content">
+                                            <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+                                                 data-widget-static="" style="margin-top: 0px">
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr class="warning">
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Belongs to</th>   <!--admin or catName-->
+                                                        <th>Opens foodbox</th>
+                                                        <th>Active</th>
+                                                        <th>Edit</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @for($i=0;$i<count($myCards);$i++)
+                                                        @if(empty($myCards[$i])|| $myCards[$i]['active'] == 0)
+                                                        @else
+                                                            {{--<tr id="card_row_{!! $myCards[$i]['card_id'] !!}">--}}
+                                                            <tr id="card_row_{!! $i !!}" value={!! $i !!}>
+                                                                <input id="cardRow" type="hidden" value={!! $i !!}>
+                                                                <input id="myCardID" type="hidden" value="{!! $myCards[$i]['card_id'] !!}">
+                                                                <input id="isAdmin"
+                                                                       type="hidden"
+                                                                       @if(empty($myCards[$i]['cat_name']))
+                                                                       value="true"
+                                                                       @else
+                                                                       value="false"
+                                                                    @endif
+                                                                >
+                                                                {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
+                                                                <td id="crr_id" class="">{!! $myCards[$i]['card_id'] !!}</td>
+                                                                <td id="crr_card_name" class="">{!! $myCards[$i]['card_name'] !!}</td>
+                                                                @if(empty($myCards[$i]['cat_id']))
+                                                                    <td id="crr_belongs_to" class="" value="">Admin</td>
+                                                                @else
+                                                                    <td hidden id="crr_belongs_to"
+                                                                        class="">{!! $myCards[$i]['cat_id'] !!}</td>
+                                                                    <td id="" class="">{!! $myCards[$i]['cat_name'] !!}</td>
+                                                                @endif
+                                                                @if(empty($myCards[$i]['cat_id']))
+                                                                    <td id="crr_opens" class="">All</td>
+                                                                @else
+                                                                    <td hidden id="crr_opens"
+                                                                        class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                                                    <td id="" class="">{!! $myCards[$i]['foodbox_name']  !!}</td>
+                                                                @endif
+                                                                @if($myCards[$i]['active'] == 1)
+                                                                    <td id="crr_active" class="">Yes</td>
+                                                                @else
+                                                                    <td id="crr_active" class="">No</td>
+                                                                @endif
+                                                                <td>
+                                                                    <ul id="btnsCards" class="nav nav-pills">
+                                                                        <li class="editBtnCard"><a href="#Edit"><i class="lnr lnr-pencil"
+                                                                                                                   onclick=""></i></a></li>
+                                                                        {{--<li class="deactivateBtnCard"--}}
+                                                                            {{--id="card_del_id_{!! $myCards[$i]['card_id'] !!}"--}}
+                                                                            {{--value="{!! $myCards[$i]['card_id'] !!}">--}}
+                                                                            {{--<a><i class="lnr lnr-lock"></i></a>--}}
+                                                                        {{--</li>--}}
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endfor
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--END Table -->
+
+                                    </div>
+
+
+                                </div>
+                                {{--End data of TAB 1--}}
                             </div>
-                            <table class="table table-striped">
-                                <thead>
-                                <tr class="warning">
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Belongs to</th>   <!--admin or catName-->
-                                    <th>Opens foodbox</th>
-                                    <th>Active</th>
-                                    <th>Edit/Deactivate</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @for($i=0;$i<10 && count($myCards)>0;$i++)
-                                    @if(empty($myCards[$i]))
-                                    @else
-                                        {{--<tr id="card_row_{!! $myCards[$i]['card_id'] !!}">--}}
-                                        <tr id="card_row_{!! $i !!}" value={!! $i !!}>
-                                            <input id="cardRow" type="hidden" value={!! $i !!}>
-                                        <input id="myCardID" type="hidden" value="{!! $myCards[$i]['card_id'] !!}">
-                                            <input id="isAdmin"
-                                                   type="hidden"
-                                                   @if(empty($myCards[$i]['cat_name']))
-                                                   value="true"
-                                                   @else
-                                                   value="false"
-                                                @endif
-                                            >
-                                            {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
-                                            <td id="crr_id" class="">{!! $myCards[$i]['card_id'] !!}</td>
-                                            <td id="crr_card_name" class="">{!! $myCards[$i]['card_name'] !!}</td>
-                                            @if(empty($myCards[$i]['cat_id']))
-                                                <td id="crr_belongs_to" class="" value="">Admin</td>
-                                            @else
-                                                <td hidden id="crr_belongs_to"
-                                                    class="">{!! $myCards[$i]['cat_id'] !!}</td>
-                                                <td id="" class="">{!! $myCards[$i]['cat_name'] !!}</td>
-                                            @endif
-                                            @if(empty($myCards[$i]['cat_id']))
-                                                <td id="crr_opens" class="">All</td>
-                                            @else
-                                                <td hidden id="crr_opens"
-                                                    class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
-                                                <td id="" class="">{!! $myCards[$i]['foodbox_name']  !!}</td>
-                                            @endif
-                                            @if($myCards[$i]['active'] == 1)
-                                                <td id="crr_active" class="">Yes</td>
-                                            @else
-                                                <td id="crr_active" class="">No</td>
-                                            @endif
-                                            <td>
-                                                <ul id="btnsCards" class="nav nav-pills">
-                                                    <li class="editBtnCard"><a href="#Edit"><i class="lnr lnr-pencil"
-                                                                                               onclick=""></i></a></li>
-                                                    <li class="deactivateBtnCard"
-                                                        id="card_del_id_{!! $myCards[$i]['card_id'] !!}"
-                                                        value="{!! $myCards[$i]['card_id'] !!}">
-                                                        <a><i class="lnr lnr-lock"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endfor
-                                </tbody>
-                            </table>
-                            <div align="right" class="col-md-12 page_1">
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="disabled"><a href="#" aria-label="Previous"><i
-                                                    class="fa fa-angle-left"></i></a>
-                                        </li>
-                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
-                                </nav>
+
+                            <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+                                {{--Data of TAB 2--}}
+                                <div class="row" style="padding-top: 20px">
+                                    <div class="col-sm-12">
+                                        <!--Table of cards-->
+                                        <div class="tab-content">
+                                            <div class="panel panel-warning" data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
+                                                 data-widget-static="" style="margin-top: 0px">
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr class="warning">
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Belongs to</th>   <!--admin or catName-->
+                                                        <th>Opens foodbox</th>
+                                                        <th>Active</th>
+                                                        <th>Edit</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @for($i=0;$i<count($myCards);$i++)
+                                                        @if(empty($myCards[$i]) || $myCards[$i]['active'] == 1 )
+                                                        @else
+                                                            {{--<tr id="card_row_{!! $myCards[$i]['card_id'] !!}">--}}
+                                                            <tr id="card_row_{!! $i !!}" value={!! $i !!}>
+                                                                <input id="cardRow" type="hidden" value={!! $i !!}>
+                                                                <input id="myCardID" type="hidden" value="{!! $myCards[$i]['card_id'] !!}">
+                                                                <input id="isAdmin"
+                                                                       type="hidden"
+                                                                       @if(empty($myCards[$i]['cat_name']))
+                                                                       value="true"
+                                                                       @else
+                                                                       value="false"
+                                                                    @endif
+                                                                >
+                                                                {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
+                                                                <td id="crr_id" class="">{!! $myCards[$i]['card_id'] !!}</td>
+                                                                <td id="crr_card_name" class="">{!! $myCards[$i]['card_name'] !!}</td>
+                                                                @if(empty($myCards[$i]['cat_id']))
+                                                                    <td id="crr_belongs_to" class="" value="">Admin</td>
+                                                                @else
+                                                                    <td hidden id="crr_belongs_to"
+                                                                        class="">{!! $myCards[$i]['cat_id'] !!}</td>
+                                                                    <td id="" class="">{!! $myCards[$i]['cat_name'] !!}</td>
+                                                                @endif
+                                                                @if(empty($myCards[$i]['cat_id']))
+                                                                    <td id="crr_opens" class="">All</td>
+                                                                @else
+                                                                    <td hidden id="crr_opens"
+                                                                        class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                                                    <td id="" class="">{!! $myCards[$i]['foodbox_name']  !!}</td>
+                                                                @endif
+                                                                @if($myCards[$i]['active'] == 1)
+                                                                    <td id="crr_active" class="">Yes</td>
+                                                                @else
+                                                                    <td id="crr_active" class="">No</td>
+                                                                @endif
+                                                                <td>
+                                                                    <ul id="btnsCards" class="nav nav-pills">
+                                                                        <li class="editBtnCard"><a href="#Edit"><i class="lnr lnr-pencil"
+                                                                                                                   onclick=""></i></a></li>
+                                                                        {{--<li class="deactivateBtnCard"--}}
+                                                                            {{--id="card_del_id_{!! $myCards[$i]['card_id'] !!}"--}}
+                                                                            {{--value="{!! $myCards[$i]['card_id'] !!}">--}}
+                                                                            {{--<a><i class="lnr lnr-lock"></i></a>--}}
+                                                                        {{--</li>--}}
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endfor
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--END Table -->
+
+                                    </div>
+
+                                    {{--End Data of TAB 2--}}
+                                </div>
                             </div>
+
+
                         </div>
                     </div>
-                    <!--END Table -->
-
                 </div>
-
-
             </div>
+            {{--End Tabs for tables--}}
+
+
+
             {{--End Cards--}}
 
 
@@ -486,9 +596,9 @@
                 $("#to_id_Admin").val(crr_id);
                 $("#to_card_name_Admin").val(crr_card_name);
                 $("#from_card_row_Admin").val(card_row);
-                if(crr_active == "Yes"){
+                if (crr_active == "Yes") {
                     $("#to_active_Admin").attr("checked", "");
-                }else{
+                } else {
                     $("#to_active_Admin").removeAttr("checked");
                 }
 
@@ -511,9 +621,9 @@
 //
 
                 $("#from_card_row").val(card_row);
-                if(crr_active == "Yes"){
+                if (crr_active == "Yes") {
                     $("#to_active").attr("checked", "");
-                }else{
+                } else {
                     $("#to_active").removeAttr("checked");
                 }
                 $("#to_id_old").val(crr_id);
@@ -535,7 +645,7 @@
             var to_belongs_to = $("#to_belongs_to").val();
             var to_opens = $("#to_opens").val();
             var isActive = 0;
-            if ($("#to_active").prop('checked')){
+            if ($("#to_active").prop('checked')) {
                 isActive = 1;
             }
             var row = $("#from_card_row").val();
@@ -573,7 +683,7 @@
                     $('#card_row_' + this.caller).find('#crr_card_name').text(data.newName);
                     $('#card_row_' + this.caller).find('#crr_belongs_to').text(data.newBelongsTo);
                     $('#card_row_' + this.caller).find('#crr_opens').text(data.newOpens);
-                    if(data.newActive==0){
+                    if (data.newActive == 0) {
                         $('#card_row_' + this.caller).find('#crr_active').text("No");
                     }
                     else {
@@ -601,7 +711,7 @@
             var to_card_name = $("#to_card_name_Admin").val();
 
             var isActive = 0;
-            if ($("#to_active_Admin").prop('checked')){
+            if ($("#to_active_Admin").prop('checked')) {
                 isActive = 1;
             }
             var row = $("#from_card_row_Admin").val();
@@ -629,7 +739,7 @@
                     console.log($('#card_row_' + this.caller));
                     $('#card_row_' + this.caller).find('#crr_id').text(data.newCardID);
                     $('#card_row_' + this.caller).find('#crr_card_name').text(data.newName);
-                    if(data.newActive==0){
+                    if (data.newActive == 0) {
                         $('#card_row_' + this.caller).find('#crr_active').text("No");
                     }
                     else {
