@@ -96,4 +96,31 @@ class CardController extends Controller
             ->get();
         return $result;
     }
+
+    public function deactivateAdminCard(Request $request)
+    {
+        $adminCard =  Auth::User()->adminCards()->where('card_id', '=',$request->card_id)->first();
+        if (empty($adminCard)) {
+            return response()->json("no adminCard found");
+        } else {
+            $adminCard->active = false;
+            $adminCard->synced_to_brainbox = false;
+            $adminCard->update();
+            return response()->json($request->card_id);
+        }
+    }
+    public function deactivateCatCard(Request $request)
+    {
+        $catCard =  Auth::User()->cards()->where('card_id', '=',$request->card_id)->first();
+
+        if (empty($catCard)) {
+            return response()->json("no catCard found");
+        } else {
+            $catCard->active = false;
+            $catCard->synced_to_brainbox = false;
+            $catCard->update();
+            return response()->json($request->card_id);
+        }
+    }
 }
+
