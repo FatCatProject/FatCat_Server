@@ -2,7 +2,7 @@
 @section('content')
     @include('layouts.datePicker')
     <div id="page-wrapper">
-        <div class="graphs">
+        <div id="Edit" class="graphs">
             <h3 class="blank1">Cards Manager:</h3>
             {{--Cards Manager--}}
             <div class="row">
@@ -111,7 +111,7 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" id="card_id" name="card_id"
+                                            <input type="text" class="form-control1" id="to_id" name="card_id"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="" required>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control1" name="card_name" id="shopUrl"
+                                            <input type="text" class="form-control1" name="card_name" id="to_card_name"
                                                    placeholder="" required>
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="cat_id" id="foodBox" class="form-control1" required>
+                                            <select name="cat_id" id="to_belongs_to" class="form-control1" required>
                                                 <option value="" name="" selected disabled>Please choose a cat for this
                                                     card:
                                                 </option>
@@ -153,7 +153,7 @@
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
-                                            <select name="foodbox_id" id="foodBox" class="form-control1" required>
+                                            <select name="foodbox_id" id="to_opens" class="form-control1" required>
                                                 <option value="" name="" selected disabled>Please choose a foodbox this
                                                     card can open:
                                                 </option>
@@ -163,10 +163,6 @@
                                                                 name="foodbox_id">{!! $FoodBox->foodbox_name !!}</option>
                                                     @endforeach
                                                 @endif
-                                                {{--@foreach ($breeds as $breed)--}}
-                                                {{--<option value="{!! $breed !!}"--}}
-                                                {{--name="{!! $breed !!}">{!! $breed !!}</option>--}}
-                                                {{--@endforeach--}}
                                             </select>
                                         </div>
                                     </div>
@@ -183,7 +179,7 @@
                                         <button type="submit" class="btn-success btn" form="addCardForm">Update Cat
                                             Card
                                         </button>
-                                        <button type="reset" class="btn-inverse btn">Cancel</button>
+                                        <button id="cancelBtnCat" type="reset" class="btn-inverse btn">Cancel</button>
                                     </div>
 
                                 </div>
@@ -261,7 +257,7 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="card_id" class="form-control1" id="cardID"
+                                            <input type="text" name="card_id" class="form-control1" id="to_id_Admin"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder="" required>
                                         </div>
                                     </div>
@@ -270,7 +266,7 @@
                                         <label for="focusedinput" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="card_name" class="form-control1" id="shopUrl"
+                                            <input type="text" name="card_name" class="form-control1" id="to_card_name_Admin"
                                                    placeholder="" required>
                                         </div>
                                     </div>
@@ -293,7 +289,7 @@
                                         <button type="submit" class="btn-success btn" form="adminCardForm">Update Admin
                                             Card
                                         </button>
-                                        <button type="reset" class="btn-inverse btn">Cancel</button>
+                                        <button id="cancelBtnAdmin" type="reset" class="btn-inverse btn">Cancel</button>
                                     </div>
 
                                 </div>
@@ -340,22 +336,24 @@
                                                 @endif
                                             >
                                             {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
-                                            <td class="">{!! $myCards[$i]['card_id'] !!}</td>
-                                            <td class="">{!! $myCards[$i]['card_name'] !!}</td>
+                                            <td id="crr_id" class="">{!! $myCards[$i]['card_id'] !!}</td>
+                                            <td id="crr_card_name" class="">{!! $myCards[$i]['card_name'] !!}</td>
                                             @if(empty($myCards[$i]['cat_id']))
-                                                <td class="">Admin</td>
+                                                <td id="crr_belongs_to" class="" value="">Admin</td>
                                             @else
-                                                <td class="">{!! $myCards[$i]['cat_name'] !!}</td>
+                                                <td hidden id="crr_belongs_to" class="">{!! $myCards[$i]['cat_id'] !!}</td>
+                                                <td id="" class="">{!! $myCards[$i]['cat_name'] !!}</td>
                                             @endif
                                             @if(empty($myCards[$i]['cat_id']))
-                                                <td class="">Admin</td>
+                                                <td id="crr_opens" class="">All</td>
                                             @else
-                                                <td class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                                <td hidden id="crr_opens" class="">{!! $myCards[$i]['foodbox_id'] !!}</td>
+                                                <td id="" class="">{!! $myCards[$i]['foodbox_name']  !!}</td>
                                             @endif
                                             @if($myCards[$i]['active'] == 1)
-                                                <td class="">Yes</td>
+                                                <td id="crr_active" class="">Yes</td>
                                             @else
-                                                <td class="">No</td>
+                                                <td id="crr_active" class="">No</td>
                                             @endif
                                             <td>
                                                 <ul id="btnsCards" class="nav nav-pills">
@@ -418,7 +416,7 @@
             console.log("cardID id is: " + id);
             console.log("isAdmins: " + isAdmin);
 
-            if (isAdmin=="true") {
+            if (isAdmin == "true") {
                 console.log("here for admin card");
                 //ajax for admin card
                 $.ajax({
@@ -461,6 +459,69 @@
 
         }
 
+        // Cancel Admin card Edit btn
+        $("#cancelBtnAdmin").click(function () {
+            $("#editAdminBlock").hide();
+            $("#addAdminBlock").show();
+        });
+
+        // Cancel CAT card Edit btn
+        $("#cancelBtnCat").click(function () {
+            $("#editCardBlock").hide();
+            $("#addCardBlock").show();
+
+        });
+
+        //Edit Cards btn - opens hidden div and populates it
+        $(".editBtnCard").click(function () {
+            var id = $(this).parent().parent().parent().find('#myCardID').val();
+            var isAdmin = $(this).parent().parent().parent().find('#isAdmin').val();
+            console.log("cardID id is: " + id);
+            console.log("isAdmins: " + isAdmin);
+
+            // IF ADMIN CARD
+            if (isAdmin == "true") {
+                $("#addAdminBlock").hide();
+                $("#editAdminBlock").show();
+
+                var crr_id = $(this).parent().parent().parent().find('#crr_id').text();
+                console.log("AdminCardID id is: " + crr_id);
+                var crr_card_name = $(this).parent().parent().parent().find('#crr_card_name').text();
+                console.log("adminCard name id is: " + crr_card_name);
+
+                $("#to_id_Admin").val(crr_id);
+                $("#to_card_name_Admin").val(crr_card_name);
+
+            }
+            // IF CAT CARD
+            else {
+                $("#addCardBlock").hide();
+                $("#editCardBlock").show();
+
+
+                var crr_id = $(this).parent().parent().parent().find('#crr_id').text();
+                console.log("CATcardID id is: " + crr_id);
+                var crr_card_name = $(this).parent().parent().parent().find('#crr_card_name').text();
+                console.log("CATcard name id is: " + crr_card_name);
+                var crr_belongs_to = $(this).parent().parent().parent().find('#crr_belongs_to').text();
+                console.log("belongs to: " + crr_belongs_to);
+                var crr_opens  = $(this).parent().parent().parent().find('#crr_opens').text();
+                console.log("opens: " + crr_opens);
+                var crr_active = $(this).parent().parent().parent().find('#crr_active').text();
+                console.log("cat card acteive: " + crr_active);
+//
+                $("#to_id").val(crr_id);
+                $("#to_card_name").val(crr_card_name);
+                $("#to_belongs_to").val(crr_belongs_to);
+                $("#to_opens").val(crr_opens);
+                $("#to_active").val(crr_active);
+            }
+            
+
+            }
+        );
+
+        //
 
     </script>
 @endsection

@@ -13,7 +13,26 @@ class CardController extends Controller
     public function cardsPage()
     {
         $currentUser = auth()->user();
-        $myRegularCards = $this->myCards($currentUser->email);
+//        $myRegularCards = $this->myCards($currentUser->email);
+        $user_cards = $currentUser->cards;
+        $myRegularCards = [];
+        foreach($user_cards as $card){
+            array_push(
+                $myRegularCards,
+                [
+                    "id" => $card->id,
+                    "user_email" => $card->user_email,
+                    "foodbox_id" => $card->foodbox_id,
+                    "foodbox_name" => $card->foodbox->foodbox_name,
+                    "card_id" => $card->card_id,
+                    "card_name" => $card->card_name,
+                    "active" => $card->active,
+                    "synced_to_brainbox" => $card->synced_to_brainbox,
+                    "cat_id" => $card->cat_id,
+                    "cat_name" => $card->cat->cat_name
+                ]
+            );
+        }
         $myAdminCards = $this->myAdminCards($currentUser->email);
         $myCards = array_merge($myAdminCards,$myRegularCards);
         $myFoodBoxes = $this->myFoodBoxes($currentUser->email);
