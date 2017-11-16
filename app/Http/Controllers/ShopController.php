@@ -315,4 +315,22 @@ class ShopController extends Controller
             'newIsFood' => $my_product->is_food
         ]);
     }
+
+    public function yearlyExpenses(Request $request){
+        $current_user = Auth::User();
+        $year_date = new DateTime($request->year_date."-01-01");
+
+        $query_data = $current_user->shoppingLogs()
+            ->whereYear("shopping_date", $year_date->format("Y"))
+            ->groupBy("month")
+            ->orderBy("month")
+            ->selectRaw("MONTH(shopping_logs.shopping_date) AS month, SUM(shopping_logs.price) AS sum")
+            ->get();
+
+        $response_data = [0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach($query_data as $record){
+            $response_data[($record->month - 1)] = $record->sum;
+        }
+        return response()->json($response_data);
+    }
 }

@@ -137,9 +137,16 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetStatsYear" name="dateYear" alt="dateYear"
-                                                   placeholder="YYYY"
-                                                   type="text" style="width: 60px; "/>
+                                            <input
+                                                alt="dateYear"
+                                                class="form-control"
+                                                id="yearly_expenses_datepicker"
+                                                name="dateYear"
+                                                placeholder="YYYY"
+                                                value="{!! (new DateTime())->format('Y') !!}"
+                                                style="width: 60px; "
+                                                type="text"
+                                            />
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
@@ -153,27 +160,53 @@
                                 </div>
                                 <div class="row">
                                     <div align="center">
-                                        <canvas id="bar1" height="207" width="450px"
-                                                style="width:450px; height: 100px;"></canvas>
-                                        <script>
-                                            var barChartData = {
-                                                labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                datasets: [
-                                                    {
-                                                        fillColor: "#00BCD4",
-                                                        strokeColor: "#00BCD4",
-                                                        data: {!! $yearly_expenses !!}
-                                                    },
-                                                ]
-                                            };
-                                            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData).fontcolor("999");
-                                        </script>
+                                        <canvas
+                                            height="207"
+                                            id="bar1"
+                                            style="width:450px; height: 100px;"
+                                            width="450px"
+                                        ></canvas>
                                     </div>
-
                                 </div>
                                 <div class="row" style="margin-left: 15px">
-                                    <h3 style="color: #999;">Total amout:&nbsp;{!! $totalExpenses !!} USD</h3>
+                                    <h3 id="expenses_sum_h" style="color: #999;"></h3>
                                 </div>
+<script>
+function expenses_bar_chart(){
+    var year_date = $("#yearly_expenses_datepicker").val();
+    console.log("year_date: " + year_date);
+
+    $.get(
+        "{!! URL::route('shopping_page_yearly_expenses') !!}",
+        {
+            year_date: year_date,
+        },
+        function(data, status){
+            console.log("status: " + status);
+            if(status === "success"){
+                console.log("data: " + JSON.stringify(data));
+                new Chart(
+                    document.getElementById("bar1").getContext("2d")).Bar(
+                        {
+                            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                            datasets: [
+                                {
+                                    fillColor: "#00ACED",
+                                    strokeColor: "#00ACED",
+                                    data: data
+                                }
+                            ]
+                        }
+                    );
+                    var expenses_sum = data.reduce(function(previous, current){ return previous + current; });
+                    $("#expenses_sum_h").text("Total expenses: " + expenses_sum + " USD");
+            }
+            $("#bar1").css("height","207px").css("width","450px").css("font-size","10px");
+        }
+    );
+}
+$("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
+</script>
 
                             </div>
 

@@ -53,8 +53,9 @@ Route::get('/deleteShop',['uses' => 'ShopController@deleteShop'])->middleware('a
 Route::get('/deleteProduct',['uses' => 'ShopController@deleteProduct'])->middleware('authenticated');
 Route::get('/updateShop',['uses' => 'ShopController@updateShop'])->middleware('authenticated');
 Route::get('/updateProduct',['uses' => 'ShopController@updateProduct'])->middleware('authenticated');
-
-
+Route::get('/shopping_page_yearly_expenses', 'ShopController@yearlyExpenses')
+    ->name('shopping_page_yearly_expenses')
+    ->middleware('authenticated');
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
