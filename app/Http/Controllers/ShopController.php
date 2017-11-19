@@ -318,4 +318,57 @@ class ShopController extends Controller
             'newIsFood' => $my_product->is_food
         ]);
     }
+
+    public function yearlyExpenses(Request $request){
+        $current_user = Auth::User();
+        $year_date = new DateTime($request->year_date."-01-01");
+
+        $query_data = $current_user->shoppingLogs()
+            ->whereYear("shopping_logs.shopping_date", $year_date->format("Y"))
+            ->groupBy("month")
+            ->orderBy("month")
+            ->selectRaw("MONTH(shopping_logs.shopping_date) AS month, SUM(shopping_logs.price) AS sum")
+            ->get();
+
+        $response_data = [0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach($query_data as $record){
+            $response_data[($record->month - 1)] = $record->sum;
+        }
+        return response()->json($response_data);
+    }
+
+    public function tableData(Request $request){
+        $current_user = Auth::User();
+        $month_date = new DateTime($request->month_date."-01");
+        $request_page = (!empty($request->page) and ($request->page > 0)) ? $request->page : 1;
+        $request_entries_per_page = ((!empty($request->entries_per_page)) and ($request->entries_per_page > 0)) ?
+            $request->entries_per_page : 10;
+
+        $response_number_of_pages = ceil((
+            $current_user->shoppingLogs()
+            ->whereYear("shopping_logs.shopping_date", $month_date->format("Y"))
+            ->whereMonth("shopping_logs.shopping_date", $month_date->format("m"))
+            ->count() / $request_entries_per_page)
+        );
+        $request_page = $request_page < $response_number_of_pages ? $request_page : $response_number_of_pages;
+
+        $response_shopping_logs = $current_user->shoppingLogs()
+            ->whereYear("shopping_date", $month_date->format("Y"))
+            ->whereMonth("shopping_date", $month_date->format("m"))
+            ->orderBy("shopping_logs.shopping_date")
+            ->select("shopping_logs.id", "shopping_logs.shopping_date", "shopping_logs.description", "shopping_logs.price")
+            ->skip(($request_page - 1) * $request_entries_per_page)
+            ->take($request_entries_per_page)
+            ->get();
+
+        return response()->json(
+            [
+                "number_of_pages" => strval($response_number_of_pages),
+                "page_number" => strval($request_page),
+                "shopping_logs" => $response_shopping_logs
+            ]
+        );
+    }
+
 }
+

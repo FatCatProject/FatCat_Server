@@ -73,7 +73,7 @@ class UserController extends Controller
             }
 
         }
-        $current_user->server_token = $request->_token;
+
         $current_user->update();
         return redirect()->back();
     }
