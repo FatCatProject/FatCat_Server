@@ -133,12 +133,15 @@ class ShopController extends Controller
     public function storeShop(Request $request)
     {
         $status = "success";
-        $currentUser = auth()->user();
-        if ($currentUser == null || $request->shop_name == null) {
+        $current_user = auth()->user();
+        $check_duplicate = DB::table('shops')->select('shops.*')
+            ->where(['user_email' => $current_user->email, 'shop_name' => $request->shop_name])
+            ->get();
+        if ($current_user == null || $request->shop_name == null || count($check_duplicate)>0) {
             $status = "failed, part of the input is lacking";
         } else {
             $id = DB::table('shops')->insertGetId(
-                ['user_email' => $currentUser->email, 'shop_name' => $request->shop_name, 'url' => $request->url,
+                ['user_email' => $current_user->email, 'shop_name' => $request->shop_name, 'url' => $request->url,
                     'address' => $request->address, 'hours' => $request->hours, 'phone' => $request->phone]
             );
         }
