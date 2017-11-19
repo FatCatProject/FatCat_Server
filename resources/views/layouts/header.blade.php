@@ -166,7 +166,24 @@
                     <li class="dropdown profile_details_drop">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <div class="profile_img">
-                                <span style="background:url(/images/1.jpg) no-repeat center"> </span>
+                                <span
+                                    @if(
+                                        !empty(\Illuminate\Support\Facades\Auth::user()->profile_picture) and
+                                        \Illuminate\Support\Facades\Storage::disk('user_pictures')->exists(
+                                            str_replace(["@", "."], "_", \Illuminate\Support\Facades\Auth::user()->email)
+                                            . "/" .\Illuminate\Support\Facades\Auth::user()->profile_picture
+                                        )
+                                    )
+                                        style="background:url(data:image/png;base64,{!! base64_encode(
+                                            \Illuminate\Support\Facades\Storage::disk("user_pictures")->get(
+                                                str_replace(["@", "."], "_", \Illuminate\Support\Facades\Auth::user()->email)
+                                                . "/" .\Illuminate\Support\Facades\Auth::user()->profile_picture
+                                            )
+                                        ) !!}) no-repeat center; background-size: cover;"
+                                    @else
+                                        style="background:url(/images/default_user_picture.png) no-repeat center; background-size: 50%;"
+                                    @endif
+                                > </span>
                                 <div class="user-name">
                                     <p>Hello &nbsp<span>{{ \Illuminate\Support\Facades\Auth::user()->first_name }}</span></p>
                                 </div>
