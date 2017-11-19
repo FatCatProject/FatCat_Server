@@ -592,5 +592,16 @@ class CatController extends Controller
         return response()->json(["exists" => $exists]);
     }
 
+    public function deleteCat(Request $request)
+    {
+        $cat =  Auth::User()->cats()->where('id', '=',$request->id);
+
+        if (empty($cat)) {
+            return response()->json("cat not found");
+        } else {
+            $cat->delete();
+            return response()->json($request->id);
+        }
+    }
 }
 

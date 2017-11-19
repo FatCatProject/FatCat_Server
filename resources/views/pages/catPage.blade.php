@@ -501,7 +501,7 @@ $("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
                     $("#collapseThree").removeClass("collapse");
                     setTimeout(function() {
                         scrollToAnchor('EditCat');
-                    }, 1500);
+                    }, 2000);
                 }
 
             });
