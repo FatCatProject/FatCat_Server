@@ -13,7 +13,8 @@
                 @for($row=0;$row<$numberOfRows;$row++)
                 <div class="row">
                     @for(;$index<count($allMyCats);$index++)
-                    <div class="col-md-4"  style="padding-bottom: 25px;">
+                    <div id="catInfo_{!! $allMyCats[$index]['id']!!}" class="col-md-4"  style="padding-bottom: 25px;">
+
                         <div class="r3_counter_box">
                             <i class="fa" style="width: 150px; margin-left: -30px">
                                 <img
@@ -63,13 +64,15 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <input type="hidden" id="catID" value="{!! $allMyCats[$index]['id']!!}">
                                         <div class="row" style="float: right;">
                                                 <ul class="nav nav-pills">
-                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="pencil editBtn" name="editBtn">
-                                                        {{--<a href="{{ URL::route('catPage',$allMyCats[$index]['id']). '#editCat' }}">--}}
+                                                    <li id="editBtn" class="pencil editBtn" name="editBtn">
                                                         <a href="/catPage/{!! $allMyCats[$index]['id']!!}">
                                                             <i class="lnr lnr-pencil editValues" onclick=""></i>
-                                                        </a></li>
+                                                        </a>
+                                                    </li>
+                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="deleteCatBtn"><a><i class="lnr lnr-trash"></i></a></li>
                                                 </ul>
 
                                         </div>
@@ -103,6 +106,34 @@
     </div>
     <script>
 
+        //Delete Cat
+        $('.deleteCatBtn').on("click", delete_cat_func);
+
+        function delete_cat_func() {
+            var id = $(this).parent().parent().parent().find('#catID').val();
+            console.log("catID id is" + id);
+            $.ajax({
+                type: "GET",
+                url: '/deleteCat',
+                caller: id,
+                data: {
+                    id: id,
+                },
+                success: function (data, status, jqXHR) {
+                    console.log("catIDBack: " + data);
+                    $("#catInfo_" + this.caller).remove();
+                },
+                fail: function (jqXHR, status, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + status);
+                }
+            })
+        }
+
+
+
+
+
 
         $(document).ready(function () {
             if( window.location.toString().includes("cat_id=")){
@@ -120,5 +151,6 @@
             var aTag = $('#'+ aid);
             $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
         }
+
     </script>
 @endsection

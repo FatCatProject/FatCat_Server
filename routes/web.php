@@ -28,6 +28,7 @@ Route::get('/catpage_table_logs', 'CatController@tableLogs')
     ->name('cat_page_table_logs')
     ->middleware('authenticated');
 Route::get('/updateBox',['uses' => 'CatController@updateBox'])->middleware('authenticated');
+Route::get('/deleteCat',['uses' => 'CatController@deleteCat'])->middleware('authenticated');
 
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
     ->middleware('authenticated')
