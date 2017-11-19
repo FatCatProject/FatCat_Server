@@ -235,7 +235,7 @@ $(document).ready(
                                 ),
                                 $("<div></div>").append(
                                     $("<p></p>").text(foodbox_data[foodbox_idx].foodbox_name)
-                                ).addClass("grow")
+                                ).addClass("grow").css('background','#EA7E2F')
                             ).addClass("stats")
                         ).addClass("r3_counter_box")
                     ).addClass("col-md-4")
