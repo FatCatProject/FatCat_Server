@@ -13,6 +13,7 @@
 <script src="/js/skycons.js"></script>
 <script src="/js/uisearch.js"></script>
 <script src="/js/wow.min.js"></script>
+<script src="/js/modal_img.js"></script>
 {{--<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>--}}
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }</script>
 <script>
@@ -29,7 +30,7 @@
 <link href="/css/bootstrap-datetimepicker.css" rel='stylesheet' type='text/css' />
 <link href='//fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic' rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
-
+<link href="/css/modal_img.css" rel='stylesheet' type='text/css' />
 {{--<script src="js/jquery.nicescroll.js"></script>--}}
 {{--<script src="js/scripts.js"></script>--}}
 
