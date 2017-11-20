@@ -105,6 +105,7 @@
                                                                 food
                                                                 product:
                                                             </option>
+                                                            <option value="none" name="new_food_id">none</option>
                                                             @if(!empty($foods))
                                                                 @foreach($foods as $food)
                                                                     <option
