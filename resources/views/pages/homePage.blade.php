@@ -162,6 +162,17 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                     <div align="center">
                         <canvas id="doughnut" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
                     </div>
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                        <!-- The Close Button -->
+                        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                        <!-- Modal Content (The Image) -->
+                        <img class="modal-content" id="img01">
+                        <!-- Modal Caption (Image Text) -->
+                        <div id="caption"></div>
+                    </div>
+                    <!-- The Modal -->
 <script>
 function visits_doughnut(){
     var year_date = $("#vet_visits_datepicker").val();
@@ -223,7 +234,7 @@ $(document).ready(
                     $("<div></div>").append(
                         $("<div></div>").append(
                             $("<i></i>").append(
-                                $("<img/>").attr("src", foodbox_data[foodbox_idx].profile_picture).css("width", "100px")
+                                $("<img/>").attr("class","myImg").attr("src", foodbox_data[foodbox_idx].profile_picture).css("width", "100px")
                             ).addClass("fa").css({
                                 "width": "150px",
                                 "margin-left": "-30px"
@@ -245,9 +256,36 @@ $(document).ready(
                 tmp_row,
                 $("<br/>")
             );
-        }
+        } image_popout();
     }
 );
+
+function image_popout() {
+// Get the modal
+    var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = $('.myImg');
+    var modalImg = $("#img01");
+    var captionText = document.getElementById("caption");
+    $('.myImg').click(function () {
+        modal.style.display = "block";
+        var newSrc = this.src;
+        modalImg.attr('src', newSrc);
+        captionText.innerHTML = this.alt;
+    });
+
+// Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+}
+
+
+
 </script>
     </div>
     @include('layouts.datePicker')
