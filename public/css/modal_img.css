@@ -27,7 +27,7 @@
     margin: auto;
     display: block;
     width: 90%;
-    max-width: 700px;
+    max-width: 580px;
 }
 
 /* Caption of Modal Image */
@@ -64,7 +64,7 @@
 .close {
     position: absolute;
     top: 75px;
-    right: 355px;
+    right: 430px;
     color: #000000;
     opacity: 0.5;
     font-size: 70px;

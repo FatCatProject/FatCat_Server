@@ -427,8 +427,6 @@
             <br>
         </div>
         <br><br><br>
-
-
         <!-- The Modal -->
         <div id="myModal" class="modal">
             <!-- The Close Button -->
@@ -439,7 +437,6 @@
             <div id="caption"></div>
         </div>
         <!-- The Modal -->
-
     </div>
 
 
