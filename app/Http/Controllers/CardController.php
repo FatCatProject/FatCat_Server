@@ -189,5 +189,45 @@ class CardController extends Controller
             'newActive' => $my_card->active
         ]);
     }
+
+    public function cardsTableData(Request $request){
+        $current_user = Auth::User();
+        $response_cards = [];
+
+        foreach($current_user->adminCards as $admin_card){
+            array_push(
+                $response_cards,
+                [
+                    "active" => ($admin_card->active == 1),
+                    "card_id" => $admin_card->card_id,
+                    "card_name" => $admin_card->card_name,
+                    "cat_id" => null,
+                    "cat_name" => null,
+                    "foodbox_id" => null,
+                    "foodbox_name" => null,
+                    "is_admin" => true
+                ]
+            );
+        }
+
+        foreach($current_user->cards as $card){
+            array_push(
+                $response_cards,
+                [
+                    "active" => ($card->active == 1),
+                    "card_id" => $card->card_id,
+                    "card_name" => $card->card_name,
+                    "cat_id" => $card->cat_id,
+                    "cat_name" => $card->cat->cat_name,
+                    "foodbox_id" => $card->foodbox_id,
+                    "foodbox_name" => $card->foodbox->foodbox_name,
+                    "is_admin" => false
+                ]
+            );
+        }
+
+        usort($response_cards, function($a, $b){ return strcmp($a['card_id'], $b['card_id']); });
+        return response()->json($response_cards);
+    }
 }
 

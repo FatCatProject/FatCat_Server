@@ -48,8 +48,6 @@ Route::get('/deleteProduct',['uses' => 'ShopController@deleteProduct'])->middlew
 Route::get('/updateShop',['uses' => 'ShopController@updateShop'])->middleware('authenticated');
 Route::get('/updateProduct',['uses' => 'ShopController@updateProduct'])->middleware('authenticated');
 
-
-
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
 Route::post('/addCard',['uses' => 'CardController@storeCard'])->middleware('authenticated');
@@ -57,7 +55,9 @@ Route::get('/deactivateAdminCard',['uses' => 'CardController@deactivateAdminCard
 Route::get('/deactivateCatCard',['uses' => 'CardController@deactivateCatCard'])->middleware('authenticated');
 Route::get('/updateCatCard',['uses' => 'CardController@updateCatCard'])->middleware('authenticated');
 Route::get('/updateAdminCard',['uses' => 'CardController@updateAdminCard'])->middleware('authenticated');
-
+Route::get('/cards_page_table_data', 'CardController@cardsTableData')
+    ->name('cards_page_table_data')
+    ->middleware('authenticated');
 
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
