@@ -55,7 +55,7 @@ class CatController extends Controller
 
             $breed = DB::table('cat_breeds')
                 ->where('breed_name', $breed_name)
-                ->orWhere('breed_name', $breed_name."_cat")
+                ->orWhere('breed_name', $breed_name . "_cat")
                 ->first();
             if (is_null($breed)) {
                 $breed = DB::table('cat_breeds')->where('breed_name', 'Other')->first();
@@ -173,8 +173,8 @@ class CatController extends Controller
     {
         $breedSearch = $request->input('searchTerm');
         $queries = DB::table('cat_breeds')
-            ->where('breed_name', 'LIKE', '%'.$breedSearch.'%')
-            ->orWhere('breed_name', 'LIKE', '%'.str_replace(' ', '_', $breedSearch).'%')
+            ->where('breed_name', 'LIKE', '%' . $breedSearch . '%')
+            ->orWhere('breed_name', 'LIKE', '%' . str_replace(' ', '_', $breedSearch) . '%')
             ->pluck('breed_name');
 
 
@@ -192,12 +192,12 @@ class CatController extends Controller
             ]
         );
 
-        try{
+        try {
             $my_cat->cat_breed = \App\CatBreed::where("breed_name", "=", $request->cat_breed)
-                ->orWhere("breed_name", "=", $request->cat_breed."_cat")
+                ->orWhere("breed_name", "=", $request->cat_breed . "_cat")
                 ->firstOrFail()
                 ->breed_name;
-        }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+        } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             $my_cat->cat_breed = "other";
         }
         $my_cat->current_weight = $request->current_weight;
@@ -231,20 +231,21 @@ class CatController extends Controller
         return redirect()->action("CatController@addCat");
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $current_user = Auth::User();
         $cat = Cat::find($request->id);
         date_default_timezone_set('Asia/Jerusalem');
         $cat->cat_name = $request->cat_name;
         $cat->dob = $request->dob;
         $cat->gender = $request->gender;
-        if(!empty($request->cat_breed)){
-            try{
+        if (!empty($request->cat_breed)) {
+            try {
                 $cat->cat_breed = \App\CatBreed::where("breed_name", "=", $request->cat_breed)
-                    ->orWhere("breed_name", "=", $request->cat_breed."_cat")
+                    ->orWhere("breed_name", "=", $request->cat_breed . "_cat")
                     ->firstOrFail()
                     ->breed_name;
-            }catch(Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
                 $cat->cat_breed = "other";
             }
         }
@@ -254,15 +255,15 @@ class CatController extends Controller
         $cat->daily_calories = $request->daily_calories;
         $cat->food_allowance = $request->food_allowance;
 
-        if(!empty($request->profile_picture)){
+        if (!empty($request->profile_picture)) {
             $cat->profile_picture = str_replace(
-                ["@", "."],
-                "_",
-                $current_user->email."_".$cat->cat_name
-            ).".".$request->profile_picture->getClientOriginalExtension();
+                    ["@", "."],
+                    "_",
+                    $current_user->email . "_" . $cat->cat_name
+                ) . "." . $request->profile_picture->getClientOriginalExtension();
         }
 
-        if (!empty($request->profile_picture)){
+        if (!empty($request->profile_picture)) {
             Storage::disk("user_pictures")->putFileAs(
                 str_replace(["@", "."], "_", $current_user->email),
                 $request->profile_picture,
@@ -514,14 +515,14 @@ class CatController extends Controller
     {
         $user = User::find(Auth::id());
         $boxes = $user->foodboxes;
-        $foods =  $user->foods;
-        $my_cats =  $user->cats;
+        $foods = $user->foods;
+        $my_cats = $user->cats;
         if (count($boxes) / 3 > intval(count($boxes) / 3))
             $numberOfRows = intval(count($boxes) / 3) + 1;
         else
             $numberOfRows = intval(count($boxes)) / 3;
         $foodbox_data = [];
-        foreach($user->foodboxes as $foodbox) {
+        foreach ($user->foodboxes as $foodbox) {
 
             $foodbox_cat = $foodbox->cards()->where("active", "=", 1)->first()->cat ?? (object)["cat_name" => "No active card"];
 
@@ -534,22 +535,37 @@ class CatController extends Controller
                         );
                 }
             }
-            array_push(
-                $foodbox_data,
-                [
-                    "id"=>$foodbox->id,
-                    "foodbox_id"=>$foodbox->foodbox_id,
-                    "foodbox_name" => $foodbox->foodbox_name,
-                    "food_name"=>$foodbox->food->food_name,
-                    "current_weight" => $foodbox->current_weight,
-                    "profile_picture" => $foodbox_cat_profile_picture,
-                    "cat_name"=>$foodbox_cat->cat_name
+            if ($foodbox->food == null) {
+                array_push(
+                    $foodbox_data,
+                    [
+                        "id" => $foodbox->id,
+                        "foodbox_id" => $foodbox->foodbox_id,
+                        "foodbox_name" => $foodbox->foodbox_name,
+                        "food_name" => "no food found",
+                        "current_weight" => $foodbox->current_weight,
+                        "profile_picture" => $foodbox_cat_profile_picture,
+                        "cat_name" => $foodbox_cat->cat_name
 
-                ]
-            );
+                    ]
+                );
+            } else {
+                array_push(
+                    $foodbox_data,
+                    [
+                        "id" => $foodbox->id,
+                        "foodbox_id" => $foodbox->foodbox_id,
+                        "foodbox_name" => $foodbox->foodbox_name,
+                        "food_name" => $foodbox->food->food_name,
+                        "current_weight" => $foodbox->current_weight,
+                        "profile_picture" => $foodbox_cat_profile_picture,
+                        "cat_name" => $foodbox_cat->cat_name
+
+                    ]
+                );
+            }
         }
-
-        return view('pages.boxManagePage', compact('numberOfRows','foodbox_data','foods','my_cats'));
+        return view('pages.boxManagePage', compact('numberOfRows', 'foodbox_data', 'foods', 'my_cats'));
     }
 
     //    Natalie
@@ -561,32 +577,43 @@ class CatController extends Controller
         if (empty($my_box))
             return response("foodbox not found", 204);
 
-        $my_box->foodbox_name= $request->new_box_name;
-        $my_box->food_id= $request->new_food_id;
-
+        $my_box->foodbox_name = $request->new_box_name;
+        if ($request->new_food_id == "none") {
+            $my_box->food_id = null;
+        } else {
+            $my_box->food_id = $request->new_food_id;
+        }
 
         try {
-            $my_box->save();
+            $my_box->update();
         } catch (QueryException $e) {
             return response("Update failed", 500);
         }
+
+        if ($my_box->food_id != null) {
+            $new_food_name = $my_box->food->food_name;
+        } else {
+            $new_food_name = "no food found";
+        }
+
         return response()->json(
             [
                 'new_box_name' => $my_box->foodbox_name,
-                'new_food_name'=>$my_box->food->food_name,
+                'new_food_name' => $new_food_name,
             ]
         );
     }
 
-    public function checkCatExists(Request $request){
+    public function checkCatExists(Request $request)
+    {
         $current_user = Auth::User();
         $exists = true;
-        try{
+        try {
             $current_user->cats()
                 ->where("cat_name", "=", $request->cat_name)
                 ->where("id", "!=", $request->cat_id)
                 ->firstOrFail();
-        }catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             $exists = false;
         }
         return response()->json(["exists" => $exists]);
@@ -594,7 +621,7 @@ class CatController extends Controller
 
     public function deleteCat(Request $request)
     {
-        $cat =  Auth::User()->cats()->where('id', '=',$request->id);
+        $cat = Auth::User()->cats()->where('id', '=', $request->id);
 
         if (empty($cat)) {
             return response()->json("cat not found");
