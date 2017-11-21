@@ -24,8 +24,8 @@
                                                 src={!! $foodbox_data[$index]['profile_picture'] !!}
                                                     width="100px"></i>
                                         <div align="center" class="stats"
-                                             style="padding-bottom: 10px;min-height: 200px">
-                                            <div class="grow groww">
+                                             style="padding-bottom: 10px;min-height: 250px">
+                                            <div class="groww">
                                                 <p id="box_{!! $foodbox_data[$index]['id']!!}_title">{!! $foodbox_data[$index]['foodbox_name']!!}</p>
                                             </div>
 
