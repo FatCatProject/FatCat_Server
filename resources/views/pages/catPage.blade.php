@@ -90,6 +90,7 @@ function daily_consumption(){
                     ];
                     console.log("pie_data: " + JSON.stringify(pie_data))
                         new Chart(document.getElementById("pie").getContext("2d")).Pie(pie_data);
+                    $("#pie").css("height","200").css("width","250");
                 }
         }
     );
@@ -133,7 +134,7 @@ $("#daily_consumption_datepicker").on("changeDate", daily_consumption);
                         </div>
 
                         <div class="row" align="center">
-                            <canvas id="line1" height="137" width="400" style="width: 450px; height: 100px;"></canvas>
+                            <canvas id="line1" height="137" width="300" style="width: 300px; height: 400px;"></canvas>
                         </div>
 
 <script>
@@ -170,7 +171,7 @@ function daily_logs(){
                         data: data
                     }]
                 }
-            );
+            );$("#line1").css("height","137").css("width","400px");
         }
     }
 );
@@ -252,6 +253,7 @@ function monthly_logs(){
             };
             console.log(JSON.stringify(bar_chart_data));
             new Chart(document.getElementById("bar1").getContext("2d")).Bar(bar_chart_data);
+            $("#bar1").css("height","137").css("width","415px");
         }
     );
 }

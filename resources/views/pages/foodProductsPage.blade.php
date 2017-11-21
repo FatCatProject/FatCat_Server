@@ -266,7 +266,7 @@ $("button[type='reset']").on("click", function(){
 
                                                 </div>
 
-                                                <div class="grow foodGrow">
+                                                <div class="grow">
                                                     <p>{!! $myFoods[$index]->food_name !!}</p>
                                                 </div>
                                                 <div class="addBtn row" style="margin:-18px; float: right ">

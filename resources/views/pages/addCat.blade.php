@@ -22,8 +22,8 @@
                                     width="100px"
                                 >
                             </i>
-                            <div  align="center" class="stats" style="padding-bottom: 10px">
-                                <div class="grow groww">
+                            <div  align="center" class="stats" style="padding-bottom: 10px; min-height: 250px">
+                                <div class="groww">
                                     <p>{!! $allMyCats[$index]['cat_name']!!}</p>
                                 </div>
 

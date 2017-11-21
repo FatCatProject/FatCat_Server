@@ -23,7 +23,7 @@
                     <div id="ratio_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
-                        <canvas id="pie" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
+                        <canvas id="pie" height="250" width="250" style="width: 470px; height: 315px;"></canvas>
                     </div>
                 </div>
 <script>
@@ -160,7 +160,7 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                     <div id="doughnut_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
-                        <canvas id="doughnut" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
+                        <canvas id="doughnut" height="250" width="250" style="width: 470px; height: 315px;"></canvas>
                     </div>
 
                     <!-- The Modal -->
