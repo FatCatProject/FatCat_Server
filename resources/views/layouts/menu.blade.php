@@ -15,7 +15,9 @@
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
 
-            <li><a href="#"><i class="lnr lnr-cog"></i>
+            <li id="first_menu_li"
+                class="{!! (Request::is('userPage') or Request::is('cardsPage') or Request::is('foodProductsPage')) ? 'act' : ''!!}"
+            ><a href="#"><i class="lnr lnr-cog"></i>
                     <span>Settings</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="/userPage">User</a></li>
@@ -23,10 +25,14 @@
                     <li><a href="/foodProductsPage">Food products</a></li>
                 </ul>
             </li>
-            <li><a href="/boxManagePage"><i class="lnr lnr-inbox"></i><span>Food boxes</span></a></li>
+            <li id="second_menu_li"
+                class="{!! (Request::is('boxManagePage')) ? 'act' : ''!!}"
+            ><a href="/boxManagePage"><i class="lnr lnr-inbox"></i><span>Food boxes</span></a></li>
             {{--<li class="active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_white.png" width="19px"><span>Food boxes</span></a></li>--}}
             {{--<li class="box or active"><a href="/boxManagePage"><i class="lnr"></i><img src="/images/box_green.png" width="19px"><span>Food boxes</span></a></li>--}}
-            <li class="menu-list"><a href="#"><i class="lnr lnr-paw"></i>
+            <li id="third_menu_li"
+                class="menu-list {!! (Request::is('addCat') or Request::is('catPage/*')) ? 'act' : '' !!}"
+            ><a href="#"><i class="lnr lnr-paw"></i>
                     <span>Cats Manager</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="/addCat">Manage cats</a></li>
@@ -37,7 +43,9 @@
                     @endif
                 </ul>
             </li>
-            <li class="menu-list"><a href="#"><i class="lnr lnr-heart-pulse"></i>
+            <li id="fourth_menu_li"
+                class="menu-list {!! (Request::is('catVetPage/*')) ? 'act' : '' !!}"
+            ><a href="#"><i class="lnr lnr-heart-pulse"></i>
                     <span>Vet logs</span></a>
                 <ul class="sub-menu-list">
                     @if(!empty($mycats))
@@ -47,7 +55,9 @@
                     @endif
                 </ul>
             </li>
-            <li class="menu-list"><a href="#"><i class="lnr lnr-cart"></i>
+            <li id="fifth_menu_li"
+                class="menu-list {!! (Request::is('shoppingPage') or Request::is('shopsPage')) ? 'act' : '' !!}"
+            ><a href="#"><i class="lnr lnr-cart"></i>
                     <span>Shopping</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="/shoppingPage">Shopping list</a></li>

@@ -188,7 +188,7 @@ function expenses_bar_chart(){
                 new Chart(
                     document.getElementById("bar1").getContext("2d")).Bar(
                         {
-                            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [
                                 {
                                     fillColor: "#00ACED",
