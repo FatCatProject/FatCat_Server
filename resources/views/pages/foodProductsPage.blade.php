@@ -121,7 +121,7 @@
                                             id="submit_button_edit"
                                             type="submit"
                                         >
-                                            Edit Product
+                                            Update Product
                                         </button>
                                         <button id="cancelEditFoodProductBtn" class="btn-inverse btn">Cancel</button>
                                     </div>
