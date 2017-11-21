@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <link href="/css/icon-font.min.css" rel='stylesheet' type='text/css' />
 <link href="/css/font-awesome.css" rel='stylesheet' type='text/css' />
 
