@@ -583,9 +583,10 @@ class CatController extends Controller
         } else {
             $my_box->food_id = $request->new_food_id;
         }
-
+        $my_box->synced_to_brainbox =  false;
         try {
             $my_box->update();
+
         } catch (QueryException $e) {
             return response("Update failed", 500);
         }
