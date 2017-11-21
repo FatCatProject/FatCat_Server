@@ -222,7 +222,7 @@ class VetController extends Controller
             $response_data[$month] = 0;
         }
         foreach($query_data as $row){
-            $response_data[$row->month] += $row->total;
+            $response_data[($row->month - 1)] += $row->total;
         }
         return response()->json($response_data);
     }
