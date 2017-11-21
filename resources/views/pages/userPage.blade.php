@@ -12,6 +12,11 @@
                             <form class="form-horizontal" enctype="multipart/form-data" method="POST"
                                   action="/editUser" id="editUser">
                                 {!! csrf_field() !!}
+
+                                <div id="errors_div" class="form-group">
+                                    <ul id="errors_ul" style="color: red;"></ul>
+                                </div>
+
                                 <div class="col-sm-6">
                                     <h4 class="blank1">User Information:</h4>
                                     <div class="form-group">
@@ -67,11 +72,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="profilePicture" class="col-sm-3 control-label">Profile
+                                        <label for="profile_picture" class="col-sm-3 control-label">Profile
                                             picture:</label>
                                         <div class="col-sm-8">
-                                            <input type="file" name="picture" id="picture" class="filestyle"
-                                                   data-buttonBefore="true" style="margin-top: 6px">
+                                            <input
+                                                class="filestyle"
+                                                data-buttonBefore="true"
+                                                id="profile_picture"
+                                                name="picture"
+                                                style="margin-top: 6px"
+                                                type="file"
+                                            />
                                         </div>
                                     </div>
 
@@ -136,7 +147,13 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-12" style="margin:50px 0 0 15px">
-                                            <button type="submit" class="btn-success btn">Save changes</button>
+                                            <button
+                                                class="btn-success btn"
+                                                id="submit_button"
+                                                type="submit"
+                                            >
+                                                Save changes
+                                            </button>
                                             <button type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
@@ -163,5 +180,48 @@
         });
 
 
+$("#profile_picture").bind("change", function(event){
+    console.log("--- profile_picture change ---");
+    if(this.files[0].length < 1){
+        $("#errors_ul").children("#file_size_error_li").remove();
+        $("#errors_ul").children("#file_extension_error_li").remove();
+        if(! $("#errors_ul").is(":parent")){
+            $("#submit_button").removeClass("disabled");
+        }
+        return;
+    }
+    var file_size_bytes = this.files[0].size;
+    var file_extension = (this.files[0].name.toLowerCase().split("."))[this.files[0].name.split(".").length - 1];
+    var allowed_file_extensions = ["gif", "jpeg", "jpg", "png"];
+    console.log("file_size_bytes: " +  file_size_bytes + " - file_extension: " + JSON.stringify(file_extension));
+
+    if(file_size_bytes > 10485760){
+    $("#submit_button").addClass("disabled");
+    $("#errors_ul").children("#file_size_error_li").remove();
+    $("#errors_ul").append(
+        $("<li></li>").attr("id", "file_size_error_li").text("File size too large - max 10MB.")
+    );
+    }else{
+        $("#errors_ul").children("#file_size_error_li").remove();
+    }
+    if($.inArray(file_extension, allowed_file_extensions) == -1){
+        $("#submit_button").addClass("disabled");
+        $("#errors_ul").children("#file_extension_error_li").remove();
+        $("#errors_ul").append(
+            $("<li></li>").attr("id", "file_extension_error_li").text(
+                "File extension not allowed. - Allowed extensions: " + JSON.stringify(allowed_file_extensions)
+            )
+        );
+    }else{
+        $("#errors_ul").children("#file_extension_error_li").remove();
+    }
+    if(! $("#errors_ul").is(":parent")){
+        $("#submit_button").removeClass("disabled");
+    }
+});
+$("button[type='reset']").on("click", function(){
+    $("#errors_ul").empty();
+    $("#submit_button").removeClass("disabled");
+});
     </script>
 @endsection
