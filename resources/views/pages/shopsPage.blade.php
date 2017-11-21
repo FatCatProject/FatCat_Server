@@ -15,7 +15,7 @@
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-9">
                                         <input type="text" name="shop_name" class="form-control1" id="shopName"
                                                placeholder="" required>
                                     </div>
@@ -23,30 +23,30 @@
 
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Url:</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-9">
                                         <input type="url" name="url" class="form-control1" id="shopUrl" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Address:</label>
-                                    <div class="col-sm-8"><textarea name="address" id="shopAddress"
+                                    <div class="col-sm-9"><textarea name="address" id="shopAddress"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
+                                                                    style="min-height: 50px"></textarea></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Opening hours:</label>
-                                    <div class="col-sm-8"><textarea name="hours" id="shopHours"
+                                    <div class="col-sm-9"><textarea name="hours" id="shopHours"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
+                                                                    style="min-height: 50px"></textarea></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-9">
                                         <input type="text" name="phone" class="form-control1" id="shopTel"
                                                pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
                                     </div>
@@ -54,7 +54,7 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-8 col-sm-offset-2">
+                                        <div class="col-sm-9 col-sm-offset-2">
                                             <button type="submit" class="btn-success btn" form="addShop">Add</button>
                                             <button type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
@@ -76,38 +76,37 @@
                                 <div class="form-group">
                                     <input type="hidden" name="to_shopID" id="to_shopID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="to_crr_shop_name" type="text" name="shop_name" class="form-control1"
+                                    <div class="col-sm-9r_shop_name" type="text" name="shop_name" class="form-control1"
                                                placeholder="" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Url:</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-9">
                                         <input type="url" name="url" class="form-control1" id="to_crr_url" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Address:</label>
-                                    <div class="col-sm-8"><textarea name="address" id="to_crr_address"
+                                    <div class="col-sm-9"><textarea name="address" id="to_crr_address"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
+                                                                    style="min-height: 50px"></textarea></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-3 control-label">Opening hours:</label>
-                                    <div class="col-sm-8"><textarea name="hours" id="to_crr_open_hours"
+                                    <div class="col-sm-9"><textarea name="hours" id="to_crr_open_hours"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
-                                                                    style="min-height: 30px"></textarea></div>
+                                                                    style="min-height: 50px"></textarea></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Phone number:</label>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-9">
                                         <input type="text" name="phone" class="form-control1" id="to_crr_number"
                                                pattern="[0-9]+((?:[0-9]+-)*)[0-9]+" placeholder="">
                                     </div>
@@ -115,14 +114,13 @@
 
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-8 col-sm-offset-2">
+                                        <div class="col-sm-9 col-sm-offset-2">
                                             <button id="updateBtnShop" type="submit" class="btn-success btn" form="">Update</button>
                                             <button id="cancelBtnShop" type="reset" class="btn-inverse btn">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -188,7 +186,7 @@
                                     <div class="row">
                                         <div class="col-sm-8 col-sm-offset-2">
                                             <button id="submit_button_add" type="submit" class="btn-success btn" form="addProduct">Add</button>
-                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                            <button id="product_reset_button" type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -349,6 +347,10 @@
             $("#updateBtnProduct").removeClass("disabled");
         }
     });
+$("#product_reset_button").on("click", function(){
+    $("#errors_ul_add").empty();
+    $("#submit_button_add").removeClass("disabled");
+});
 </script>
             </div>
             <!--Table of shops-->
@@ -370,7 +372,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($index=0;$index<10 && count($shops)>0;$index++)
+                        @for($index=0;$index<count($shops);$index++)
                             @if(empty($shops[$index]))
                             @else
                                 <tr id="shop_row_{!! $shops[$index]->id !!}">
@@ -422,7 +424,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i=0;$i<10 && count($products)>0;$i++)
+                        @for($i=0;$i<count($products);$i++)
                             @if(empty($products[$i]))
                             @else
                                 <tr id="product_row_{!! $products[$i]->id !!}">
@@ -438,6 +440,7 @@
                                         <td class="">No image</td>
                                     @else
                                         <td class=""><img
+                                                    class="myImg"
                                                     src="{!! $pictures[$products[$i]->id] !!}"
                                                     width="50px"
                                                     height="50px"
@@ -468,7 +471,16 @@
     </div>
 
 
-
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- The Close Button -->
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+    </div>
+    <!-- The Modal -->
 
 
     <script>
@@ -726,5 +738,33 @@
             $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
         }
 
+
+        $(document).ready(function () {
+            image_popout();
+        })
+
+        function image_popout() {
+// Get the modal
+            var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = $('.myImg');
+            var modalImg = $("#img01");
+            var captionText = document.getElementById("caption");
+            $('.myImg').click(function () {
+                modal.style.display = "block";
+                var newSrc = this.src;
+                modalImg.attr('src', newSrc);
+                captionText.innerHTML = this.alt;
+            });
+
+// Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
     </script>
 @endsection

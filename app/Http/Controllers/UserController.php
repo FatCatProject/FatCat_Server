@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -73,9 +74,16 @@ class UserController extends Controller
 
         }
 
-        $current_user->server_token = $request->_token;
         $current_user->update();
         return redirect()->back();
+    }
 
+    public function changePassword(Request $request)
+    {
+        $current_user = Auth::User();
+        $new_password = Hash::make($request->new_password);
+        if (Hash::check($current_user->password, $new_password))
+            $current_user->password = $new_password;
+        $current_user->update();
     }
 }

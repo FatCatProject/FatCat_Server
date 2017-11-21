@@ -13,10 +13,11 @@
                 @for($row=0;$row<$numberOfRows;$row++)
                 <div class="row">
                     @for(;$index<count($allMyCats);$index++)
-                    <div class="col-md-4"  style="padding-bottom: 25px;">
+                    <div id="catInfo_{!! $allMyCats[$index]['id']!!}" class="col-md-4"  style="padding-bottom: 25px;">
+
                         <div class="r3_counter_box">
                             <i class="fa" style="width: 150px; margin-left: -30px">
-                                <img
+                                <img class="myImg"
                                     src="{!! $cat_profile_pictures[$allMyCats[$index]['cat_name']] !!}"
                                     width="100px"
                                 >
@@ -63,13 +64,15 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <input type="hidden" id="catID" value="{!! $allMyCats[$index]['id']!!}">
                                         <div class="row" style="float: right;">
                                                 <ul class="nav nav-pills">
-                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="pencil editBtn" name="editBtn">
-                                                        {{--<a href="{{ URL::route('catPage',$allMyCats[$index]['id']). '#editCat' }}">--}}
+                                                    <li id="editBtn" class="pencil editBtn" name="editBtn">
                                                         <a href="/catPage/{!! $allMyCats[$index]['id']!!}">
                                                             <i class="lnr lnr-pencil editValues" onclick=""></i>
-                                                        </a></li>
+                                                        </a>
+                                                    </li>
+                                                    <li id="{!! $allMyCats[$index]['id']!!}" class="deleteCatBtn"><a><i class="lnr lnr-trash"></i></a></li>
                                                 </ul>
 
                                         </div>
@@ -85,7 +88,16 @@
 
 
 
-
+                    <!-- The Modal -->
+                        <div id="myModal" class="modal">
+                            <!-- The Close Button -->
+                            <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                            <!-- Modal Content (The Image) -->
+                            <img class="modal-content" id="img01">
+                            <!-- Modal Caption (Image Text) -->
+                            <div id="caption"></div>
+                        </div>
+                        <!-- The Modal -->
                 </div>
             </div>
             <div id="EditCat" class="row" style="margin: 25px">
@@ -103,6 +115,34 @@
     </div>
     <script>
 
+        //Delete Cat
+        $('.deleteCatBtn').on("click", delete_cat_func);
+
+        function delete_cat_func() {
+            var id = $(this).parent().parent().parent().find('#catID').val();
+            console.log("catID id is" + id);
+            $.ajax({
+                type: "GET",
+                url: '/deleteCat',
+                caller: id,
+                data: {
+                    id: id,
+                },
+                success: function (data, status, jqXHR) {
+                    console.log("catIDBack: " + data);
+                    $("#catInfo_" + this.caller).remove();
+                },
+                fail: function (jqXHR, status, errorThrown) {
+                    console.log("ERROR:" + jqXHR);
+                    console.log("ERROR:" + status);
+                }
+            })
+        }
+
+
+
+
+
 
         $(document).ready(function () {
             if( window.location.toString().includes("cat_id=")){
@@ -112,13 +152,37 @@
                 }, 500);
             }
 
-
+            image_popout();
         });
 
         //Anchor
         function scrollToAnchor(aid){
             var aTag = $('#'+ aid);
             $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
+        }
+
+        function image_popout() {
+// Get the modal
+            var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = $('.myImg');
+            var modalImg = $("#img01");
+            var captionText = document.getElementById("caption");
+            $('.myImg').click(function () {
+                modal.style.display = "block";
+                var newSrc = this.src;
+                modalImg.attr('src', newSrc);
+                captionText.innerHTML = this.alt;
+            });
+
+// Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
         }
     </script>
 @endsection

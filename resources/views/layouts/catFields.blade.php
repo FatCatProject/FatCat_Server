@@ -227,7 +227,7 @@ $("#breed").on("change", function () {
                 <div class="col-sm-8">
                     <input
                         class="form-control1 input-sm"
-                        max="100"
+                        max="25000"
                         min="0"
                         name="current_weight"
                         placeholder="Enter weight in Kg"
@@ -246,7 +246,7 @@ $("#breed").on("change", function () {
                 <div class="col-sm-8">
                     <input
                         class="form-control1 input-sm"
-                        max="100"
+                        max="25000"
                         min="0"
                         name="target_weight"
                         placeholder="Enter weight in Kg"
@@ -265,7 +265,7 @@ $("#breed").on("change", function () {
                 <div class="col-sm-8">
                         <input
                             class="form-control1 input-sm"
-                            max="1000"
+                            max="10000"
                             min="0"
                             name="daily_calories"
                             placeholder=""
@@ -399,6 +399,10 @@ $("#breed").on("change", function () {
             $("#submit_button").removeClass("disabled");
         }
     });
+$("button[type='reset']").on("click", function(){
+    $("#errors_ul").empty();
+    $("#submit_button").removeClass("disabled");
+});
 </script>
     </div>
 </div>

@@ -28,6 +28,7 @@ Route::get('/catpage_table_logs', 'CatController@tableLogs')
     ->name('cat_page_table_logs')
     ->middleware('authenticated');
 Route::get('/updateBox',['uses' => 'CatController@updateBox'])->middleware('authenticated');
+Route::get('/deleteCat',['uses' => 'CatController@deleteCat'])->middleware('authenticated');
 
 Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
     ->middleware('authenticated')
@@ -35,6 +36,12 @@ Route::get('/catVetPage/{id}/{year?}', 'VetController@catVetPage')
 Route::get('/deleteVetLog/' , 'VetController@delete');
 Route::post('/addvetlog',['uses' => 'VetController@store'])->middleware('authenticated');
 Route::put('/update',['uses' => 'VetController@update'])->middleware('authenticated');
+Route::get('/cat_vet_page_expenses','VetController@yearlyExpenses')
+    ->name('cat_vet_page_expenses')
+    ->middleware('authenticated');
+Route::get('/cat_vet_page_table_data', 'VetController@tableLogs')
+    ->name('cat_vet_page_table_data')
+    ->middleware('authenticated');
 
 Route::get('/shoppingPage/{year?}',['uses' =>'ShopController@shoppingPage'])->middleware('authenticated');
 Route::get('/shopsPage', 'ShopController@shopsPage')->middleware('authenticated');
@@ -47,6 +54,12 @@ Route::get('/deleteShop',['uses' => 'ShopController@deleteShop'])->middleware('a
 Route::get('/deleteProduct',['uses' => 'ShopController@deleteProduct'])->middleware('authenticated');
 Route::get('/updateShop',['uses' => 'ShopController@updateShop'])->middleware('authenticated');
 Route::get('/updateProduct',['uses' => 'ShopController@updateProduct'])->middleware('authenticated');
+Route::get('/shopping_page_yearly_expenses', 'ShopController@yearlyExpenses')
+    ->name('shopping_page_yearly_expenses')
+    ->middleware('authenticated');
+Route::get('/shopping_page_table_data', 'ShopController@tableData')
+    ->name('shopping_page_table_data')
+    ->middleware('authenticated');
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');

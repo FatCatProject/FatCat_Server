@@ -137,9 +137,16 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input class="form-control" id="vetStatsYear" name="dateYear" alt="dateYear"
-                                                   placeholder="YYYY"
-                                                   type="text" style="width: 60px; "/>
+                                            <input
+                                                alt="dateYear"
+                                                class="form-control"
+                                                id="yearly_expenses_datepicker"
+                                                name="dateYear"
+                                                placeholder="YYYY"
+                                                value="{!! (new DateTime())->format('Y') !!}"
+                                                style="width: 60px; "
+                                                type="text"
+                                            />
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
@@ -153,27 +160,53 @@
                                 </div>
                                 <div class="row">
                                     <div align="center">
-                                        <canvas id="bar1" height="207" width="450px"
-                                                style="width:450px; height: 100px;"></canvas>
-                                        <script>
-                                            var barChartData = {
-                                                labels: ["Jun", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                datasets: [
-                                                    {
-                                                        fillColor: "#00BCD4",
-                                                        strokeColor: "#00BCD4",
-                                                        data: {!! $yearly_expenses !!}
-                                                    },
-                                                ]
-                                            };
-                                            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData).fontcolor("999");
-                                        </script>
+                                        <canvas
+                                            height="207"
+                                            id="bar1"
+                                            style="width:450px; height: 100px;"
+                                            width="450px"
+                                        ></canvas>
                                     </div>
-
                                 </div>
                                 <div class="row" style="margin-left: 15px">
-                                    <h3 style="color: #999;">Total amout:&nbsp;{!! $totalExpenses !!} USD</h3>
+                                    <h3 id="expenses_sum_h" style="color: #999;"></h3>
                                 </div>
+<script>
+function expenses_bar_chart(){
+    var year_date = $("#yearly_expenses_datepicker").val();
+    console.log("year_date: " + year_date);
+
+    $.get(
+        "{!! URL::route('shopping_page_yearly_expenses') !!}",
+        {
+            year_date: year_date,
+        },
+        function(data, status){
+            console.log("status: " + status);
+            if(status === "success"){
+                console.log("data: " + JSON.stringify(data));
+                new Chart(
+                    document.getElementById("bar1").getContext("2d")).Bar(
+                        {
+                            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                            datasets: [
+                                {
+                                    fillColor: "#00ACED",
+                                    strokeColor: "#00ACED",
+                                    data: data
+                                }
+                            ]
+                        }
+                    );
+                    var expenses_sum = data.reduce(function(previous, current){ return previous + current; });
+                    $("#expenses_sum_h").text("Total expenses: " + expenses_sum + " USD");
+            }
+            $("#bar1").css("height","207px").css("width","450px").css("font-size","10px");
+        }
+    );
+}
+$("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
+</script>
 
                             </div>
 
@@ -194,16 +227,22 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input class="form-control" id="logsMonth" name="dateMonth" alt="dateMonth"
-                                       placeholder="YYYY-MM"
-                                       type="text" style="width: 90px; "/>
+                                <input
+                                    alt="dateMonth"
+                                    class="form-control"
+                                    id="logs_table_datepicker"
+                                    name="dateMonth"
+                                    placeholder="YYYY-MM"
+                                    type="text" style="width: 90px; "
+                                    value="{!! (new DateTime())->format('Y-m') !!}"
+                                />
                             </div>
                         </div>
                         <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
                             Pick a month or view 10 last purchases
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table id="logs_table" class="table table-striped">
                         <thead>
                         <tr class="warning">
                             <th>Date</th>
@@ -213,46 +252,250 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($index=0;$index < count($shoppingLogs);$index++)
-
-                            <tr id="row_{!! $shoppingLogs[$index]->id !!}">
-
-                                @if(empty($shoppingLogs[$index]))
-                                @endif
-                                @if(!empty($shoppingLogs[$index]))
-                                    <input id="logID" type="hidden" value="{!! $shoppingLogs[$index]->id !!}">
-                                    <td id="crr_date"> {!! $shoppingLogs[$index]->shopping_date !!} </td>
-                                    <td id="crr_desc"> {!! $shoppingLogs[$index]->description !!} </td>
-                                    <td id="crr_price"> {!! $shoppingLogs[$index]->price !!} USD</td>
-                                    <td>
-                                        <ul id="btns" class="nav nav-pills">
-                                            <li class="editBtn"><a href="#Edit"><i class="lnr lnr-pencil editValues"
-                                                                                   onclick=""></i></a></li>
-                                            <li class="deleteBtn" id="del_id_{!! $shoppingLogs[$index]->id !!}"
-                                                value="{!! $shoppingLogs[$index]->id !!}">
-                                                <a><i class="lnr lnr-trash"></i></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                @endif
-                            </tr>
-                        @endfor
                         </tbody>
                     </table>
                     <div align="right" class="col-md-12 page_1">
                         <nav>
-                            <ul class="pagination">
-                                <li class="disabled"><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
-                                </li>
-                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+                            <ul id="table_pages" class="pagination">
                             </ul>
                         </nav>
                     </div>
+<script>
+//Edit btn - opens hidden div and populates it
+function edit_table_row_func(){
+    $("#addBlock").hide();
+    $("#editBlock").show();
+
+    var id = $(this).parent().parent().parent().find('#logID').val();
+    console.log("id:" + id);
+    var crr_date = $(this).parent().parent().parent().find('#crr_date').text();
+    console.log("date is:" + crr_date);
+    var crr_desc = $(this).parent().parent().parent().find('#crr_desc').text() || "";
+    console.log("crr_desc:" + crr_desc);
+    var crr_price = parseInt($(this).parent().parent().parent().find('#crr_price').text());
+    console.log("crr_price:" + crr_price);
+
+    $("#to_logID").val(id);
+    $("#to_date").val(crr_date);
+    $("#to_desc").val(crr_desc);
+    $("#to_price").val(crr_price);
+}
+
+$("#cancelBtn").click(function () {
+    $("#editBlock").hide();
+    $("#addBlock").show();
+});
+
+
+//Delete table row
+function delete_table_row_func() {
+    var id = $(this).parent().parent().parent().find('#logID').val();
+    console.log("shoplog id is" + id);
+    $.ajax({
+        type: "GET",
+        url: '/deleteShoppingLog',
+        caller: id,
+        data: {
+            id: id,
+        },
+        success: function (data, status, jqXHR) {
+            console.log("llll:" + data);
+            $("#row_" + this.caller).remove();
+        },
+        fail: function (jqXHR, status, errorThrown) {
+            console.log("ERROR:" + jqXHR);
+            console.log("ERROR:" + status);
+        }
+    })
+}
+
+//Update btn
+$('#updateBtn').on("click", function () {
+    var id = $('#to_logID').val();
+    var to_date = $('#to_date').val();
+    var to_desc = $('#to_desc').val();
+    var to_price = $('#to_price').val();
+    console.log("this is the id of log in ajax:" + id);
+    console.log("new to_date:" + to_date);
+    console.log("new to_desc:" + to_desc);
+    console.log("new price:" + to_price);
+    $.ajax({
+        type: "GET",
+        url: '/updateShoppingLog',
+        caller: id,
+        data: {
+            id: id,
+            to_date: to_date,
+            to_desc: to_desc,
+            to_price: to_price,
+
+        },
+        success: function (data, textStatus, jqXHR) {
+            console.log("back newDate " + data.newDate);
+            console.log("back newDesc " + data.newDesc);
+            console.log("back newPrice " + data.newPrice);
+            console.log("got back forID" + this.caller);
+//                    $("#row_" + this.caller).html(newWeight+"<span>&nbsp;&nbsp;grams left</span>");
+            console.log(  $('#row_' + this.caller));
+            $('#row_' + this.caller).find('#crr_date').text(data.newDate);
+            $('#row_' + this.caller).find('#crr_desc').text(data.newDesc || "");
+            $('#row_' + this.caller).find('#crr_price').text(data.newPrice).append(" USD");
+            scrollToAnchor('row_' + this.caller);
+
+        },
+        fail: function (jqXHR, textStatus, errorThrown) {
+            console.log("ERROR:" + jqXHR);
+            console.log("ERROR:" + textStatus);
+        }
+    })
+    $("#editBlock").hide();
+    $("#addBlock").show();
+});
+
+//Anchor
+function scrollToAnchor(aid){
+    var aTag = $('#'+ aid);
+    $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
+}
+
+function table_pages(number_of_pages, active_page){
+    console.log("--- table_pages ---");
+    console.log("number_of_pages: " + number_of_pages + " - active_page: " + active_page);
+    number_of_pages = (number_of_pages > 0) ? number_of_pages : 1;
+    active_page = (active_page < 1) ? 1 : ((active_page >= number_of_pages) ? number_of_pages : active_page);
+    var table_pages_ul = $("#table_pages");
+    table_pages_ul.empty();
+
+    table_pages_ul.append(
+        $("<li></li>").append(
+            $("<a></a>").append(
+                $("<i></i>").addClass("fa fa-angle-left")
+            )
+        ).attr("id", "page_previous").on("click", page_li_btn_event)
+    );
+
+    for(var i = 1; i <= number_of_pages; i++){
+        var tmp_li = $("<li></li>").append(
+            $("<a></a>").append(i)
+        ).addClass("page_li_btn").on("click", page_li_btn_event);
+        if(i == active_page){
+            tmp_li.addClass("active");
+        }
+        table_pages_ul.append(tmp_li);
+    }
+
+    table_pages_ul.append(
+        $("<li></li>").append(
+            $("<a></a>").append(
+                $("<i></i>").addClass("fa fa-angle-right")
+            )
+        ).attr("id", "page_next").on("click", page_li_btn_event)
+    );
+    if(active_page < 2){
+        $("#page_previous").addClass("disabled");
+    }
+    if(active_page >= number_of_pages){
+        $("#page_next").addClass("disabled");
+    }
+}
+
+function table_rows(data){
+    console.log("--- table_rows ---");
+    console.log("data: " + JSON.stringify(data));
+    var logs_table = $("#logs_table");
+    $("#logs_table tr").not("thead tr").remove();
+
+    for(row_idx in data){
+        var row = data[row_idx];
+        logs_table.append(
+            $("<tr></tr>").attr("id", "row_" + row.id).append(
+                $("<input/>").attr("id", "logID").attr("type", "hidden").val(row.id),
+                $("<td></td>").attr("id", "crr_date").text(row.shopping_date),
+                $("<td></td>").attr("id", "crr_desc").text(row.description || ""),
+                $("<td></td>").attr("id", "crr_price").text(row.price + " USD"),
+                $("<td></td>").append(
+                    $("<ul></ul>").attr("id", "btns").addClass("nav nav-pills").append(
+                        $("<li></li>").addClass("editBtn").append(
+                            $("<a></a>").attr("href", "#Edit").append(
+                                $("<i></i>").addClass("lnr lnr-pencil editValues")
+                            )
+                        ).on("click", edit_table_row_func),
+                        $("<li></li>").attr("id", "del_id_" + row.id).addClass("deleteBtn").val(row.id).append(
+                            $("<a></a>").append(
+                                $("<i></i>").addClass("lnr lnr-trash")
+                            )
+                        ).on("click", delete_table_row_func)
+                    )
+                )
+            )
+        );
+    }
+}
+
+function table_logs_datepicker_event(){
+    console.log("--- table_logs_datepicker_event ---");
+    var month_date = $("#logs_table_datepicker").val();
+    var page = 1;
+    var entries_per_page = 10;
+    console.log(
+        "month_date: " + month_date +
+        " - page: " + page +
+        " - entries_per_page: " + entries_per_page
+    );
+
+    $.get(
+        "{!! URL::route('shopping_page_table_data') !!}",
+        {
+            month_date: month_date,
+            page: page,
+            entries_per_page: entries_per_page
+        },
+        function(data, status){
+            if(status === "success"){
+                table_rows(data.shopping_logs);
+                table_pages(data.number_of_pages, data.page_number);
+            }
+        }
+    );
+}
+
+function page_li_btn_event(){
+    console.log("--- page_li_btn_event ---");
+    var month_date = $("#logs_table_datepicker").val();
+    var entries_per_page = 10;
+    var page = ($(this).hasClass("page_li_btn")) ? $(this).find("a").first().html() : (
+        ($(this).attr("id") == "page_previous") ?
+        ($(this).parent().find(".active").first().find("a").first().html() - 1) :
+        ($(this).parent().find(".active").first().find("a").first().html() - -1)
+    );
+    console.log(
+        "month_date: " + month_date +
+        " - page: " + page +
+        " - entries_per_page: " + entries_per_page
+    );
+
+    if($(this).hasClass("disabled")){
+        return;
+    }
+
+    $.get(
+        "{!! URL::route('shopping_page_table_data') !!}",
+    {
+        month_date: month_date,
+            page: page,
+            entries_per_page: entries_per_page
+    },
+        function(data, status){
+            if(status === "success"){
+                table_rows(data.shopping_logs);
+                table_pages(data.number_of_pages, data.page_number);
+            }
+        }
+    );
+}
+
+$("#logs_table_datepicker").on("changeDate", table_logs_datepicker_event);
+</script>
                 </div>
             </div>
             <!--END Table -->
@@ -261,109 +504,4 @@
         <br><br><br>
     </div>
 
-    <script>
-
-
-        //Edit btn - opens hiden div and populates it
-        $(".editBtn").click(function () {
-            $("#addBlock").hide();
-            $("#editBlock").show();
-
-            var id = $(this).parent().parent().parent().find('#logID').val();
-            console.log("id:" + id);
-            var crr_date = $(this).parent().parent().parent().find('#crr_date').text();
-            console.log("date is:" + crr_date);
-            var crr_desc = $(this).parent().parent().parent().find('#crr_desc').text();
-            console.log("crr_desc:" + crr_desc);
-            var crr_price = parseInt($(this).parent().parent().parent().find('#crr_price').text());
-            console.log("crr_price:" + crr_price);
-
-            $("#to_logID").val(id);
-            $("#to_date").val(crr_date);
-            $("#to_desc").val(crr_desc);
-            $("#to_price").val(crr_price);
-
-        });
-
-        //Cancel Edit btn
-        $("#cancelBtn").click(function () {
-            $("#editBlock").hide();
-            $("#addBlock").show();
-        });
-
-
-        //Delete table row
-        $('.deleteBtn').on("click", delete_table_row_func);
-
-        function delete_table_row_func() {
-            var id = $(this).parent().parent().parent().find('#logID').val();
-            console.log("shoplog id is" + id);
-            $.ajax({
-                type: "GET",
-                url: '/deleteShoppingLog',
-                caller: id,
-                data: {
-                    id: id,
-                },
-                success: function (data, status, jqXHR) {
-                    console.log("llll:" + data);
-                    $("#row_" + this.caller).remove();
-                },
-                fail: function (jqXHR, status, errorThrown) {
-                    console.log("ERROR:" + jqXHR);
-                    console.log("ERROR:" + status);
-                }
-            })
-        }
-
-        //Update btn
-        $('#updateBtn').on("click", function () {
-            var id = $('#to_logID').val();
-            var to_date = $('#to_date').val();
-            var to_desc = $('#to_desc').val();
-            var to_price = $('#to_price').val();
-            console.log("this is the id of log in ajax:" + id);
-            console.log("new to_date:" + to_date);
-            console.log("new to_desc:" + to_desc);
-            console.log("new price:" + to_price);
-            $.ajax({
-                type: "GET",
-                url: '/updateShoppingLog',
-                caller: id,
-                data: {
-                    id: id,
-                    to_date: to_date,
-                    to_desc: to_desc,
-                    to_price: to_price,
-
-                },
-                success: function (data, textStatus, jqXHR) {
-                    console.log("back newDate " + data.newDate);
-                    console.log("back newDesc " + data.newDesc);
-                    console.log("back newPrice " + data.newPrice);
-                    console.log("got back forID" + this.caller);
-//                    $("#row_" + this.caller).html(newWeight+"<span>&nbsp;&nbsp;grams left</span>");
-                    console.log(  $('#row_' + this.caller));
-                    $('#row_' + this.caller).find('#crr_date').text(data.newDate);
-                    $('#row_' + this.caller).find('#crr_desc').text(data.newDesc);
-                    $('#row_' + this.caller).find('#crr_price').text(data.newPrice).append(" USD");
-                    scrollToAnchor('row_' + this.caller);
-
-                },
-                fail: function (jqXHR, textStatus, errorThrown) {
-                    console.log("ERROR:" + jqXHR);
-                    console.log("ERROR:" + textStatus);
-                }
-            })
-            $("#editBlock").hide();
-            $("#addBlock").show();
-        });
-
-//Anchor
-        function scrollToAnchor(aid){
-            var aTag = $('#'+ aid);
-            $('html,body').animate({scrollTop: aTag.offset().top -60},'slow');
-        }
-
-    </script>
 @endsection
