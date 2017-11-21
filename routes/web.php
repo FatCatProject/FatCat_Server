@@ -71,7 +71,8 @@ Route::get('/updateAdminCard',['uses' => 'CardController@updateAdminCard'])->mid
 Route::get('/cards_page_table_data', 'CardController@cardsTableData')
     ->name('cards_page_table_data')
     ->middleware('authenticated');
-
+Route::get('/check_card', 'CardController@checkCardExists')->name('check_card_exists')
+    ->middleware('authenticated');
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
     ->middleware('authenticated');

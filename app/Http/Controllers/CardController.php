@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Cat;
+use DateTime;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DateTime;
-use App\Cat;
 use Illuminate\Support\Facades\DB;
 
 class CardController extends Controller
@@ -229,5 +230,33 @@ class CardController extends Controller
         usort($response_cards, function($a, $b){ return strcmp($a['card_id'], $b['card_id']); });
         return response()->json($response_cards);
     }
+
+    public function checkCardExists(Request $request)
+    {
+        $current_user = Auth::User();
+        $exists = true;
+        try {
+            $current_user->cards()
+                ->where("card_id", "=", $request->card_id)
+                ->where("id", "!=", $request->id)
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $exists = false;
+        }
+        if($exists){
+            return response()->json(["exists" => $exists]);
+        }
+        $exists = true;
+        try {
+            $current_user->adminCards()
+                ->where("card_id", "=", $request->card_id)
+                ->where("id", "!=", $request->id)
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $exists = false;
+        }
+        return response()->json(["exists" => $exists]);
+    }
+
 }
 

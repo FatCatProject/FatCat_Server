@@ -13,6 +13,11 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" action="addCard" id="addCardForm">
                                 {!! csrf_field() !!}
+
+                                <div id="errors_div_add_card" class="form-group">
+                                    <ul id="errors_ul_add_card" style="color: red;"></ul>
+                                </div>
+
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="" class="col-sm-3 control-label">ID: <span
@@ -73,13 +78,55 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button type="submit" class="btn-success btn" form="addCardForm">Add Cat Card
+                                        <button id="submit_button_add_card" type="submit" class="btn-success btn" form="addCardForm">Add Cat Card
                                         </button>
-                                        <button type="reset" class="btn-inverse btn">Reset</button>
+                                        <button id="reset_button_add_card" type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
 
                                 </div>
+<script>
 
+    $("#card_id").on("change", function(event){
+        console.log("--- card_id input change ---");
+
+        var id = 0;
+        var card_id = $("#card_id").val();
+        console.log("id: " + id + " - card_id: " + card_id);
+
+        $("#submit_button_add_card").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_card_exists') !!}",
+            data = {
+                id: id,
+                card_id: card_id
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#submit_button_add_card").addClass("disabled");
+                        $("#errors_ul_add_card").children("#card_id_error_li").remove();
+                        $("#errors_ul_add_card").append(
+                            $("<li></li>").attr("id", "card_id_error_li").text("Card ID already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_add_card").children("#card_id_error_li").remove();
+                        if(! $("#errors_ul_add_card").is(":parent")){
+                            $("#submit_button_add_card").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#reset_button_add_card").on("click", function(){
+    $("#errors_ul_add_card").empty();
+    $("#submit_button_add_card").removeClass("disabled");
+});
+
+</script>
                             </form>
 
                         </div>
@@ -186,6 +233,9 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" action="addAdminCard" id="adminCardForm">
                                 {!! csrf_field() !!}
+                                <div id="errors_div_add_admin_card" class="form-group">
+                                    <ul id="errors_ul_add_admin_card" style="color: red;"></ul>
+                                </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="" class="col-sm-3 control-label">ID: <span
@@ -216,14 +266,57 @@
                                 <div class="form-group">
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
-                                        <button type="submit" class="btn-success btn" form="adminCardForm">Add Admin
+                                        <button id="submit_button_add_admin_card" type="submit" class="btn-success btn" form="adminCardForm">Add Admin
                                             Card
                                         </button>
-                                        <button type="reset" class="btn-inverse btn">Reset</button>
+                                        <button id="reset_button_add_admin_card" type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
 
                                 </div>
 
+<script>
+
+    $("#cardID").on("change", function(event){
+        console.log("--- cardID input change ---");
+
+        var id = 0;
+        var card_id = $("#cardID").val();
+        console.log("id: " + id + " - card_id: " + card_id);
+
+        $("#submit_button_add_admin_card").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_card_exists') !!}",
+            data = {
+                id: id,
+                card_id: card_id
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#submit_button_add_admin_card").addClass("disabled");
+                        $("#errors_ul_add_admin_card").children("#admin_card_id_error_li").remove();
+                        $("#errors_ul_add_admin_card").append(
+                            $("<li></li>").attr("id", "admin_card_id_error_li").text("Card ID already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_add_admin_card").children("#admin_card_id_error_li").remove();
+                        if(! $("#errors_ul_add_admin_card").is(":parent")){
+                            $("#submit_button_add_admin_card").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#reset_button_add_admin_card").on("click", function(){
+    $("#errors_ul_add_admin_card").empty();
+    $("#submit_button_add_admin_card").removeClass("disabled");
+});
+
+</script>
                             </form>
 
                         </div>
