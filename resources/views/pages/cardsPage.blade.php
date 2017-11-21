@@ -15,7 +15,7 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID: <span
+                                        <label for="" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control1" id="card_id" name="card_id"
@@ -24,7 +24,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span
+                                        <label for="" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control1" name="card_name" id="shopUrl"
@@ -33,7 +33,7 @@
                                     </div>
                                     {{--Choose cat--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Belongs to: <span
+                                        <label for="" class="col-sm-3 control-label">Belongs to: <span
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
@@ -52,7 +52,7 @@
                                     </div>
                                     {{--Choose which box to open--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox: <span
+                                        <label for="" class="col-sm-3 control-label">Opens foodbox: <span
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
@@ -94,7 +94,7 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID: </label>
+                                        <label for="" class="col-sm-3 control-label">ID: </label>
                                         <div class="col-sm-9">
                                             <input type="hidden" id="to_id_old" value="">
                                             <input type="hidden" id="from_card_row" value="">
@@ -106,7 +106,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span
+                                        <label for="" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control1" name="card_name" id="to_card_name"
@@ -115,7 +115,7 @@
                                     </div>
                                     {{--Choose cat--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Belongs to: <span
+                                        <label for="" class="col-sm-3 control-label">Belongs to: <span
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
@@ -134,7 +134,7 @@
                                     </div>
                                     {{--Choose which box to open--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Opens foodbox: <span
+                                        <label for="" class="col-sm-3 control-label">Opens foodbox: <span
                                                 style="color: red;">*</span></label>
                                         <!--Full dropdown without ajax-->
                                         <div class="col-sm-9">
@@ -188,7 +188,7 @@
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID: <span
+                                        <label for="" class="col-sm-3 control-label">ID: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_id" class="form-control1" id="cardID"
@@ -199,7 +199,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span
+                                        <label for="" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_name" class="form-control1" id="shopUrl"
@@ -240,8 +240,7 @@
                                     <div class="form-group">
                                         <input type="hidden" id="to_id_old_Admin" value="">
                                         <input type="hidden" id="from_card_row_Admin" value="">
-                                        <label for="focusedinput" class="col-sm-3 control-label">ID: <span
-                                                style="color: red;">*</span></label>
+                                        <label for="" class="col-sm-3 control-label">ID: </label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_id" class="form-control1" id="to_id_Admin"
                                                    pattern="\b\d{3}-\d{3}-\d{3}-\d{3}-\d{3}\b" placeholder=""
@@ -251,7 +250,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span
+                                        <label for="to_card_name_Admin" class="col-sm-3 control-label">Name: <span
                                                 style="color: red;">*</span></label>
                                         <div class="col-sm-9">
                                             <input type="text" name="card_name" class="form-control1"
@@ -296,7 +295,7 @@
             <hr>
 
             {{--Tabs for tables--}}
-            <div class="grid_3 grid_5">
+            <div id="Table" class="grid_3 grid_5">
                 <div class="row" style="padding-bottom: 10px">
                     <h4>Registered cards:</h4>
                 </div>
@@ -676,7 +675,9 @@ $(document).ready(cards_table_data);
                     console.log("got back forID" + this.caller);
                     console.log($('#card_row_' + this.caller));
                     cards_table_data();
-                    scrollToAnchor('card_row_' + this.caller);
+//                    scrollToAnchor('card_row_' + this.caller);
+                    scrollToAnchor('Table');
+
 
                 },
                 fail: function (jqXHR, textStatus, errorThrown) {
@@ -724,7 +725,8 @@ $(document).ready(cards_table_data);
                     console.log("got back forID" + this.caller);
                     console.log($('#card_row_' + this.caller));
                     cards_table_data();
-                    scrollToAnchor('card_row_' + this.caller);
+//                    scrollToAnchor('card_row_' + this.caller);
+                    scrollToAnchor('Table');
 
                 },
                 fail: function (jqXHR, textStatus, errorThrown) {
@@ -732,8 +734,10 @@ $(document).ready(cards_table_data);
                     console.log("ERROR:" + textStatus);
                 }
             })
-            $("#editAdminBlockdBlock").hide();
-            $("#addAdminBlockBlock").show();
+
+            $("#editAdminBlock").hide();
+            $("#addAdminBlock").show();
+            $("#cardID").blur();
         });
 
         //Anchor
