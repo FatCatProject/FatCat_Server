@@ -90,7 +90,7 @@
                     <h4 class="blank1">Edit cat card:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="addCard" id="addCardForm">
+                            <form class="form-horizontal" method="POST" action="addCard" id="addCardFormEdit">
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -234,7 +234,7 @@
                     <h4 class="blank1">Edit admin card:</h4>
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
-                            <form class="form-horizontal" method="POST" action="addAdminCard" id="adminCardForm">
+                            <form class="form-horizontal" method="POST" action="addAdminCard" id="adminCardFormEdit">
                                 {!! csrf_field() !!}
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -278,7 +278,7 @@
 
                                     <div class="col-sm-5" style="margin:20px 0 0 15px">
                                         <button id="updateAdminCardBtn" type="submit" class="btn-success btn"
-                                                form="adminCardForm">Update Admin
+                                                form="">Update Admin
                                             Card
                                         </button>
                                         <button id="cancelBtnAdmin" type="reset" class="btn-inverse btn">Cancel</button>
@@ -734,10 +734,8 @@ $(document).ready(cards_table_data);
                     console.log("ERROR:" + textStatus);
                 }
             })
-
             $("#editAdminBlock").hide();
             $("#addAdminBlock").show();
-            $("#cardID").blur();
         });
 
         //Anchor
