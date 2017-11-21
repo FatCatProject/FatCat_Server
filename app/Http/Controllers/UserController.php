@@ -29,7 +29,10 @@ class UserController extends Controller
         $current_user->last_name = $request->last_name;
         $current_user->country = $request->country;
         $current_user->phone = $request->phone_number;
-
+        if ($request->cat_bd == "on")
+            $current_user->bd_reminder = "1";
+        else
+            $current_user->bd_reminder = "0";
         if ($request->buy_food == "on")
             $current_user->buy_food_reminder = "1";
         else

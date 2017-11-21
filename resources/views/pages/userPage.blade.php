@@ -93,7 +93,7 @@
                                     {{--reminders / mail notifications--}}
                                     <div class="form-group">
                                         <label for="checkbox" class="col-sm-7 control-label">Reminder to buy food when
-                                            only 10% is left :</label>
+                                            less then 1 kg left :</label>
                                         <div class="col-sm-5">
                                             @if($current_user->buy_food_reminder == 1)
                                                 <div class="checkbox-inline"><label><input type="checkbox"
@@ -103,6 +103,21 @@
                                             @else
                                                 <div class="checkbox-inline"><label><input type="checkbox"
                                                                                            name="buy_food">Yes</label>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkbox" class="col-sm-7 control-label">Reminder day before a cat's birthday :</label>
+                                        <div class="col-sm-5">
+                                            @if($current_user->bd_reminder == 1)
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="cat_bd"
+                                                                                           checked="checked">Yes</label>
+                                                </div>
+                                            @else
+                                                <div class="checkbox-inline"><label><input type="checkbox"
+                                                                                           name="cat_bd">Yes</label>
                                                 </div>
                                             @endif
                                         </div>
