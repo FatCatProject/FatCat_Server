@@ -386,5 +386,21 @@ class ShopController extends Controller
         return response()->json(["exists" => $exists]);
     }
 
+    public function checkProductExists(Request $request)
+    {
+        $current_user = Auth::User();
+        $exists = true;
+        try {
+            $current_user->products()
+                ->where("product_name", "=", $request->product_name)
+                ->where("weight", "=", $request->product_weight)
+                ->where("id", "!=", $request->product_id)
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $exists = false;
+        }
+        return response()->json(["exists" => $exists]);
+    }
+
 }
 

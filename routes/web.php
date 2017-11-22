@@ -62,6 +62,8 @@ Route::get('/shopping_page_table_data', 'ShopController@tableData')
     ->middleware('authenticated');
 Route::get('/check_shop', 'ShopController@checkShopExists')->name('check_shop_exists')
     ->middleware('authenticated');
+Route::get('/check_product', 'ShopController@checkProductExists')->name('check_product_exists')
+    ->middleware('authenticated');
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
