@@ -234,7 +234,7 @@ $(document).ready(
                     $("<div></div>").append(
                         $("<div></div>").append(
                             $("<i></i>").append(
-                                $("<img/>").attr("class","myImg").attr("src", foodbox_data[foodbox_idx].profile_picture).css("width", "100px")
+                                $("<img/>").addClass("myImg").attr("src", foodbox_data[foodbox_idx].profile_picture)
                             ).addClass("fa").css({
                                 "width": "150px",
                                 "margin-left": "-30px"

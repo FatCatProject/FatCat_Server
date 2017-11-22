@@ -216,7 +216,7 @@ $("button[type='reset']").on("click", function(){
 });
 </script>
                 <div class="col-sm-5" style="padding: 20px">
-                    <img src="/images/catFood.png" width="100px">
+                    <img src="/images/catFood.png">
                 </div>
             </div>
             <hr>
@@ -239,7 +239,7 @@ $("button[type='reset']").on("click", function(){
                                             <i class="fa" style="width: 150px;"><img
                                                         class="myImg"
                                                         src="{!! $food_pictures[$myFoods[$index]->id] !!}"
-                                                        width="100px"></i>
+                                                ></i>
                                             {{----}}
                                             <div class="stats">
                                                 <input type="hidden" id="foodID" value="{!! $myFoods[$index]->id !!}">
@@ -249,12 +249,12 @@ $("button[type='reset']").on("click", function(){
                                                     </h5>
                                                 </div>
                                                 {{--GramsToADD--}}
-                                                <div hidden class="row gramsToAdd" style="margin: 20px 0px 0px;">
+                                                <div hidden class="row gramsToAdd" style="min-height:55px ;">
                                                         <div class="col-sm-6" style="padding: 0px;">
                                                             <input type="number" id="addFoodWeight" step="any" min="0" max="10000"
                                                                    class="form-control1" id="currentWeight" placeholder="" required>
                                                         </div>
-                                                        <div class="col-sm-2"  style="padding:0px; margin-top: 20px">
+                                                        <div class="col-sm-2">
                                                             <p class="help-block">Grams</p>
                                                         </div>
                                                         <div class="col-sm-4"  style="padding: 0px;">
@@ -266,10 +266,10 @@ $("button[type='reset']").on("click", function(){
 
                                                 </div>
 
-                                                <div class="grow">
+                                                <div class="growFood">
                                                     <p>{!! $myFoods[$index]->food_name !!}</p>
                                                 </div>
-                                                <div class="addBtn row" style="margin:-18px; float: right ">
+                                                <div class="addBtn row" style="margin:-18px; float: right;">
                                                     <ul class="nav nav-pills">
                                                         <li class="add"><a><i
                                                                         class="lnr lnr-plus-circle editValues"

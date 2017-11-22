@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- Stats-->
-                <div class="col-sm-4" style="min-width:500px;">
+                <div class="col-sm-4">
                     <div class="tab-content">
                         <div class="panel panel-warning" style="margin-top:0px"
                              data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
