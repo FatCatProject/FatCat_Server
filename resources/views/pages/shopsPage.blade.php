@@ -13,6 +13,11 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" action="addShop" id="addShop">
                                 {!! csrf_field() !!}
+
+                                <div id="errors_div_add_shop" class="form-group">
+                                    <ul id="errors_ul_add_shop" style="color: red;"></ul>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-9">
@@ -55,11 +60,54 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-9 col-sm-offset-2">
-                                            <button type="submit" class="btn-success btn" form="addShop">Add</button>
-                                            <button type="reset" class="btn-inverse btn">Reset</button>
+                                            <button id="submit_button_add_shop" type="submit" class="btn-success btn" form="addShop">Add</button>
+                                            <button id="reset_button_add_shop" type="reset" class="btn-inverse btn">Reset</button>
                                         </div>
                                     </div>
                                 </div>
+<script>
+
+    $("#shopName").on("change", function(event){
+        console.log("--- shopName input change ---");
+
+        var shop_id = 0;
+        var shop_name = $("#shopName").val();
+        console.log("shop_name: " + shop_name + " - shop_id: " + shop_id);
+
+        $("#submit_button_add_shop").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_shop_exists') !!}",
+            data = {
+                shop_id: shop_id,
+               shop_name: shop_name
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#submit_button_add_shop").addClass("disabled");
+                        $("#errors_ul_add_shop").children("#shop_name_error_li").remove();
+                        $("#errors_ul_add_shop").append(
+                            $("<li></li>").attr("id", "shop_name_error_li").text("Shop already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_add_shop").children("#shop_name_error_li").remove();
+                        if(! $("#errors_ul_add_shop").is(":parent")){
+                            $("#submit_button_add_shop").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#reset_button_add_shop").on("click", function(){
+    $("#errors_ul_add_shop").empty();
+    $("#submit_button_add_shop").removeClass("disabled");
+});
+
+</script>
                             </form>
 
                         </div>
@@ -73,6 +121,11 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" action="addShop" id="addShop">
                                 {!! csrf_field() !!}
+
+                                <div id="errors_div_edit_shop" class="form-group">
+                                    <ul id="errors_ul_edit_shop" style="color: red;"></ul>
+                                </div>
+
                                 <div class="form-group">
                                     <input type="hidden" name="to_shopID" id="to_shopID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
@@ -120,6 +173,49 @@
                                         </div>
                                     </div>
                                 </div>
+<script>
+
+    $("#to_crr_shop_name").on("change", function(event){
+        console.log("--- to_crr_shop_name input change ---");
+
+        var shop_id = $("#to_shopID").val();
+        var shop_name = $("#to_crr_shop_name").val();
+        console.log("shop_name: " + shop_name + " - shop_id: " + shop_id);
+
+        $("#updateBtnShop").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_shop_exists') !!}",
+            data = {
+                shop_id: shop_id,
+                shop_name: shop_name
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#updateBtnShop").addClass("disabled");
+                        $("#errors_ul_edit_shop").children("#shop_name_error_li").remove();
+                        $("#errors_ul_edit_shop").append(
+                            $("<li></li>").attr("id", "shop_name_error_li").text("Shop already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_edit_shop").children("#shop_name_error_li").remove();
+                        if(! $("#errors_ul_edit_shop").is(":parent")){
+                            $("#updateBtnShop").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#cancelBtnShop").on("click", function(){
+    $("#errors_ul_edit_shop").empty();
+    $("#updateBtnShop").removeClass("disabled");
+});
+
+</script>
                             </form>
                         </div>
                     </div>
@@ -137,7 +233,11 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="addProduct" id="addProduct">
                                 {!! csrf_field() !!}
-                                <input type="hidden" value="{{csrf_token()}}" name="_token">
+
+                                <div id="errors_div_add_product" class="form-group">
+                                    <ul id="errors_ul_add_product" style="color: red;"></ul>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-8">
@@ -190,6 +290,50 @@
                                         </div>
                                     </div>
                                 </div>
+<script>
+
+    $("#itemName, #itemWeight").on("change", function(event){
+        console.log("--- itemName, itemWeight input change ---");
+
+        var product_id = 0;
+        var product_name = $("#itemName").val();
+        var product_weight = $("#itemWeight").val();
+        console.log("product_name: " + product_name + " - product_id: " + product_id + " - product_weight: " + product_weight);
+
+        $("#submit_button_add").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_product_exists') !!}",
+            data = {
+                product_id: product_id,
+                product_name: product_name,
+                product_weight: product_weight
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#submit_button_add").addClass("disabled");
+                        $("#errors_ul_add_product").children("#product_name_error_li").remove();
+                        $("#errors_ul_add_product").append(
+                            $("<li></li>").attr("id", "product_name_error_li").text("Product already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_add_product").children("#product_name_error_li").remove();
+                        if(! $("#errors_ul_add_product").is(":parent")){
+                            $("#submit_button_add").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#product_reset_button").on("click", function(){
+    $("#errors_ul_add_product").empty();
+    $("#submit_button_add").removeClass("disabled");
+});
+</script>
                             </form>
 
                         </div>
@@ -205,7 +349,11 @@
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="addProduct" id="addProduct">
                                 {!! csrf_field() !!}
-                                <input type="hidden" value="{{csrf_token()}}" name="_token">
+
+                                <div id="errors_div_edit_product" class="form-group">
+                                    <ul id="errors_ul_edit_product" style="color: red;"></ul>
+                                </div>
+
                                 <div class="form-group">
                                     <input type="hidden" name="to_productID" id="to_productID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
@@ -261,6 +409,50 @@
                                         </div>
                                     </div>
                                 </div>
+<script>
+
+    $("#to_crr_name, #to_crr_weight").on("change", function(event){
+        console.log("--- to_crr_name, to_crr_weight input change ---");
+
+        var product_id = $("#to_productID").val();
+        var product_name = $("#to_crr_name").val();
+        var product_weight = $("#to_crr_weight").val();
+        console.log("product_name: " + product_name + " - product_id: " + product_id + " - product_weight: " + product_weight);
+
+        $("#updateBtnProduct").addClass("disabled");
+        $.getJSON(
+            url = "{!! URL::route('check_product_exists') !!}",
+            data = {
+                product_id: product_id,
+                product_name: product_name,
+                product_weight: product_weight
+            },
+            success = function(data, textStatus, jqXHR){
+                console.log("textStatus: " + textStatus);
+                if(textStatus === "success"){
+                    console.log("data: " + JSON.stringify(data));
+                    if(data.exists){
+                        $("#updateBtnProduct").addClass("disabled");
+                        $("#errors_ul_edit_product").children("#product_name_error_li").remove();
+                        $("#errors_ul_edit_product").append(
+                            $("<li></li>").attr("id", "product_name_error_li").text("Product already exists.")
+                        );
+                    }else{
+                        $("#errors_ul_edit_product").children("#product_name_error_li").remove();
+                        if(! $("#errors_ul_edit_product").is(":parent")){
+                            $("#updateBtnProduct").removeClass("disabled");
+                        }
+                    }
+                }
+            }
+        );
+    });
+
+$("#cancelBtnProduct").on("click", function(){
+    $("#errors_ul_edit_product").empty();
+    $("#updateBtnProduct").removeClass("disabled");
+});
+</script>
                             </form>
 
                         </div>

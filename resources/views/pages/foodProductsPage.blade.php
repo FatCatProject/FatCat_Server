@@ -20,9 +20,9 @@
                                 <div class="col-sm-12">
                                     {{--Product name--}}
                                     <div class="form-group">
-                                        <label for="focusedinput" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
+                                        <label for="food_name_add_input" class="col-sm-3 control-label">Name: <span style="color: red;">*</span></label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control1" name="food_name" id="shopUrl"
+                                            <input type="text" class="form-control1" name="food_name" id="food_name_add_input"
                                                    placeholder="" required>
                                         </div>
                                     </div>
@@ -68,6 +68,44 @@
                                         <button type="reset" class="btn-inverse btn">Reset</button>
                                     </div>
                                 </div>
+<script>
+
+$("#food_name_add_input").on("change", function(event){
+    console.log("--- food_name_add_input change ---");
+
+    var food_id = 0;
+    var food_name = $("#food_name_add_input").val();
+    console.log("food_name: " + food_name + " - food_id: " + food_id);
+
+    $("#submit_button_add").addClass("disabled");
+    $.getJSON(
+        url = "{!! URL::route('check_food_exists') !!}",
+        data = {
+            food_name: food_name,
+            food_id: food_id
+        },
+        success = function(data, textStatus, jqXHR){
+            console.log("textStatus: " + textStatus);
+            if(textStatus === "success"){
+                console.log("data: " + JSON.stringify(data));
+                if(data.exists){
+                    $("#submit_button_add").addClass("disabled");
+                    $("#errors_ul_add").children("#food_name_error_li").remove();
+                    $("#errors_ul_add").append(
+                        $("<li></li>").attr("id", "food_name_error_li").text("Food already exists.")
+                    );
+                }else{
+                    $("#errors_ul_add").children("#food_name_error_li").remove();
+                    if(! $("#errors_ul_add").is(":parent")){
+                        $("#submit_button_add").removeClass("disabled");
+                    }
+                }
+            }
+        }
+    );
+});
+
+</script>
                             </form>
                         </div>
                     </div>
@@ -123,9 +161,47 @@
                                         >
                                             Update Product
                                         </button>
-                                        <button id="cancelEditFoodProductBtn" class="btn-inverse btn">Cancel</button>
+                                        <button id="cancelEditFoodProductBtn" type="button" class="btn-inverse btn">Cancel</button>
                                     </div>
                                 </div>
+<script>
+
+$("#food_name_to_edit").on("change", function(event){
+    console.log("--- food_name_to_edit change ---");
+
+    var food_id = $("#food_id_to_edit").val();
+    var food_name = $("#food_name_to_edit").val();
+    console.log("food_name: " + food_name + " - food_id: " + food_id);
+
+    $("#submit_button_edit").addClass("disabled");
+    $.getJSON(
+        url = "{!! URL::route('check_food_exists') !!}",
+        data = {
+            food_name: food_name,
+            food_id: food_id
+        },
+        success = function(data, textStatus, jqXHR){
+            console.log("textStatus: " + textStatus);
+            if(textStatus === "success"){
+                console.log("data: " + JSON.stringify(data));
+                if(data.exists){
+                    $("#submit_button_edit").addClass("disabled");
+                    $("#errors_ul_edit").children("#food_name_error_li").remove();
+                    $("#errors_ul_edit").append(
+                        $("<li></li>").attr("id", "food_name_error_li").text("Food already exists.")
+                    );
+                }else{
+                    $("#errors_ul_edit").children("#food_name_error_li").remove();
+                    if(! $("#errors_ul_edit").is(":parent")){
+                        $("#submit_button_edit").removeClass("disabled");
+                    }
+                }
+            }
+        }
+    );
+});
+
+</script>
                             </form>
                         </div>
                     </div>
@@ -371,11 +447,11 @@ $("button[type='reset']").on("click", function(){
                 $("#food_name_to_edit").val(foodName);
                 $("#food_id_to_edit").val(id);
                 $("#oldname").val(oldname);
-//                $("#food_profilePicture_to_edit").val(); // TODO
             });
             $("#cancelEditFoodProductBtn").click(function(){
                 $("#addProductBlock").show();
                 $("#editProductBlock").hide();
+                $("#picture_input_edit").val("");
 
             });
         });

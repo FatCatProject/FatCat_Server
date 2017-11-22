@@ -60,6 +60,10 @@ Route::get('/shopping_page_yearly_expenses', 'ShopController@yearlyExpenses')
 Route::get('/shopping_page_table_data', 'ShopController@tableData')
     ->name('shopping_page_table_data')
     ->middleware('authenticated');
+Route::get('/check_shop', 'ShopController@checkShopExists')->name('check_shop_exists')
+    ->middleware('authenticated');
+Route::get('/check_product', 'ShopController@checkProductExists')->name('check_product_exists')
+    ->middleware('authenticated');
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');
@@ -71,6 +75,8 @@ Route::get('/updateAdminCard',['uses' => 'CardController@updateAdminCard'])->mid
 Route::get('/cards_page_table_data', 'CardController@cardsTableData')
     ->name('cards_page_table_data')
     ->middleware('authenticated');
+Route::get('/check_card', 'CardController@checkCardExists')->name('check_card_exists')
+    ->middleware('authenticated');
 
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
@@ -80,6 +86,8 @@ Route::get('/update',['uses' => 'FoodController@update'])->middleware('authentic
 Route::get('/updateWeight',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::post('/editFood',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::get('/check_food', 'FoodController@checkFoodExists')->name('check_food_exists')
+    ->middleware('authenticated');
 
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
 Route::get('/homePage/expenses','HomeController@yearlyExpenses')
