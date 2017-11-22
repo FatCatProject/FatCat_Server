@@ -276,7 +276,7 @@
                     });
                 </script>
                 <!-- Stats-->
-                <div class="col-sm-4" style="min-width:500px;">
+                <div class="col-sm-4">
                     <div class="tab-content">
                         <div class="panel panel-warning" style="margin-top:0px"
                              data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
@@ -306,7 +306,7 @@
                                 </div>
                                 <div class="row" style="margin-left:2px;">
                                     <div class="col-sm-12" style="color: #999; font-size: 13px; margin-bottom: 30px">
-                                        Pick a year to see the expenses for a specific year
+                                        Pick a year to see the expenses
                                     </div>
                                 </div>
                                 <div class="row">
@@ -336,7 +336,7 @@
                                                             new Chart(
                                                                 document.getElementById("bar1").getContext("2d")).Bar(
                                                                 {
-                                                                    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                                                     datasets: [
                                                                         {
                                                                             fillColor: "#00ACED",
@@ -553,8 +553,6 @@
                         class: "myImg",
                         id: "myImg_" + [row.id],
                         src: prescription_pictures[row.id],
-                        width: "50px",
-                        height: "50px",
                         align: "center"
                     }
                 ) : "No prescription picture";

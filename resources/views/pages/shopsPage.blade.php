@@ -130,8 +130,7 @@ $("#reset_button_add_shop").on("click", function(){
                                     <input type="hidden" name="to_shopID" id="to_shopID" value="">
                                     <label for="focusedinput" class="col-sm-3 control-label">Shop name: <span style="color: red;">*</span></label>
                                     <div class="col-sm-9">
-                                        <input id="to_crr_shop_name" type="text" name="shop_name" class="form-control1"
-                                            placeholder="" required/>
+                                        <input id="to_crr_shop_name" type="text" name="shop_name" class="form-control1" placeholder="" required>
                                     </div>
                                 </div>
 
@@ -571,13 +570,13 @@ $("#product_reset_button").on("click", function(){
                                 <tr id="shop_row_{!! $shops[$index]->id !!}">
                                     {{--the url has to be a cklicable LINK, put the same value in HREF as the address itself--}}
                                     <input id="shopID" type="hidden" value="{!! $shops[$index]->id !!}">
-                                    <td id="crr_shop_name" class="">{!! $shops[$index]->shop_name !!}</td>
-                                    <td id="crr_url" class=""><a href="{!! $shops[$index]->url !!}"
-                                                                   target="_blank">{!! $shops[$index]->url !!}</a>
+                                    <td id="crr_shop_name" class="">{!! $shops[$index]->shop_name ?? ""!!}</td>
+                                    <td id="crr_url" class="" style=""><a href="{!! $shops[$index]->url !!}"
+                                                                   target="_blank">{!! $shops[$index]->url ?? ""!!}</a>
                                     </td>
-                                    <td id="crr_address" class="">{!! $shops[$index]->address !!}</td>
-                                    <td id="crr_open_hours" class="">{!! $shops[$index]->hours !!}</td>
-                                    <td id="crr_number" class="">{!! $shops[$index]->phone !!}</td>
+                                    <td id="crr_address" class="">{!! $shops[$index]->address ?? "" !!}</td>
+                                    <td id="crr_open_hours" class="">{!! $shops[$index]->hours ?? "" !!}</td>
+                                    <td id="crr_number" class="">{!! $shops[$index]->phone ?? ""!!}</td>
                                     <td>
                                         <ul id="btnsShop" class="nav nav-pills">
                                             <li class="editBtnShop"><a href="#Edit"><i class="lnr lnr-pencil"
@@ -635,8 +634,6 @@ $("#product_reset_button").on("click", function(){
                                         <td class=""><img
                                                     class="myImg"
                                                     src="{!! $pictures[$products[$i]->id] !!}"
-                                                    width="50px"
-                                                    height="50px"
                                                     align="center"
                                             ></td>
                                     @endif
@@ -835,11 +832,11 @@ $("#product_reset_button").on("click", function(){
 
                     console.log("got back forID" + this.caller);
                     console.log(  $('#shop_row_' + this.caller));
-                    $('#shop_row_' + this.caller).find('#crr_shop_name').text(data.newName);
-                    $('#shop_row_' + this.caller).find('#crr_url').html('<a href='+data.newUrl+' target="_blank">'+data.newUrl+'<a/>');
-                    $('#shop_row_' + this.caller).find('#crr_address').text(data.newAddress);
-                    $('#shop_row_' + this.caller).find('#crr_open_hours').text(data.newHours);
-                    $('#shop_row_' + this.caller).find('#crr_number').text(data.newPhone);
+                    $('#shop_row_' + this.caller).find('#crr_shop_name').text(data.newName || "");
+                    $('#shop_row_' + this.caller).find('#crr_url').html('<a href='+(data.newUrl || "")+' target="_blank">'+(data.newUrl || "")+'<a/>');
+                    $('#shop_row_' + this.caller).find('#crr_address').text(data.newAddress || "");
+                    $('#shop_row_' + this.caller).find('#crr_open_hours').text(data.newHours || "");
+                    $('#shop_row_' + this.caller).find('#crr_number').text(data.newPhone || "");
                     scrollToAnchor('shop_row_' + this.caller);
 
                 },

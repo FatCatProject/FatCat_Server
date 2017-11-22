@@ -31,7 +31,7 @@
 
                                 <div class="form-group">
                                     <label for="txtarea1" class="col-sm-2 control-label">Description:</label>
-                                    <div class="col-sm-8"><textarea name="description" id="description"
+                                    <div class="col-sm-9"><textarea name="description" id="description"
                                                                     cols="50"
                                                                     rows="10" class="form-control1"
                                                                     style="min-height: 70px"></textarea></div>
@@ -40,8 +40,8 @@
                                 <div class="form-group">
                                     <label for="smallinput" class="col-sm-2 control-label label-input-sm">Price: <span
                                             style="color: red;">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input type="number" name="price" step="any" min="0" max="999"
+                                    <div class="col-sm-9">
+                                        <input type="number" name="price" step="any" min="0" max="9999"
                                                class="form-control1 input-sm"
                                                id="vetLogPrice" placeholder="" required>
                                     </div>
@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- Stats-->
-                <div class="col-sm-4" style="min-width:500px;">
+                <div class="col-sm-4">
                     <div class="tab-content">
                         <div class="panel panel-warning" style="margin-top:0px"
                              data-widget="{&quot;draggable&quot;: &quot;false&quot;}"
@@ -188,7 +188,7 @@ function expenses_bar_chart(){
                 new Chart(
                     document.getElementById("bar1").getContext("2d")).Bar(
                         {
-                            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                             datasets: [
                                 {
                                     fillColor: "#00ACED",

@@ -22,10 +22,10 @@
                                         --}}
                                         <i class="fa" style="width: 150px; margin-left: -30px"><img class="myImg"
                                                 src={!! $foodbox_data[$index]['profile_picture'] !!}
-                                                    width="100px"></i>
+                                                   ></i>
                                         <div align="center" class="stats"
                                              style="padding-bottom: 10px;min-height: 250px">
-                                            <div class="grow groww">
+                                            <div class="groww">
                                                 <p id="box_{!! $foodbox_data[$index]['id']!!}_title">{!! $foodbox_data[$index]['foodbox_name']!!}</p>
                                             </div>
 
@@ -33,13 +33,13 @@
                                                 <input type="hidden" id="crr_id" class="crr_id" value="{!! $foodbox_data[$index]['id']!!}">
                                                 <table class="catCardTable" style="margin-top: 30px">
                                                     <tbody>
-                                                    <tr>
-                                                        <td>Unique ID:</td>
-                                                        <td>{!! $foodbox_data[$index]['foodbox_id']!!}</td>
-                                                    </tr>
+                                                    {{--<tr>--}}
+                                                        {{--<td>Unique ID:</td>--}}
+                                                        {{--<td>{!! $foodbox_data[$index]['foodbox_id']!!}</td>--}}
+                                                    {{--</tr>--}}
                                                     <tr>
                                                         <td>Box name:</td>
-                                                        <td id="box_{!! $foodbox_data[$index]['id']!!}_name">{!! $foodbox_data[$index]['foodbox_name']!!}</td>
+                                                        <td style="word-break:break-all" id="box_{!! $foodbox_data[$index]['id']!!}_name">{!! $foodbox_data[$index]['foodbox_name']!!}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Food type:</td>

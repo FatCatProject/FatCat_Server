@@ -23,7 +23,7 @@
                     <div id="ratio_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
-                        <canvas id="pie" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
+                        <canvas id="pie" height="250" width="250" style="width: 470px; height: 315px;"></canvas>
                     </div>
                 </div>
 <script>
@@ -118,7 +118,7 @@ function expenses_bar_chart(){
                 new Chart(
                     document.getElementById("bar1").getContext("2d")).Bar(
             {
-                labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [
             {
                 fillColor: "#00ACED",
@@ -160,7 +160,7 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                     <div id="doughnut_legend" class="legend" style="margin:0 0 0 25px">
                     </div>
                     <div align="center">
-                        <canvas id="doughnut" height="200" width="200" style="width: 100px; height: 100px;"></canvas>
+                        <canvas id="doughnut" height="250" width="250" style="width: 470px; height: 315px;"></canvas>
                     </div>
 
                     <!-- The Modal -->
@@ -234,7 +234,7 @@ $(document).ready(
                     $("<div></div>").append(
                         $("<div></div>").append(
                             $("<i></i>").append(
-                                $("<img/>").attr("class","myImg").attr("src", foodbox_data[foodbox_idx].profile_picture).css("width", "100px")
+                                $("<img/>").addClass("myImg").attr("src", foodbox_data[foodbox_idx].profile_picture)
                             ).addClass("fa").css({
                                 "width": "150px",
                                 "margin-left": "-30px"
