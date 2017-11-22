@@ -60,6 +60,8 @@ Route::get('/shopping_page_yearly_expenses', 'ShopController@yearlyExpenses')
 Route::get('/shopping_page_table_data', 'ShopController@tableData')
     ->name('shopping_page_table_data')
     ->middleware('authenticated');
+Route::get('/check_shop', 'ShopController@checkShopExists')->name('check_shop_exists')
+    ->middleware('authenticated');
 
 Route::get('/cardsPage', 'CardController@cardsPage')->middleware('authenticated');
 Route::post('/addAdminCard',['uses' => 'CardController@storeAdminCard'])->middleware('authenticated');

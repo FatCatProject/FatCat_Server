@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Shop;
 use App\ShoppingLog;
+use Carbon\Carbon;
+use DateTime;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DateTime;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\QueryException;
 
 class ShopController extends Controller
 {
@@ -368,6 +369,21 @@ class ShopController extends Controller
                 "shopping_logs" => $response_shopping_logs
             ]
         );
+    }
+
+    public function checkShopExists(Request $request)
+    {
+        $current_user = Auth::User();
+        $exists = true;
+        try {
+            $current_user->shops()
+                ->where("shop_name", "=", $request->shop_name)
+                ->where("id", "!=", $request->shop_id)
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $exists = false;
+        }
+        return response()->json(["exists" => $exists]);
     }
 
 }
