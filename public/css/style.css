@@ -4,6 +4,15 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+.gramsToAdd{
+	margin: 20px 0px 0px;
+}
+.myImg{
+	height: 100px;
+}
+td .myImg{
+	height: 50px;
+}
 .catCardTable tr{
 	text-align: left;
 
@@ -1929,20 +1938,40 @@ i.pull-left.fa.fa-bolt.icon-rounded {
 .grow{
 	 position: absolute;
 	 top:47%;
-	 left:30%;
+	 left:25%;
 	 background:#8BC34A;
 	 /*width: 95px;*/
-	 width: 40%;
+	 width: 50%;
 	 height: 30px;
 	 padding: .4em 0 0;
  }
 .groww{
 	position: absolute;
 	top:30%;
-	left:30%;
+	left:25%;
 	background:#8BC34A;
 	/*width: 95px;*/
-	width: 40%;
+	width: 50%;
+	height: 30px;
+	padding: .4em 0 0;
+}
+.growww{
+	 position: absolute;
+	 top:30%;
+	 left:25%;
+	 background:#8BC34A;
+	 /*width: 95px;*/
+	 width: 50%;
+	 height: 30px;
+	 padding: .4em 0 0;
+ }
+.growFood{
+	position: absolute;
+	top:45%;
+	left:15%;
+	background:#8BC34A;
+	/*width: 95px;*/
+	width: 70%;
 	height: 30px;
 	padding: .4em 0 0;
 }
@@ -2029,6 +2058,18 @@ canvas.overlay {
 	text-transform: uppercase;
 }
 .groww p{
+	color: #fff;
+	margin: 0;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+.growww p{
+	color: #fff;
+	margin: 0;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+.growFood p{
 	color: #fff;
 	margin: 0;
 	font-size: 11px;
@@ -5295,6 +5336,12 @@ p.creating{
 	.groww {
 		left:32%;
 	}
+	.growww {
+		 left:32%;
+	 }
+	.growFood {
+		left:32%;
+	}
 	.r3_counter_box h5 {
 		font-size: 2.2em;
 	}
@@ -5661,6 +5708,14 @@ p.creating{
 		top: 41%;
 	}
 	.groww {
+		 /*left: 100%;*/
+		 top: 17%;
+	 }
+	.growww {
+		/*left: 100%;*/
+		top: 17%;
+	}
+	.growFood {
 		/*left: 100%;*/
 		top: 17%;
 	}
@@ -6107,6 +6162,12 @@ p.creating{
 	.groww {
 		left: 43%;
 	}
+	.growww {
+		left: 43%;
+	}
+	.growFood {
+		left: 43%;
+	}
 	.switch-right {
 		width: 100%;
 		float: none;
@@ -6358,6 +6419,21 @@ p.creating{
 	.groww {
 		left: 41%;
 	}
+	.growww {
+		left: 41%;
+	}
+	.growFood {
+		left: 41%;
+	}
+	/*Natalie*/
+	.table-striped td{
+		word-wrap:break-word;
+		max-width: 40px;
+	}
+	.table-striped th{
+		 word-wrap:break-word;
+		 max-width: 40px;
+	 }
 }
 @media (max-width:655px){
 	.social_icons {
@@ -6790,6 +6866,12 @@ p.creating{
 	.groww {
 		left: 38%;
 	}
+	.growww {
+		left: 38%;
+	}
+	.growFood {
+		left: 38%;
+	}
 	.left-side-collapsed .logo-icon {
 		height: 140px;
 	}
@@ -6998,13 +7080,57 @@ p.creating{
 	.stats {
 		padding: 1.2em;
 	}
+	/*mobile left margins*/
 	.grow {
-		 left: 35%;
-		 top: 37%;
+		 left: 58%;
+		 top: 30%;
+		 width: 42%;
 	 }
+	.myImg{
+		height: 63px;
+	}
 	.groww {
-		/*left: 35%;*/
-		top: 10%;
+		left: 60%;
+		top: 15%;
+		width: 40%;
+	}
+	.growww {
+		left: 60%;
+		top: 11%;
+		width: 40%;
+	}
+	.growFood {
+		left: 60%;
+		top: 30%;
+		width: 40%;
+	}
+	.stats{
+		min-height: 115px;
+	}
+	.gramsToAdd .col-sm-6{
+		float: left;
+		padding: 0px;
+		margin: 0px;
+		width: 50%;
+	}
+	.gramsToAdd nav-pills{
+		float: left;
+		padding: 0px;
+		margin: 0px;
+	}
+	.gramsToAdd .help-block{
+		margin-top: 25px;
+		margin-left: 2px;
+		float: left;
+	}
+	.r3_counter_box h5{
+		margin-top: 20px;
+	}
+	h3{
+		font-size: 15px;
+	}
+	td .myImg{
+		height: 30px;
 	}
 	.activity-img1 {
 		width: 39%;
@@ -7355,6 +7481,12 @@ p.creating{
 	.groww p {
 		font-size: 10px;
 	}
+	.growww p {
+		font-size: 10px;
+	}
+	.growFood p {
+		font-size: 10px;
+	}
 	.grow {
 		width: 75px;
 		height: 24px;
@@ -7366,6 +7498,22 @@ p.creating{
 		height: 24px;
 		padding: .3em 0 0;
 		top: 30%;
+	}
+	.growww {
+		width: 75px;
+		height: 24px;
+		padding: .3em 0 0;
+		top: 30%;
+	}
+	.growFood {
+		width: 75px;
+		height: 24px;
+		padding: .3em 0 0;
+		top: 30%;
+	}
+	#crr_url{
+		word-wrap:break-word;
+		max-width: 10px;
 	}
 	.switch-right-grid1 {
 		padding: 1em 1em 0;

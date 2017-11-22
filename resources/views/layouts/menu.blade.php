@@ -16,7 +16,7 @@
         <ul class="nav nav-pills nav-stacked custom-nav">
 
             <li id="first_menu_li"
-                class="{!! (Request::is('userPage') or Request::is('cardsPage') or Request::is('foodProductsPage')) ? 'act' : ''!!}"
+                class="menu-list {!! (Request::is('userPage') or Request::is('cardsPage') or Request::is('foodProductsPage')) ? 'act' : ''!!}"
             ><a href="#"><i class="lnr lnr-cog"></i>
                     <span>Settings</span></a>
                 <ul class="sub-menu-list">

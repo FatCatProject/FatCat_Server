@@ -19,11 +19,10 @@
                             <i class="fa" style="width: 150px; margin-left: -30px">
                                 <img class="myImg"
                                     src="{!! $cat_profile_pictures[$allMyCats[$index]['cat_name']] !!}"
-                                    width="100px"
                                 >
                             </i>
                             <div  align="center" class="stats" style="padding-bottom: 10px; min-height: 250px">
-                                <div class="groww">
+                                <div class="growww">
                                     <p>{!! $allMyCats[$index]['cat_name']!!}</p>
                                 </div>
 

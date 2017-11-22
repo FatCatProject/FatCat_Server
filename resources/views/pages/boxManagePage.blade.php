@@ -22,7 +22,7 @@
                                         --}}
                                         <i class="fa" style="width: 150px; margin-left: -30px"><img class="myImg"
                                                 src={!! $foodbox_data[$index]['profile_picture'] !!}
-                                                    width="100px"></i>
+                                                   ></i>
                                         <div align="center" class="stats"
                                              style="padding-bottom: 10px;min-height: 250px">
                                             <div class="groww">
