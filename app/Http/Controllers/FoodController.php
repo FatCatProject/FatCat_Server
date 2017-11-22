@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\QueryException;
 use App\Food;
+use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -183,4 +184,20 @@ class FoodController extends Controller
             return response("", 204);
         }
     }
+
+    public function checkFoodExists(Request $request){
+        $current_user = Auth::User();
+        $exists = true;
+        try {
+            $current_user->foods()
+                ->where("food_name", "=", $request->food_name)
+                ->where("id", "!=", $request->food_id)
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $exists = false;
+        }
+        return response()->json(["exists" => $exists]);
+    }
+
 }
+

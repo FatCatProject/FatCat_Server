@@ -73,6 +73,7 @@ Route::get('/cards_page_table_data', 'CardController@cardsTableData')
     ->middleware('authenticated');
 Route::get('/check_card', 'CardController@checkCardExists')->name('check_card_exists')
     ->middleware('authenticated');
+
 Route::get('/deleteFood/{id}','FoodController@delete')
     ->name('deleteFood')
     ->middleware('authenticated');
@@ -81,6 +82,8 @@ Route::get('/update',['uses' => 'FoodController@update'])->middleware('authentic
 Route::get('/updateWeight',['uses' => 'FoodController@updateWeight'])->middleware('authenticated');
 Route::post('/addFood',['uses' => 'FoodController@store'])->middleware('authenticated');
 Route::post('/editFood',['uses' => 'FoodController@update'])->middleware('authenticated');
+Route::get('/check_food', 'FoodController@checkFoodExists')->name('check_food_exists')
+    ->middleware('authenticated');
 
 Route::get('/homePage', 'HomeController@homePage')->middleware('authenticated');
 Route::get('/homePage/expenses','HomeController@yearlyExpenses')
