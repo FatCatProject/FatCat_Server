@@ -102,8 +102,7 @@
             </div>
         </div>
     </div>
-@endsection
-<script>
+    <script>
     function enableBtn(){
         document.getElementById("registerBtn").disabled = false;
     }
@@ -111,3 +110,5 @@
         document.getElementById("registerBtn").disabled = true;
     }
 </script>
+@endsection
+
