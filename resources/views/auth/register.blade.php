@@ -83,13 +83,15 @@
                                 <div class="col-md-6 col-md-offset-4">
 
                                     <div class="g-recaptcha"
-                                         data-sitekey="6LfemTkUAAAAAIvFKfl4JHZeSmfveGUl4isBV2JN"></div>
+                                         data-sitekey="6LfemTkUAAAAAIvFKfl4JHZeSmfveGUl4isBV2JN"
+                                         data-callback="enableBtn"
+                                         data-expired-callback="disableBtn"></div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="registerBtn" disabled>
                                         Register
                                     </button>
                                 </div>
@@ -101,3 +103,11 @@
         </div>
     </div>
 @endsection
+<script>
+    function enableBtn(){
+        document.getElementById("registerBtn").disabled = false;
+    }
+    function disableBtn() {
+        document.getElementById("registerBtn").disabled = true;
+    }
+</script>
