@@ -292,7 +292,7 @@ $("button[type='reset']").on("click", function(){
 });
 </script>
                 <div class="col-sm-5" style="padding: 20px">
-                    <img src="/images/catFood.png">
+                    <img src="/images/gen_food.png">
                 </div>
             </div>
             <hr>

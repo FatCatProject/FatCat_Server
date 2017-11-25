@@ -143,9 +143,9 @@
                                                 id="yearly_expenses_datepicker"
                                                 name="dateYear"
                                                 placeholder="YYYY"
-                                                value="{!! (new DateTime())->format('Y') !!}"
-                                                style="width: 60px; "
+                                                style="width: 60px;"
                                                 type="text"
+                                                value="{!! (new DateTime())->format('Y') !!}"
                                             />
                                         </div>
                                     </div>
@@ -201,7 +201,7 @@ function expenses_bar_chart(){
                     var expenses_sum = data.reduce(function(previous, current){ return previous + current; });
                     $("#expenses_sum_h").text("Total expenses: " + expenses_sum + " USD");
             }
-            $("#bar1").css("height","207px").css("width","450px").css("font-size","10px");
+            $("#bar1").css("height", "155px").css("width", "390px").css("font-size", "10px");
         }
     );
 }
@@ -239,7 +239,7 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                             </div>
                         </div>
                         <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
-                            Pick a month or view 10 last purchases
+                            Pick a month to view purchases
                         </div>
                     </div>
                     <table id="logs_table" class="table table-striped">

@@ -8,7 +8,7 @@
             <h3 class="blank1">{!! $cat['cat_name'] !!} information</h3>
         </div>
 
-        <div class="graph_box">
+        <div class="graph_box home">
             {{-- Chart1 Daily consumption --}}
             <div class="col-sm-4">
                 <div class="grid_1">
@@ -103,7 +103,7 @@ $("#daily_consumption_datepicker").on("changeDate", daily_consumption);
             {{-- Chart2 Daily --}}
             <div class="col-sm-4">
                 <div class="grid_1">
-                    <div class="switch-right-grid">
+                    <div class="">
                         <div class="col-lg-2">
                             <div class="input-group" style="margin: 15px 0px 0px 15px; width: 20%">
                                 <div class="input-group-addon">
@@ -288,7 +288,7 @@ $("#monthly_logs_datepicker").on("changeDate", monthly_logs);
                     </div>
                 </div>
                 <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
-                    Pick a month or view 10 last visits
+                    Pick a month or view 10 last feeding logs
                 </div>
             </div>
                 {{--</div>--}}

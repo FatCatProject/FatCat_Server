@@ -1,20 +1,10 @@
 @extends('layouts.app')
-{{--@include('layouts.styling')--}}
 @section('content')
 <div class="container">
-    <div class="row" align="center">
-        <div class="col-md-5">
-            <img src="/images/foodBowl.png" width="80px" style="margin-top: 72px; margin-left: 5%">
-        </div>
-        <div class="col-md-6">
-            <img src="/images/fatso.gif" width="200px" style="margin-left: 20%">
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading" style="margin-top: -34px">Login</div>
-
+                <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
@@ -66,13 +56,14 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+                                <a href="https://simonscat.com/" target="_blank"><img align="right" src="/images/simons_box_1.gif" style="width: 35%"></a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
 </div>
