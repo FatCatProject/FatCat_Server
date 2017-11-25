@@ -18,7 +18,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body background="/images/paws_many.png" style="background-color: #FFFFFF;">
+<body background="" style="background-color: #F8F8F8;">
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top" style="background-color: #8BC34A">
             <div class="container">
@@ -34,7 +34,6 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}" style="font-family: 'Cabin', sans-serif;">
-{{--                        {{ config('FatCat', 'FatCat') }}--}}
                         <span style="font-size:1.5em; color: #FFFFFF;">Fat </span><i style="font-size:1.5em; color: #000000;"class="lnr lnr-paw"></i><span style="font-size:1.5em; color: #000000";> Cat</span>
 
                     </a>

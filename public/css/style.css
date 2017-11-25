@@ -4,6 +4,9 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+.home .grid_1{
+	max-height: 284px
+}
 .gramsToAdd{
 	margin: 20px 0px 0px;
 }
@@ -818,6 +821,9 @@ ul.dropdown-menu.drp-mnu li {
 	.hidden-xs{display:none!important}
 	.visible-xs {
 		display: none !important;
+	}
+	.home .grid_1{
+		max-height: 1000px;
 	}
 }
 @media (min-width:768px) and (max-width:991px){
@@ -7081,6 +7087,9 @@ p.creating{
 		padding: 1.2em;
 	}
 	/*mobile left margins*/
+	.home .grid_1{
+		max-height: 1000px;
+	}
 	.grow {
 		 left: 58%;
 		 top: 30%;

@@ -397,7 +397,7 @@
                             </div>
                         </div>
                         <div class="col-sm-10" style="margin:8px 0 0 25px;color: #999; font-size: 13px;">
-                            Pick a month or view 10 last visits
+                            Pick a month to view vet visits
                         </div>
                     </div>
                     <table id="logs_table" class="table table-striped">

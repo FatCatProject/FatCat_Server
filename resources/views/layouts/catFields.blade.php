@@ -227,7 +227,7 @@ $("#breed").on("change", function () {
                 <div class="col-sm-8">
                     <input
                         class="form-control1 input-sm"
-                        max="25000"
+                        max="50"
                         min="0"
                         name="current_weight"
                         placeholder="Enter weight in Kg"
@@ -246,7 +246,7 @@ $("#breed").on("change", function () {
                 <div class="col-sm-8">
                     <input
                         class="form-control1 input-sm"
-                        max="25000"
+                        max="50"
                         min="0"
                         name="target_weight"
                         placeholder="Enter weight in Kg"

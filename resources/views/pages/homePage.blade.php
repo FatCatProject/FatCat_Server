@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
+        <div class="row home">
             {{--chart 1--}}
             <div class="col-sm-4">
                 <div class="grid_1">
@@ -140,7 +140,7 @@ $("#yearly_expenses_datepicker").on("changeDate", expenses_bar_chart);
                 </div>
             </div>
             {{--chart 3--}}
-            <div class="col-sm-4">
+            <div class="col-sm-4" >
                 <div class="grid_1">
                     <div class="row">
                         <div class="col-lg-2">
@@ -219,6 +219,7 @@ function visits_doughnut(){
 $("#vet_visits_datepicker").on("changeDate", visits_doughnut);
 // $(document).ready(ratioPie);
 </script>
+
                 </div>
             </div>
         </div>
