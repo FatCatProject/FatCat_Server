@@ -192,6 +192,13 @@ class bbox extends Controller
                 if ($tmp_feeding_log->wasRecentlyCreated) {
                     array_push($created_ids, $tmp_feeding_log->id);
                 }
+
+                if(!empty($tmp_feeding_log->foodbox->food)){
+                    $tmp_feeding_log->foodbox->food->weight_left -=
+                        ($tmp_feeding_log->start_weight - $tmp_feeding_log->end_weight);
+                    $tmp_feeding_log->foodbox->food->weight_left = $tmp_feeding_log->foodbox->food->weight_left > 0 ?
+                        $tmp_feeding_log->foodbox->food->weight_left : 0;
+                }
             }
 
         } catch (QueryException $e) {
@@ -210,6 +217,9 @@ class bbox extends Controller
         foreach ($foodboxes_to_save as $foodbox) {
             $foodbox->last_seen = $now;
             $foodbox->save();
+            if(!empty($foodbox->food)){
+                $foodbox->food->save();
+            }
         }
         return response("", 201);
     }
