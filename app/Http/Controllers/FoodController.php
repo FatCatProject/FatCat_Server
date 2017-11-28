@@ -108,7 +108,11 @@ class FoodController extends Controller
             return response("Product not found", 204);
 
         $newWeight = $my_food->weight_left + $request->addFoodWeight;
-        $my_food->weight_left = $newWeight;
+        if($newWeight > 0){
+            $my_food->weight_left = $newWeight;
+        }
+        else
+            $my_food->weight_left = 0;
 
         try {
             $my_food->save();
