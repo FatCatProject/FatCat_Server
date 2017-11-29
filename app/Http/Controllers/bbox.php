@@ -17,7 +17,7 @@ class bbox extends Controller
 
     public function get_server_token(Request $request)
     {
-        if (!$request->hasHeader("php-auth-user") || !$request->hasHeader("php-auth-pw")) {
+        if (!$request->hasHeader("server-token-user") || !$request->hasHeader("server-token-pw")) {
             return response("", 401);
         }
 
@@ -25,8 +25,8 @@ class bbox extends Controller
             return response("", 400);
         }
 
-        $auth_user = $request->header("php-auth-user");
-        $auth_pw = $request->header("php-auth-pw");
+        $auth_user = $request->header("server-token-user");
+        $auth_pw = $request->header("server-token-pw");
         $request_brainbox_id = json_decode($request->getContent());
 
         try {

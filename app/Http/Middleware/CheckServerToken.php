@@ -20,11 +20,11 @@ class CheckServerToken
     {
 //        TODO - Log IP if login failed
 
-        if (!$request->hasHeader("php-auth-user") || !$request->hasHeader("php-auth-pw")) {
+        if (!$request->hasHeader("server-token-user") || !$request->hasHeader("server-token-pw")) {
             return response("", 401);
         }
-        $auth_user = $request->header("php-auth-user");
-        $auth_pw = $request->header("php-auth-pw");
+        $auth_user = $request->header("server-token-user");
+        $auth_pw = $request->header("server-token-pw");
         try {
             $request_user = User::where("email", $auth_user)->firstOrFail();
             if ($request_user->server_token !== $auth_pw) {
