@@ -102,6 +102,6 @@ Route::get('/homePage/vet_visits','HomeController@yearlyVetVisits')
 
 Route::get('/userPage', 'UserController@userPage')->middleware('authenticated');
 Route::post('/editUser','UserController@update')->middleware('authenticated');
-
+Route::post('changePassword','UserController@changePassword')->middleware('authenticated');
 
 ?>

@@ -197,7 +197,7 @@
                     <div class="tab-content" style="padding:0px">
                         <div class="tab-pane active" id="horizontal-form">
                             <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                                  action="/changePASSWORD!!!" id="XXXX">
+                                  action="/changePassword" id="changePasswordForm">
                                 {!! csrf_field() !!}
 
                                 <div id="errors_div_password_change" class="form-group">
@@ -258,6 +258,7 @@
                                                 class="btn-success btn"
                                                 id="submit_button_change_password"
                                                 type="submit"
+                                                form="changePasswordForm"
                                                 disabled
                                             >
                                                 Change password
@@ -266,6 +267,7 @@
                                                 class="btn-inverse btn"
                                                 id="reset_button_change_password"
                                                 type="reset"
+
                                             >
                                                 Cancel
                                             </button>
