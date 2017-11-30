@@ -201,7 +201,21 @@
                                 {!! csrf_field() !!}
 
                                 <div id="errors_div_password_change" class="form-group">
-                                    <ul id="errors_ul_password_change" style="color: red;"></ul>
+                                    <ul id="errors_ul_password_change" style="color: red;">
+                                        @if(!empty($current_password_error))
+                                            <li id="current_password_error_li">{!! $current_password_error !!}</li>
+<script>
+$(document).ready(function(){
+    $("html, body").animate(
+        {
+            scrollTop: $("#current_password_error_li").offset().top
+        },
+        2000
+    );
+});
+</script>
+                                        @endif
+                                    </ul>
                                 </div>
 
                                 <div class="col-sm-6">
